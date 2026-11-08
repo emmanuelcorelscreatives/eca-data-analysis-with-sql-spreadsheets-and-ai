@@ -38,6 +38,7 @@ with (run / 'outputs/monthly_sales.csv').open('w', newline='', encoding='utf-8')
     writer.writerow(['2025-03', len({r['order_id'] for r in qualifying}),
                      f"{sum((Decimal(r['line_revenue']) for r in qualifying), Decimal('0')):.2f}"])
 lines = ['Report: March sales',
+         'Run identifier: 2025-03-synthetic-retailer',
          'Input: inputs\\orders_export.csv',
          'Query: queries\\monthly_sales.sql',
          'Output: outputs\\monthly_sales.csv']

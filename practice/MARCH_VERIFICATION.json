@@ -1,5 +1,5 @@
 {
-  "at": "2026-11-08T20:21:48.757966+00:00",
+  "at": "2026-11-08T20:44:44.547616+00:00",
   "actualPsqlCommandPassed": true,
   "actualPsqlOutput": "BEGIN\nCREATE TABLE\nCOPY 4\n period  | order_count | monthly_revenue \n---------+-------------+-----------------\n 2025-03 |           4 |          125.00\n(1 row)\n\nCOMMIT\n",
   "observedFields": [

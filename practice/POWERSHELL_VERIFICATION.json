@@ -1,0 +1,28 @@
+{
+  "actualGetDateResult": "2026-11-08T20:35:53.4623245+00:00",
+  "realPowerShellExecution": true,
+  "files": [
+    {
+      "path": "runs/2025-03/inputs/orders_export.csv",
+      "sha256": "9b95ce9792143558ea402cf50861525d2aa5c2a0b33e97c78dff05eccda4a066",
+      "commands": [
+        "Get-FileHash -Algorithm SHA256 -LiteralPath '.\\runs\\2025-03\\inputs\\orders_export.csv'"
+      ]
+    },
+    {
+      "path": "runs/2025-03/queries/monthly_sales.sql",
+      "sha256": "c87114379482f4e5799c5aa3f18cd26de9c82a34ede8050d555462b24a1f5576",
+      "commands": [
+        "Get-FileHash -Algorithm SHA256 -LiteralPath '.\\runs\\2025-03\\queries\\monthly_sales.sql'"
+      ]
+    },
+    {
+      "path": "runs/2025-03/outputs/monthly_sales.csv",
+      "sha256": "a4aa40ed519a88c802c364504e2f0f49cb76663c2e289521ec07687b5d0fa2d2",
+      "commands": [
+        "Get-FileHash -Algorithm SHA256 -LiteralPath '.\\runs\\2025-03\\outputs\\monthly_sales.csv'",
+        "Get-Date -Format o"
+      ]
+    }
+  ]
+}

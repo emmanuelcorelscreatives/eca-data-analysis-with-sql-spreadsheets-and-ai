@@ -1,5 +1,5 @@
 {
-  "at": "2026-11-08T20:22:59.767633+00:00",
+  "at": "2026-11-08T20:58:54.078013+00:00",
   "loaderPassed": true,
   "checksPassed": true,
   "marchSqlResult": [
@@ -24,7 +24,11 @@
     },
     {
       "path": "practice/MARCH_VERIFICATION.json",
-      "sha256": "34edacea0b2d26d79a084d3cbbb7cdafe2af56e8a23575832f1a30ba4942f7d0"
+      "sha256": "174d8b15429798f248e3e37d0bd5e9d8a704e802fca02c0ef71066ed55ccf9d8"
+    },
+    {
+      "path": "practice/POWERSHELL_VERIFICATION.json",
+      "sha256": "cd79f753095075b413140c4b36067591f8b75a0a76759d53881f845807f5a88b"
     },
     {
       "path": "practice/README.md",
@@ -56,7 +60,7 @@
     },
     {
       "path": "practice/reproducibility.py",
-      "sha256": "3584837ec875f02a67d7dd27869c4f086db58b3bee0e79f86bb156078f74c8bc"
+      "sha256": "de3065ea6a8f85ac640a9deaadaac03cd2ef49f5c2190b0e2a2a761b4d232811"
     },
     {
       "path": "practice/sql/checks.sql",
@@ -84,7 +88,7 @@
     },
     {
       "path": "runs/2025-03/run_manifest.txt",
-      "sha256": "6bec02862a1b35ed11391ee566284ae7d6d534e5b6d9bd18624583c28a2b87a9"
+      "sha256": "d0df8e923f5374a58110ed5b3fa439a64ee7d1560de75aa544e9777a615e0575"
     }
   ]
 }

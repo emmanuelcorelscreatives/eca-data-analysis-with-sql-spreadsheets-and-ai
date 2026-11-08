@@ -1,4 +1,5 @@
 Report: March sales
+Run identifier: 2025-03-synthetic-retailer
 Input: inputs\orders_export.csv
 Query: queries\monthly_sales.sql
 Output: outputs\monthly_sales.csv
@@ -9,7 +10,7 @@ Reporting start: 2025-03-01 00:00:00 UTC (inclusive)
 Reporting cutoff: 2025-04-01 00:00:00 UTC (exclusive)
 Monthly revenue: Sum of line revenue for completed sales within the reporting window, USD; exclude return events; round to two decimal places for display only.
 Order count: Distinct order_id values for the same qualifying completed sales.
-Generated at: 2026-11-08T20:21:48.380206+00:00
+Generated at: 2026-11-08T20:35:53.4623245+00:00
 Input upstream export or snapshot ID: synthetic-retailer-v1
 Query Git commit: not applicable (identified by SHA256)
 Calculation: Python Decimal; compare with PostgreSQL using practice/sql/run_march.sql.
