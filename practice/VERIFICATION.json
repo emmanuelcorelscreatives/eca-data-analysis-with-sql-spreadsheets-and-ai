@@ -1,5 +1,5 @@
 {
-  "at": "2026-11-08T23:01:39.131Z",
+  "at": "2026-11-08T23:26:22.228Z",
   "baseVerificationAt": "2026-11-08T22:09:59.578670+00:00",
   "loaderPassed": true,
   "checksPassed": true,
@@ -74,7 +74,7 @@
     },
     {
       "path": "practice/project2/README.md",
-      "sha256": "31abf4919cbf08925bb8df2f90ed492c13b0ed82a432fa3c18b38c3613f26772"
+      "sha256": "751bdeec2da5ee341b68a02c6aefb183c70b5155fcdf5ceadc8eddeed4e854bd"
     },
     {
       "path": "practice/project2/VERIFICATION.json",
@@ -203,6 +203,16 @@
     {
       "path": "runs/2025-03/run_manifest.txt",
       "sha256": "d0df8e923f5374a58110ed5b3fa439a64ee7d1560de75aa544e9777a615e0575"
+    },
+    {
+      "path": "practice/project2/analysis_pack.html",
+      "sha256": "73379d57988831c37c615e5c30856a2d9f460129914aaeb30d978f16e4dae7e6"
     }
-  ]
+  ],
+  "project2BrowserViewer": {
+    "path": "practice/project2/analysis_pack.html",
+    "htmlSha256": "73379d57988831c37c615e5c30856a2d9f460129914aaeb30d978f16e4dae7e6",
+    "sourceVerificationSha256": "d44c2692cc1c14fe9680adb3dd477d885b126a5c99f9c41a911102e58d4940c6",
+    "actualNativeBrowserTablesMatched": true
+  }
 }

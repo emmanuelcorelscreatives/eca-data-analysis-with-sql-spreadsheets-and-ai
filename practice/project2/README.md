@@ -43,3 +43,8 @@ The input CSVs contain six customers, three products, nine orders, eleven items 
 The six actual answer CSVs are in `answers/`. Four actual control CSVs are in `controls/`; they are separate from the answers. `verify.py` reopens every exported file, checks headers and rows against execution, and reconciles answers with independently calculated source-data totals. Rerun after any data change. These reference results are not promises about a different database.
 
 Keep the supplied `metric_notes.txt` worksheet as a blank learner template. The completed observations and exception decision for this worked example are in `VERIFICATION.json`. Follow `submission_checklist.txt` for your own submission, and use `EXERCISES.md` for independent practice.
+
+
+## Browser view of the checked reference pack
+
+Open `analysis_pack.html` from this complete folder to view the six real answer extracts beside their SQL, observed metric notes and separate controls. This is an Academy-authored browser document, not a simulated database application. It is a static reference to the execution timestamp and input hashes in `VERIFICATION.json`; after changing data, use fresh query outputs and verification instead of treating this reference page as a new run. SQL and CSV links open the corresponding supplied files.
