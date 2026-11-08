@@ -1,0 +1,203 @@
+Emmanuel Corels Academy
+Public worked kit: https://github.com/emmanuelcorelscreatives/eca-data-analysis-with-sql-spreadsheets-and-ai/tree/51daae49bb6ee6b976b739f7e6f9fcd59f172d8b/practice/project2
+
+{
+  "checkedAt": "2026-11-08T22:59:46.411270+00:00",
+  "actualExecution": true,
+  "schema": "eca_project2",
+  "savedAnalysisAndControlsUnchanged": true,
+  "independentPythonDecimalChecksPassed": true,
+  "allExtractHeadersAndRowsReopened": true,
+  "inputFiles": {
+    "customers.csv": "06fbfc7f0e0dd36fb62c5f97a39e1fc3eedf3805f44e7b45b6f86761cf512a73",
+    "order_items.csv": "5732b1a7b880dae58c968ec08fe5bdd627848f4db6d87d4629fd86b0e85fe60d",
+    "orders.csv": "cb29c47a7bcc8354da8f6b3fa08eced167b7355102e7b8c31749ac61c330c308",
+    "products.csv": "df0bb00af072efb7aaa7c723214a092c9c9b3131ddb41e5f455e2e3e8e705b6e",
+    "returns.csv": "49c6d9f5ec32829389af23d811db681fa8296071a5d0fa9b490bf4c9fccacf89"
+  },
+  "sourceFiles": {
+    "project2_analysis.sql": "838c02931c9bb2a4060e505efce952a3b874e4ce6721b4db10f74da5c30993a1",
+    "project2_controls.sql": "516724f46df9d8d2adb85c7691872b453a0c265ebb6e545a8605ec0bc412801e"
+  },
+  "observations": {
+    "q01_revenue.csv": {
+      "query": "-- Project 2 example: verify table names, columns, status values, and metric rules against your course schema.\n-- Assumed tables: orders(order_id, customer_id, order_ts, status),\n-- order_items(order_item_id, order_id, product_id, quantity, unit_price),\n-- products(product_id, category), customers(customer_id).\n-- Example period: [2025-01-01 00:00:00+00, 2025-04-01 00:00:00+00).\n-- Qualifying status: paid. Gross revenue: SUM(quantity * unit_price) on qualifying items.\n-- Returns are NOT deducted. Resolve exceptions identified by project2_controls.sql\n-- before trusting product, category, or customer answers.\n\n-- Q1. What is gross revenue for qualifying items in the period?\nSELECT SUM(oi.quantity * oi.unit_price) AS gross_revenue\nFROM orders AS o\nJOIN order_items AS oi ON oi.order_id = o.order_id\nWHERE o.status = 'paid'\n  AND o.order_ts >= TIMESTAMPTZ '2025-01-01 00:00:00+00'\n  AND o.order_ts <  TIMESTAMPTZ '2025-04-01 00:00:00+00';",
+      "rows": [
+        {
+          "gross_revenue": "400.00"
+        }
+      ],
+      "csvSha256": "f0532b27a552c714786ca863a93b88a35b86607fbd8101b8bc4e6855415305f5",
+      "rowCount": 1
+    },
+    "q02_monthly_revenue.csv": {
+      "query": "-- Q2. What is gross revenue in each reporting month, including months with no lines?\nWITH calendar AS (\n    SELECT generate_series(\n        DATE '2025-01-01', DATE '2025-03-01', INTERVAL '1 month'\n    )::date AS reporting_month\n), monthly AS (\n    SELECT date_trunc('month', o.order_ts AT TIME ZONE 'UTC')::date AS reporting_month,\n           SUM(oi.quantity * oi.unit_price) AS gross_revenue\n    FROM orders AS o\n    JOIN order_items AS oi ON oi.order_id = o.order_id\n    WHERE o.status = 'paid'\n      AND o.order_ts >= TIMESTAMPTZ '2025-01-01 00:00:00+00'\n      AND o.order_ts <  TIMESTAMPTZ '2025-04-01 00:00:00+00'\n    GROUP BY 1\n)\nSELECT c.reporting_month, COALESCE(m.gross_revenue, 0) AS gross_revenue\nFROM calendar AS c\nLEFT JOIN monthly AS m ON m.reporting_month = c.reporting_month\nORDER BY c.reporting_month;",
+      "rows": [
+        {
+          "reporting_month": "2025-01-01",
+          "gross_revenue": "180.00"
+        },
+        {
+          "reporting_month": "2025-02-01",
+          "gross_revenue": "0"
+        },
+        {
+          "reporting_month": "2025-03-01",
+          "gross_revenue": "220.00"
+        }
+      ],
+      "csvSha256": "8cdb8ade901557335f9e207769091b9bb17af1072e013191b5d9c22972cff26c",
+      "rowCount": 3
+    },
+    "q03_category_revenue.csv": {
+      "query": "-- Q3. What is gross revenue by recorded product category?\n-- A missing product match or category will appear as a null category; investigate it.\nSELECT p.category, SUM(oi.quantity * oi.unit_price) AS gross_revenue\nFROM orders AS o\nJOIN order_items AS oi ON oi.order_id = o.order_id\nLEFT JOIN products AS p ON p.product_id = oi.product_id\nWHERE o.status = 'paid'\n  AND o.order_ts >= TIMESTAMPTZ '2025-01-01 00:00:00+00'\n  AND o.order_ts <  TIMESTAMPTZ '2025-04-01 00:00:00+00'\nGROUP BY p.category\nORDER BY gross_revenue DESC NULLS LAST, p.category NULLS LAST;",
+      "rows": [
+        {
+          "category": "Accessories",
+          "gross_revenue": "240.00"
+        },
+        {
+          "category": "Home",
+          "gross_revenue": "160.00"
+        }
+      ],
+      "csvSha256": "7d93f66f2f42df2174658fe042d6d33bdc7f7dc64d08441a87af4d42a503e2a6",
+      "rowCount": 2
+    },
+    "q04_product_ranking.csv": {
+      "query": "-- Q4. Which products rank highest by gross revenue? Equal revenues share a rank.\n-- Product identifier supplies deterministic output order within a tie.\nWITH product_totals AS (\n    SELECT oi.product_id, SUM(oi.quantity * oi.unit_price) AS gross_revenue\n    FROM orders AS o\n    JOIN order_items AS oi ON oi.order_id = o.order_id\n    WHERE o.status = 'paid'\n      AND o.order_ts >= TIMESTAMPTZ '2025-01-01 00:00:00+00'\n      AND o.order_ts <  TIMESTAMPTZ '2025-04-01 00:00:00+00'\n    GROUP BY oi.product_id\n)\nSELECT product_id, gross_revenue,\n       DENSE_RANK() OVER (ORDER BY gross_revenue DESC) AS revenue_rank\nFROM product_totals\nORDER BY gross_revenue DESC NULLS LAST, product_id NULLS LAST;",
+      "rows": [
+        {
+          "product_id": "P201",
+          "gross_revenue": "160.00",
+          "revenue_rank": "1"
+        },
+        {
+          "product_id": "P202",
+          "gross_revenue": "160.00",
+          "revenue_rank": "1"
+        },
+        {
+          "product_id": "P203",
+          "gross_revenue": "80.00",
+          "revenue_rank": "2"
+        }
+      ],
+      "csvSha256": "f6b338b181c93aa7eba576cac50cc1046a8b973d07d314d221a992e8bfb5710f",
+      "rowCount": 3
+    },
+    "q05_customer_share.csv": {
+      "query": "-- Q5. What revenue did each customer contribute, and what share of total?\n-- A null share means the total denominator is zero or unavailable.\nWITH customer_totals AS (\n    SELECT o.customer_id, SUM(oi.quantity * oi.unit_price) AS gross_revenue\n    FROM orders AS o\n    JOIN order_items AS oi ON oi.order_id = o.order_id\n    WHERE o.status = 'paid'\n      AND o.order_ts >= TIMESTAMPTZ '2025-01-01 00:00:00+00'\n      AND o.order_ts <  TIMESTAMPTZ '2025-04-01 00:00:00+00'\n    GROUP BY o.customer_id\n)\nSELECT customer_id, gross_revenue,\n       gross_revenue / NULLIF(SUM(gross_revenue) OVER (), 0) AS revenue_share\nFROM customer_totals\nORDER BY gross_revenue DESC NULLS LAST, customer_id NULLS LAST;",
+      "rows": [
+        {
+          "customer_id": "C201",
+          "gross_revenue": "260.00",
+          "revenue_share": "0.65000000000000000000"
+        },
+        {
+          "customer_id": "C203",
+          "gross_revenue": "120.00",
+          "revenue_share": "0.30000000000000000000"
+        },
+        {
+          "customer_id": "C202",
+          "gross_revenue": "20.00",
+          "revenue_share": "0.05000000000000000000"
+        }
+      ],
+      "csvSha256": "10b897283cf72baf6434adb86934d520d084b8203d3772e02f996bbe9f381736",
+      "rowCount": 3
+    },
+    "q06_customers_without_paid_orders.csv": {
+      "query": "-- Q6. Which listed customers have no paid order in the period?\n-- A paid order without items still disqualifies a customer from this list.\nSELECT c.customer_id\nFROM customers AS c\nWHERE NOT EXISTS (\n    SELECT 1\n    FROM orders AS o\n    WHERE o.customer_id = c.customer_id\n      AND o.status = 'paid'\n      AND o.order_ts >= TIMESTAMPTZ '2025-01-01 00:00:00+00'\n      AND o.order_ts <  TIMESTAMPTZ '2025-04-01 00:00:00+00'\n)\nORDER BY c.customer_id;",
+      "rows": [
+        {
+          "customer_id": "C205"
+        },
+        {
+          "customer_id": "C206"
+        }
+      ],
+      "csvSha256": "e324d833355b4aee431022912e60868fd341f633d5f1d4075b02a3af6f9dc4cf",
+      "rowCount": 2
+    },
+    "c01_reconciliation.csv": {
+      "query": "-- Run controls separately after adapting the same illustrative schema and period.\n-- C1. Independent direct count and total; compare control_gross_revenue with Q1,\n-- the sum of Q2, Q3, Q4, and Q5 revenue, and record any difference.\nSELECT COUNT(DISTINCT o.order_id) AS paid_orders_with_items,\n       COUNT(*) AS qualifying_item_rows,\n       SUM(oi.quantity * oi.unit_price) AS control_gross_revenue\nFROM orders AS o\nJOIN order_items AS oi ON oi.order_id = o.order_id\nWHERE o.status = 'paid'\n  AND o.order_ts >= TIMESTAMPTZ '2025-01-01 00:00:00+00'\n  AND o.order_ts <  TIMESTAMPTZ '2025-04-01 00:00:00+00';",
+      "rows": [
+        {
+          "paid_orders_with_items": "4",
+          "qualifying_item_rows": "7",
+          "control_gross_revenue": "400.00"
+        }
+      ],
+      "csvSha256": "f55fa19dadd8288e37bd1102fdc3264cf7f389f4f64be9a0c58cbec327f4490e",
+      "rowCount": 1
+    },
+    "c02_exceptions.csv": {
+      "query": "-- C2. Exceptions that can invalidate or change the interpretation of answers.\nWITH paid_orders AS (\n    SELECT o.order_id, o.customer_id\n    FROM orders AS o\n    WHERE o.status = 'paid'\n      AND o.order_ts >= TIMESTAMPTZ '2025-01-01 00:00:00+00'\n      AND o.order_ts <  TIMESTAMPTZ '2025-04-01 00:00:00+00'\n), item_checks AS (\n    SELECT COUNT(*) FILTER (\n               WHERE oi.quantity IS NULL OR oi.unit_price IS NULL\n           ) AS null_line_inputs,\n           COUNT(*) FILTER (\n               WHERE p.product_id IS NULL\n           ) AS missing_product_keys,\n           COUNT(*) FILTER (\n               WHERE p.product_id IS NOT NULL AND p.category IS NULL\n           ) AS missing_categories\n    FROM paid_orders AS o\n    JOIN order_items AS oi ON oi.order_id = o.order_id\n    LEFT JOIN products AS p ON p.product_id = oi.product_id\n), order_checks AS (\n    SELECT COUNT(*) FILTER (\n               WHERE c.customer_id IS NULL\n           ) AS missing_customer_keys,\n           COUNT(*) FILTER (\n               WHERE NOT EXISTS (\n                   SELECT 1 FROM order_items AS oi\n                   WHERE oi.order_id = o.order_id\n               )\n           ) AS paid_orders_without_items\n    FROM paid_orders AS o\n    LEFT JOIN customers AS c ON c.customer_id = o.customer_id\n)\nSELECT i.null_line_inputs, i.missing_product_keys, i.missing_categories,\n       r.missing_customer_keys, r.paid_orders_without_items\nFROM item_checks AS i CROSS JOIN order_checks AS r;",
+      "rows": [
+        {
+          "null_line_inputs": "0",
+          "missing_product_keys": "0",
+          "missing_categories": "0",
+          "missing_customer_keys": "0",
+          "paid_orders_without_items": "1"
+        }
+      ],
+      "csvSha256": "71adba93f0043ebe7acf0e24e4b138ba5a82bae0e305eee954afd2556a687400",
+      "rowCount": 1
+    },
+    "c03_month_coverage.csv": {
+      "query": "-- C3. Inspect period coverage and the product tie rule independently of exports.\n-- Run each SELECT separately: a PostgreSQL WITH clause belongs to one statement.\nSELECT generate_series(\n    DATE '2025-01-01', DATE '2025-03-01', INTERVAL '1 month'\n)::date AS expected_reporting_month;",
+      "rows": [
+        {
+          "expected_reporting_month": "2025-01-01"
+        },
+        {
+          "expected_reporting_month": "2025-02-01"
+        },
+        {
+          "expected_reporting_month": "2025-03-01"
+        }
+      ],
+      "csvSha256": "3fdc22ea05107f25b90adb59d22c5f548f1c19a115a829f9fe4b1eaf21850122",
+      "rowCount": 3
+    },
+    "c03_product_ties.csv": {
+      "query": "WITH product_totals AS (\n    SELECT oi.product_id, SUM(oi.quantity * oi.unit_price) AS gross_revenue\n    FROM orders AS o\n    JOIN order_items AS oi ON oi.order_id = o.order_id\n    WHERE o.status = 'paid'\n      AND o.order_ts >= TIMESTAMPTZ '2025-01-01 00:00:00+00'\n      AND o.order_ts <  TIMESTAMPTZ '2025-04-01 00:00:00+00'\n    GROUP BY oi.product_id\n), tied_totals AS (\n    SELECT gross_revenue\n    FROM product_totals\n    GROUP BY gross_revenue\n    HAVING COUNT(*) > 1\n)\nSELECT p.product_id, p.gross_revenue,\n       DENSE_RANK() OVER (ORDER BY p.gross_revenue DESC) AS tie_group_rank\nFROM product_totals AS p\nJOIN tied_totals AS t ON t.gross_revenue IS NOT DISTINCT FROM p.gross_revenue\nORDER BY p.gross_revenue DESC NULLS LAST, p.product_id NULLS LAST;",
+      "rows": [
+        {
+          "product_id": "P201",
+          "gross_revenue": "160.00",
+          "tie_group_rank": "1"
+        },
+        {
+          "product_id": "P202",
+          "gross_revenue": "160.00",
+          "tie_group_rank": "1"
+        }
+      ],
+      "csvSha256": "1b454337b6e1fafb917ac9d37eab12017a8fc8f3899b9ec54e083bfeeaa61e75",
+      "rowCount": 2
+    }
+  },
+  "independentExpected": {
+    "totalGrossRevenue": "400.00",
+    "monthlyGrossRevenue": {
+      "2025-01-01": "180.00",
+      "2025-02-01": "0",
+      "2025-03-01": "220.00"
+    },
+    "paidOrders": 5,
+    "paidOrdersWithItems": 4,
+    "qualifyingItemRows": 7,
+    "paidOrdersWithoutItems": [
+      "O2005"
+    ],
+    "customersWithoutPaidOrders": [
+      "C205",
+      "C206"
+    ]
+  },
+  "exceptionDecision": "O2005 is an intentional synthetic paid order without item rows. It contributes no line revenue, disqualifies C204 from Q6, and is retained with a disclosed limitation; this is not an assertion that a real business exception was resolved. Investigate the analogous exception in your own dataset."
+}
