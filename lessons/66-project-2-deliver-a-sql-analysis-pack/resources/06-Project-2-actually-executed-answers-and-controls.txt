@@ -1,6 +1,3 @@
-Emmanuel Corels Academy
-Public worked kit: https://github.com/emmanuelcorelscreatives/eca-data-analysis-with-sql-spreadsheets-and-ai/tree/51daae49bb6ee6b976b739f7e6f9fcd59f172d8b/practice/project2
-
 {
   "checkedAt": "2026-11-08T22:59:46.411270+00:00",
   "actualExecution": true,
