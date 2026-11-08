@@ -1,0 +1,13 @@
+order_id,customer_id,order_date,region,status,amount
+O1001,C001,2025-01-05,North,completed,12.50
+O1002,C002,2025-01-10,South,completed,17.50
+O1003,C003,2025-01-15,East,completed,15.00
+O1004,C004,2025-01-20,West,completed,80.00
+O1005,C001,2025-02-05,North,completed,12.50
+O1006,C002,2025-02-10,South,completed,17.50
+O1007,C003,2025-02-15,East,completed,15.00
+O1008,C004,2025-02-20,West,completed,80.00
+O1009,C001,2025-03-05,North,completed,12.50
+O1010,C002,2025-03-10,South,completed,17.50
+O1011,C003,2025-03-15,East,completed,15.00
+O1012,C004,2025-03-20,West,completed,80.00

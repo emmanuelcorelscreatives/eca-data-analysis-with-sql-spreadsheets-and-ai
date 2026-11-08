@@ -1,0 +1,5 @@
+return_id,order_item_id,return_date,quantity_returned,refund_amount
+R001,L101,2025-01-08,1,5.00
+R002,L101,2025-01-09,0,2.50
+R003,L105,2025-02-09,1,12.50
+R004,L109,2025-03-09,1,12.50

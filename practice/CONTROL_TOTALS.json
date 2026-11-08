@@ -1,0 +1,24 @@
+{
+  "synthetic": true,
+  "row_counts": {
+    "customers": 5,
+    "products": 4,
+    "orders": 12,
+    "order_items": 12,
+    "returns": 4
+  },
+  "gross_sales": "375.00",
+  "refund_amount": "32.50",
+  "monthly_gross_sales": {
+    "2025-01": "125.00",
+    "2025-02": "125.00",
+    "2025-03": "125.00"
+  },
+  "product_join": {
+    "retained": 12,
+    "matched": 10,
+    "unmatched": 2,
+    "null_keys": 1,
+    "absent_reference_keys": 1
+  }
+}

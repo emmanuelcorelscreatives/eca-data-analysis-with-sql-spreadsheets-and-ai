@@ -1,0 +1,82 @@
+{
+  "at": "2026-11-08T20:05:18.539170+00:00",
+  "loaderPassed": true,
+  "checksPassed": true,
+  "marchSqlResult": [
+    "2025-03",
+    "4",
+    "125.00"
+  ],
+  "pythonOutputMatchesPostgreSQL": true,
+  "existingTablesProtectedOnSecondLoad": true,
+  "files": [
+    {
+      "path": "practice/CONTROL_TOTALS.json",
+      "sha256": "cdd75550e7d73d38882c7720b76c9ae70f736a068c0e21ec0b94057ed126cc13"
+    },
+    {
+      "path": "practice/DATA_DICTIONARY.md",
+      "sha256": "988887006f83ad4b6e002250c4d964c54096d7a0dfd475e5d17efd31cf8199a5"
+    },
+    {
+      "path": "practice/EXERCISES.md",
+      "sha256": "25b54d39a3f55a26c192d22da419847797b201f1d3ffbb1efe79e00309a496f9"
+    },
+    {
+      "path": "practice/README.md",
+      "sha256": "c288ce884944a9b58f4e4c09668b5229af2e217bca0dbf5d77ac39f6624378f7"
+    },
+    {
+      "path": "practice/data/customers.csv",
+      "sha256": "d18cf6bc19a243e206e1159b52dc21cfe099a271d82f3b1ae6ce65a545875ed3"
+    },
+    {
+      "path": "practice/data/order_items.csv",
+      "sha256": "d7b5501e995e23484f02783fdd836f92b0b05553f1aecab9b9953a7de9e8e9f9"
+    },
+    {
+      "path": "practice/data/orders.csv",
+      "sha256": "8f79e0cef46d9b0bc877fcd246858b300e916d13e4c7a1538e35b75aeef5beff"
+    },
+    {
+      "path": "practice/data/products.csv",
+      "sha256": "bdc472607d209c752c59dfbd14c3ad5cea15b8a689910325798f3898c0e412d4"
+    },
+    {
+      "path": "practice/data/returns.csv",
+      "sha256": "2179b624fd7033a4fe275d31a49cf520c0ab8b2f75826247a8712539609beab9"
+    },
+    {
+      "path": "practice/load.py",
+      "sha256": "6cfffd4634e6bcf4a27db4d3c5cc832ef8636e0ef45339ddd7a207d1a090c110"
+    },
+    {
+      "path": "practice/reproducibility.py",
+      "sha256": "87a0c3500691c55f2f7e628b053f792960800b54da1e13ce794fe92bc2ad6489"
+    },
+    {
+      "path": "practice/sql/checks.sql",
+      "sha256": "a30438a38b838bd6b814cfe4359a4f388483f227513a3e4b9cfb293fe47c388f"
+    },
+    {
+      "path": "practice/sql/schema.sql",
+      "sha256": "95031948aa886b0264e935d13e99c9c0e782a27c3de000f177bab7adbfd0e523"
+    },
+    {
+      "path": "runs/2025-03/inputs/orders_export.csv",
+      "sha256": "a383fd1cd7b13b04902577df88b61d5287a08493e052994ada9e75f6f630539e"
+    },
+    {
+      "path": "runs/2025-03/outputs/monthly_sales.csv",
+      "sha256": "df4d07283203983d96197c5088e583d4276142b7aac44916311cd7f37a256197"
+    },
+    {
+      "path": "runs/2025-03/queries/monthly_sales.sql",
+      "sha256": "6d971fdd8336857171f97a3b0b611040eff70f3a989eea5c8f1c24de1b4bfefa"
+    },
+    {
+      "path": "runs/2025-03/run_manifest.txt",
+      "sha256": "5be41e7dcc70240268cdc321cda7215faecdcd285be959704f00b81cbe181b04"
+    }
+  ]
+}

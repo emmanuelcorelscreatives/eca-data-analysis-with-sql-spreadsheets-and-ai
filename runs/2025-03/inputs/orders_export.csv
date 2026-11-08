@@ -1,0 +1,5 @@
+order_id,customer_id,order_date,region,status,amount
+O1009,C001,2025-03-05,North,completed,12.50
+O1010,C002,2025-03-10,South,completed,17.50
+O1011,C003,2025-03-15,East,completed,15.00
+O1012,C004,2025-03-20,West,completed,80.00
