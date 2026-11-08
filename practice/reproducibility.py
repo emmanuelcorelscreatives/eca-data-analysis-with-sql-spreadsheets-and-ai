@@ -1,24 +1,53 @@
-"""Create the actual lesson98 March input/query/output and SHA256 manifest."""
+"""Create lesson98's real March files and hashes from the supplied synthetic data.
+Python 3 only. Then verify with the actual PostgreSQL command in README.md.
+"""
 from pathlib import Path
 from datetime import datetime, timezone
 from decimal import Decimal
-import csv, hashlib, io
-root=Path(__file__).resolve().parents[1]
-run=root/'runs/2025-03'
-for name in ('inputs','queries','outputs'):(run/name).mkdir(parents=True,exist_ok=True)
-with (root/'practice/data/orders.csv').open(newline='',encoding='utf-8') as f:
-    source=csv.DictReader(f);fields=source.fieldnames;rows=[r for r in source if '2025-03-01' <= r['order_date'] < '2025-04-01']
-with (run/'inputs/orders_export.csv').open('w',newline='',encoding='utf-8') as f:
-    w=csv.DictWriter(f,fields,lineterminator='\n');w.writeheader();w.writerows(rows)
-query="SELECT '2025-03' AS period, COUNT(*) AS order_count, SUM(amount) AS gross_sales FROM orders WHERE order_date >= DATE '2025-03-01' AND order_date < DATE '2025-04-01' AND status = 'completed';\n"
-(run/'queries/monthly_sales.sql').write_text(query,encoding='utf-8')
-# Independently check this output against the same SQL in PostgreSQL before capture.
-qualifying=[r for r in rows if r['status']=='completed']
-with (run/'outputs/monthly_sales.csv').open('w',newline='',encoding='utf-8') as f:
-    w=csv.writer(f,lineterminator='\n');w.writerow(['period','order_count','gross_sales']);w.writerow(['2025-03',len(qualifying),f"{sum((Decimal(r['amount']) for r in qualifying),Decimal('0')):.2f}"])
-lines=['Report name: March gross sales','Run identifier: 2025-03-synthetic-retailer']
-for label,path in [('Input 1','inputs/orders_export.csv'),('Query','queries/monthly_sales.sql'),('Output','outputs/monthly_sales.csv')]:
-    lines += [label+' path, relative to this manifest: '+path,label+' SHA256: '+hashlib.sha256((run/path).read_bytes()).hexdigest()]
-lines += ['Input 1 upstream export or snapshot ID: synthetic-retailer-v1','Query Git commit: not applicable (content identified by SHA256)','Reporting start: 2025-03-01 inclusive, calendar date without timezone','Reporting cutoff: 2025-04-01 exclusive, calendar date without timezone','Metric definitions: gross_sales = SUM(amount), completed orders in the stated period, refunds excluded, illustrative USD rounded to two decimals; order_count = qualifying order rows','Generated at: '+datetime.now(timezone.utc).isoformat(),'Execution: output calculated by Python Decimal; verify against saved SQL on the same practice data before presenting a database result.']
-(run/'run_manifest.txt').write_text('\n'.join(lines)+'\n',encoding='utf-8')
+import csv, hashlib
+root = Path(__file__).resolve().parents[1]
+run = root / 'runs/2025-03'
+for name in ('inputs', 'queries', 'outputs'):
+    (run / name).mkdir(parents=True, exist_ok=True)
+with (root / 'practice/data/orders.csv').open(newline='', encoding='utf-8') as source:
+    orders = {r['order_id']: r for r in csv.DictReader(source)}
+with (root / 'practice/data/order_items.csv').open(newline='', encoding='utf-8') as source:
+    items = list(csv.DictReader(source))
+rows = []
+for item in items:
+    order = orders[item['order_id']]
+    if '2025-03-01' <= order['order_date'] < '2025-04-01':
+        rows.append({**{k:order[k] for k in ('order_id','order_date','status')},
+                     'order_item_id':item['order_item_id'], 'line_revenue':item['line_revenue']})
+with (run / 'inputs/orders_export.csv').open('w', newline='', encoding='utf-8') as output:
+    writer = csv.DictWriter(output, ['order_id','order_date','status','order_item_id','line_revenue'], lineterminator='\n')
+    writer.writeheader(); writer.writerows(rows)
+query = """SELECT '2025-03' AS period,
+       COUNT(DISTINCT order_id) AS order_count,
+       SUM(line_revenue) AS monthly_revenue
+FROM orders_export
+WHERE order_date >= DATE '2025-03-01'
+  AND order_date < DATE '2025-04-01'
+  AND status = 'completed';
+"""
+(run / 'queries/monthly_sales.sql').write_text(query, encoding='utf-8')
+qualifying = [r for r in rows if r['status'] == 'completed']
+with (run / 'outputs/monthly_sales.csv').open('w', newline='', encoding='utf-8') as output:
+    writer = csv.writer(output, lineterminator='\n')
+    writer.writerow(['period','order_count','monthly_revenue'])
+    writer.writerow(['2025-03', len({r['order_id'] for r in qualifying}),
+                     f"{sum((Decimal(r['line_revenue']) for r in qualifying), Decimal('0')):.2f}"])
+lines = ['Report name: March monthly revenue', 'Run identifier: 2025-03-synthetic-retailer', '']
+for label, path in [('Input','inputs/orders_export.csv'), ('Query','queries/monthly_sales.sql'), ('Output','outputs/monthly_sales.csv')]:
+    lines += [label + ' path, relative to this manifest: ' + path,
+              label + ' SHA256: ' + hashlib.sha256((run / path).read_bytes()).hexdigest(), '']
+lines += ['Input upstream export or snapshot ID: synthetic-retailer-v1',
+          'Query Git commit: not applicable (identified by SHA256)',
+          'Reporting start: 2025-03-01 inclusive; calendar dates, no timezone',
+          'Reporting cutoff: 2025-04-01 exclusive; calendar dates, no timezone',
+          'Monthly revenue: Sum of line revenue for completed sales within the reporting window, USD; exclude return events; round to two decimal places for display only.',
+          'Order count: Distinct order_id values for the same qualifying completed sales.',
+          'Generated at: ' + datetime.now(timezone.utc).isoformat(),
+          'Calculation: Python Decimal; compare with PostgreSQL using practice/sql/run_march.sql.']
+(run / 'run_manifest.txt').write_text('\n'.join(lines) + '\n', encoding='utf-8')
 print('Created actual March files and SHA256 manifest.')

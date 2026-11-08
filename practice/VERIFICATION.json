@@ -1,5 +1,5 @@
 {
-  "at": "2026-11-08T20:05:18.539170+00:00",
+  "at": "2026-11-08T20:13:56.739820+00:00",
   "loaderPassed": true,
   "checksPassed": true,
   "marchSqlResult": [
@@ -23,8 +23,12 @@
       "sha256": "25b54d39a3f55a26c192d22da419847797b201f1d3ffbb1efe79e00309a496f9"
     },
     {
+      "path": "practice/MARCH_VERIFICATION.json",
+      "sha256": "f375a8ac07fc122844c24a1090e0b6d4d08c6628c60d2b3b835c8755a0b468de"
+    },
+    {
       "path": "practice/README.md",
-      "sha256": "c288ce884944a9b58f4e4c09668b5229af2e217bca0dbf5d77ac39f6624378f7"
+      "sha256": "2cac649f91ab9cd8052a4f680ba90895ed6aff6e99fd4e176b3020dfa5000da6"
     },
     {
       "path": "practice/data/customers.csv",
@@ -52,11 +56,15 @@
     },
     {
       "path": "practice/reproducibility.py",
-      "sha256": "87a0c3500691c55f2f7e628b053f792960800b54da1e13ce794fe92bc2ad6489"
+      "sha256": "866887ca858b9f0dd6b5e1fe2216b9bcdf90a24234ed853d3ac0c4d2de958fe8"
     },
     {
       "path": "practice/sql/checks.sql",
       "sha256": "a30438a38b838bd6b814cfe4359a4f388483f227513a3e4b9cfb293fe47c388f"
+    },
+    {
+      "path": "practice/sql/run_march.sql",
+      "sha256": "d18a615bc8c9229e8b2303d061709597cdbf9093b53b319c81dfa49fffb517fe"
     },
     {
       "path": "practice/sql/schema.sql",
@@ -64,19 +72,19 @@
     },
     {
       "path": "runs/2025-03/inputs/orders_export.csv",
-      "sha256": "a383fd1cd7b13b04902577df88b61d5287a08493e052994ada9e75f6f630539e"
+      "sha256": "9b95ce9792143558ea402cf50861525d2aa5c2a0b33e97c78dff05eccda4a066"
     },
     {
       "path": "runs/2025-03/outputs/monthly_sales.csv",
-      "sha256": "df4d07283203983d96197c5088e583d4276142b7aac44916311cd7f37a256197"
+      "sha256": "a4aa40ed519a88c802c364504e2f0f49cb76663c2e289521ec07687b5d0fa2d2"
     },
     {
       "path": "runs/2025-03/queries/monthly_sales.sql",
-      "sha256": "6d971fdd8336857171f97a3b0b611040eff70f3a989eea5c8f1c24de1b4bfefa"
+      "sha256": "aa06f6f5d408fe222596d6b7e7503fa2578bebe8b2742e9e84ab898fab92f34e"
     },
     {
       "path": "runs/2025-03/run_manifest.txt",
-      "sha256": "5be41e7dcc70240268cdc321cda7215faecdcd285be959704f00b81cbe181b04"
+      "sha256": "6fa607184677fcbebc83bc6f858fec736bc643dc1f44f9e77c4dad3002ff7b33"
     }
   ]
 }

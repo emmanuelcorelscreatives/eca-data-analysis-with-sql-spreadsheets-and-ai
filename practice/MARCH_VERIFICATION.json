@@ -1,0 +1,31 @@
+{
+  "at": "2026-11-08T20:13:20.550755+00:00",
+  "actualPsqlCommandPassed": true,
+  "actualPsqlOutput": "BEGIN\nCREATE TABLE\nCOPY 4\n period  | order_count | monthly_revenue \n---------+-------------+-----------------\n 2025-03 |           4 |          125.00\n(1 row)\n\nCOMMIT\n",
+  "observedFields": [
+    "period",
+    "order_count",
+    "monthly_revenue"
+  ],
+  "observedRow": [
+    "2025-03",
+    "4",
+    "125.00"
+  ],
+  "actualCsvMatchesDatabase": true,
+  "allManifestHashesMatchFiles": true,
+  "files": [
+    {
+      "path": "inputs/orders_export.csv",
+      "sha256": "9b95ce9792143558ea402cf50861525d2aa5c2a0b33e97c78dff05eccda4a066"
+    },
+    {
+      "path": "queries/monthly_sales.sql",
+      "sha256": "aa06f6f5d408fe222596d6b7e7503fa2578bebe8b2742e9e84ab898fab92f34e"
+    },
+    {
+      "path": "outputs/monthly_sales.csv",
+      "sha256": "a4aa40ed519a88c802c364504e2f0f49cb76663c2e289521ec07687b5d0fa2d2"
+    }
+  ]
+}

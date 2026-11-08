@@ -1,15 +1,20 @@
-Report name: March gross sales
+Report name: March monthly revenue
 Run identifier: 2025-03-synthetic-retailer
-Input 1 path, relative to this manifest: inputs/orders_export.csv
-Input 1 SHA256: a383fd1cd7b13b04902577df88b61d5287a08493e052994ada9e75f6f630539e
+
+Input path, relative to this manifest: inputs/orders_export.csv
+Input SHA256: 9b95ce9792143558ea402cf50861525d2aa5c2a0b33e97c78dff05eccda4a066
+
 Query path, relative to this manifest: queries/monthly_sales.sql
-Query SHA256: 6d971fdd8336857171f97a3b0b611040eff70f3a989eea5c8f1c24de1b4bfefa
+Query SHA256: aa06f6f5d408fe222596d6b7e7503fa2578bebe8b2742e9e84ab898fab92f34e
+
 Output path, relative to this manifest: outputs/monthly_sales.csv
-Output SHA256: df4d07283203983d96197c5088e583d4276142b7aac44916311cd7f37a256197
-Input 1 upstream export or snapshot ID: synthetic-retailer-v1
-Query Git commit: not applicable (content identified by SHA256)
-Reporting start: 2025-03-01 inclusive, calendar date without timezone
-Reporting cutoff: 2025-04-01 exclusive, calendar date without timezone
-Metric definitions: gross_sales = SUM(amount), completed orders in the stated period, refunds excluded, illustrative USD rounded to two decimals; order_count = qualifying order rows
-Generated at: 2026-11-08T20:04:58.727679+00:00
-Execution: output calculated by Python Decimal; verify against saved SQL on the same practice data before presenting a database result.
+Output SHA256: a4aa40ed519a88c802c364504e2f0f49cb76663c2e289521ec07687b5d0fa2d2
+
+Input upstream export or snapshot ID: synthetic-retailer-v1
+Query Git commit: not applicable (identified by SHA256)
+Reporting start: 2025-03-01 inclusive; calendar dates, no timezone
+Reporting cutoff: 2025-04-01 exclusive; calendar dates, no timezone
+Monthly revenue: Sum of line revenue for completed sales within the reporting window, USD; exclude return events; round to two decimal places for display only.
+Order count: Distinct order_id values for the same qualifying completed sales.
+Generated at: 2026-11-08T20:13:00.976447+00:00
+Calculation: Python Decimal; compare with PostgreSQL using practice/sql/run_march.sql.
