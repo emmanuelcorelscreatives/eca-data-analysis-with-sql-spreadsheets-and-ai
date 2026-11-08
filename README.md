@@ -4,6 +4,8 @@ Emmanuel Corels Academy
 
 An 18-hour, English-language, beginner-to-intermediate practical course following a fictional retailer from raw records to checked insights and repeatable reports. Across exactly 18 sections and 108 video lessons, learners use Excel or equivalent Google Sheets workflows, PostgreSQL, and independently verified AI assistance. Four applied projects build a spreadsheet sales snapshot, SQL analysis pack, dashboard and decision brief, and end-to-end capstone. Video lessons total 1,080 minutes; the section tasks suggest 960 additional minutes of independent practice. Synthetic datasets, known control totals, metric definitions, and a second-period extract support validation and refresh. The scope is applied descriptive and diagnostic analysis, not statistical modeling, machine learning, database administration, complex ETL, or full BI-platform training.
 
+[Runnable practice example and setup](practice/README.md)
+
 ## Course materials
 
 - [1. Course Introduction and Landing-Page Video](lessons/01-course-introduction-and-landing-page-video/README.md)
