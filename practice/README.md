@@ -15,3 +15,9 @@ See reproducibility.py for the actual March run and hash manifest. No generated 
 From the repository root, run `python practice/reproducibility.py`, then `psql --dbname=practice --set=ON_ERROR_STOP=1 --file=practice/sql/run_march.sql` to verify the March CSV calculation in PostgreSQL. The run uses line revenue and distinct order IDs for completed sales, excludes return events, and preserves hashes and paths relative to the run manifest. The temporary import table disappears at commit.
 
 The March run interprets each supplied calendar date at midnight UTC and applies the saved lecture's exact inclusive start and exclusive cutoff: 2025-03-01 00:00:00 UTC through 2025-04-01 00:00:00 UTC. The SQL explicitly uses AT TIME ZONE and TIMESTAMPTZ; the base CSV dictionary still describes date-only source fields.
+
+## Lesson 49: check the actual join results
+
+The orders/customers walkthrough uses this starter kit directly. After loading it, the saved checks return 12 total orders, 12 matched orders, no duplicate customer keys and no null customer keys. The ordered join sample returns the first 10 rows; that LIMIT does not count all matching orders.
+
+[Executed queries, schemas and expected result rows](verification/lesson49_inner_join.json) record the actual checks against these synthetic files. Rerun the commands after changing data; do not copy a count from a screenshot. Other lessons can define independent inline VALUES fixtures, whose original data and answers remain separate.

@@ -1,0 +1,184 @@
+{
+  "checkedAt": "2026-11-08T21:53:12.574767+00:00",
+  "lesson": "49. INNER JOIN and Matching Keys",
+  "syntheticCourseData": true,
+  "actualExecution": true,
+  "datasetFiles": [
+    {
+      "path": "practice/data/orders.csv",
+      "sha256": "8f79e0cef46d9b0bc877fcd246858b300e916d13e4c7a1538e35b75aeef5beff"
+    },
+    {
+      "path": "practice/data/customers.csv",
+      "sha256": "d18cf6bc19a243e206e1159b52dc21cfe099a271d82f3b1ae6ce65a545875ed3"
+    }
+  ],
+  "observations": {
+    "duplicate_customer_keys": {
+      "query": "SELECT customer_id, COUNT(*) AS key_rows FROM customers GROUP BY customer_id HAVING COUNT(*) > 1 ORDER BY key_rows DESC, customer_id;",
+      "fields": [
+        "customer_id",
+        "key_rows"
+      ],
+      "rows": []
+    },
+    "null_customer_keys": {
+      "query": "SELECT COUNT(*) AS null_customer_keys FROM customers WHERE customer_id IS NULL;",
+      "fields": [
+        "null_customer_keys"
+      ],
+      "rows": [
+        [
+          "0"
+        ]
+      ]
+    },
+    "total_orders": {
+      "query": "SELECT COUNT(*) AS total_orders FROM orders;",
+      "fields": [
+        "total_orders"
+      ],
+      "rows": [
+        [
+          "12"
+        ]
+      ]
+    },
+    "joined_order_sample": {
+      "query": "SELECT o.order_id, o.customer_id AS order_customer_id, c.customer_id AS customer_customer_id, c.customer_name FROM orders AS o INNER JOIN customers AS c ON o.customer_id = c.customer_id ORDER BY o.order_id LIMIT 10;",
+      "fields": [
+        "order_id",
+        "order_customer_id",
+        "customer_customer_id",
+        "customer_name"
+      ],
+      "rows": [
+        [
+          "O1001",
+          "C001",
+          "C001",
+          "Avery Cole"
+        ],
+        [
+          "O1002",
+          "C002",
+          "C002",
+          "Jordan Ellis"
+        ],
+        [
+          "O1003",
+          "C003",
+          "C003",
+          "Morgan Lee"
+        ],
+        [
+          "O1004",
+          "C004",
+          "C004",
+          "Sam Rivera"
+        ],
+        [
+          "O1005",
+          "C001",
+          "C001",
+          "Avery Cole"
+        ],
+        [
+          "O1006",
+          "C002",
+          "C002",
+          "Jordan Ellis"
+        ],
+        [
+          "O1007",
+          "C003",
+          "C003",
+          "Morgan Lee"
+        ],
+        [
+          "O1008",
+          "C004",
+          "C004",
+          "Sam Rivera"
+        ],
+        [
+          "O1009",
+          "C001",
+          "C001",
+          "Avery Cole"
+        ],
+        [
+          "O1010",
+          "C002",
+          "C002",
+          "Jordan Ellis"
+        ]
+      ]
+    },
+    "matched_orders": {
+      "query": "SELECT COUNT(*) AS matched_orders FROM orders AS o INNER JOIN customers AS c ON o.customer_id = c.customer_id;",
+      "fields": [
+        "matched_orders"
+      ],
+      "rows": [
+        [
+          "12"
+        ]
+      ]
+    },
+    "schema_orders": {
+      "rows": [
+        [
+          "order_id",
+          "text",
+          "NO"
+        ],
+        [
+          "customer_id",
+          "text",
+          "YES"
+        ],
+        [
+          "order_date",
+          "date",
+          "NO"
+        ],
+        [
+          "region",
+          "text",
+          "NO"
+        ],
+        [
+          "status",
+          "text",
+          "NO"
+        ],
+        [
+          "amount",
+          "numeric",
+          "NO"
+        ]
+      ]
+    },
+    "schema_customers": {
+      "rows": [
+        [
+          "customer_id",
+          "text",
+          "NO"
+        ],
+        [
+          "customer_name",
+          "text",
+          "NO"
+        ],
+        [
+          "region",
+          "text",
+          "NO"
+        ]
+      ]
+    }
+  },
+  "scope": "These observations use this starter kit. Independent VALUES fixtures in other lessons retain their own rows and results."
+}

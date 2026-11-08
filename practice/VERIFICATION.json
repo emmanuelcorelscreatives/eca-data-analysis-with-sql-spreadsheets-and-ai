@@ -1,5 +1,5 @@
 {
-  "at": "2026-11-08T20:58:54.078013+00:00",
+  "at": "2026-11-08T22:09:59.578670+00:00",
   "loaderPassed": true,
   "checksPassed": true,
   "marchSqlResult": [
@@ -32,7 +32,7 @@
     },
     {
       "path": "practice/README.md",
-      "sha256": "90711f3e531a61c1818b9f9c0b67827e9b6f70bd1bc1eb611fe9681ebb97e0b8"
+      "sha256": "bdcf265c2e9ca55bcbd094bc72d8af45e6cd0ef3419adeaf6fba05497257a18b"
     },
     {
       "path": "practice/data/customers.csv",
@@ -73,6 +73,10 @@
     {
       "path": "practice/sql/schema.sql",
       "sha256": "95031948aa886b0264e935d13e99c9c0e782a27c3de000f177bab7adbfd0e523"
+    },
+    {
+      "path": "practice/verification/lesson49_inner_join.json",
+      "sha256": "4c6b3166d2d83e763b95bac729a5522252bd48b406190e8dc4a43cf6c9c0ba70"
     },
     {
       "path": "runs/2025-03/inputs/orders_export.csv",
