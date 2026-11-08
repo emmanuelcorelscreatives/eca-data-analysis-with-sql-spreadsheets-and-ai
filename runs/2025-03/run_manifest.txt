@@ -1,20 +1,15 @@
-Report name: March monthly revenue
-Run identifier: 2025-03-synthetic-retailer
-
-Input path, relative to this manifest: inputs/orders_export.csv
+Report: March sales
+Input: inputs\orders_export.csv
+Query: queries\monthly_sales.sql
+Output: outputs\monthly_sales.csv
 Input SHA256: 9b95ce9792143558ea402cf50861525d2aa5c2a0b33e97c78dff05eccda4a066
-
-Query path, relative to this manifest: queries/monthly_sales.sql
-Query SHA256: aa06f6f5d408fe222596d6b7e7503fa2578bebe8b2742e9e84ab898fab92f34e
-
-Output path, relative to this manifest: outputs/monthly_sales.csv
+Query SHA256: c87114379482f4e5799c5aa3f18cd26de9c82a34ede8050d555462b24a1f5576
 Output SHA256: a4aa40ed519a88c802c364504e2f0f49cb76663c2e289521ec07687b5d0fa2d2
-
-Input upstream export or snapshot ID: synthetic-retailer-v1
-Query Git commit: not applicable (identified by SHA256)
-Reporting start: 2025-03-01 inclusive; calendar dates, no timezone
-Reporting cutoff: 2025-04-01 exclusive; calendar dates, no timezone
+Reporting start: 2025-03-01 00:00:00 UTC (inclusive)
+Reporting cutoff: 2025-04-01 00:00:00 UTC (exclusive)
 Monthly revenue: Sum of line revenue for completed sales within the reporting window, USD; exclude return events; round to two decimal places for display only.
 Order count: Distinct order_id values for the same qualifying completed sales.
-Generated at: 2026-11-08T20:13:00.976447+00:00
+Generated at: 2026-11-08T20:21:48.380206+00:00
+Input upstream export or snapshot ID: synthetic-retailer-v1
+Query Git commit: not applicable (identified by SHA256)
 Calculation: Python Decimal; compare with PostgreSQL using practice/sql/run_march.sql.

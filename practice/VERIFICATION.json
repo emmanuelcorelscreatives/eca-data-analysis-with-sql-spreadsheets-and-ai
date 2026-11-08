@@ -1,5 +1,5 @@
 {
-  "at": "2026-11-08T20:13:56.739820+00:00",
+  "at": "2026-11-08T20:22:59.767633+00:00",
   "loaderPassed": true,
   "checksPassed": true,
   "marchSqlResult": [
@@ -24,11 +24,11 @@
     },
     {
       "path": "practice/MARCH_VERIFICATION.json",
-      "sha256": "f375a8ac07fc122844c24a1090e0b6d4d08c6628c60d2b3b835c8755a0b468de"
+      "sha256": "34edacea0b2d26d79a084d3cbbb7cdafe2af56e8a23575832f1a30ba4942f7d0"
     },
     {
       "path": "practice/README.md",
-      "sha256": "2cac649f91ab9cd8052a4f680ba90895ed6aff6e99fd4e176b3020dfa5000da6"
+      "sha256": "90711f3e531a61c1818b9f9c0b67827e9b6f70bd1bc1eb611fe9681ebb97e0b8"
     },
     {
       "path": "practice/data/customers.csv",
@@ -56,7 +56,7 @@
     },
     {
       "path": "practice/reproducibility.py",
-      "sha256": "866887ca858b9f0dd6b5e1fe2216b9bcdf90a24234ed853d3ac0c4d2de958fe8"
+      "sha256": "3584837ec875f02a67d7dd27869c4f086db58b3bee0e79f86bb156078f74c8bc"
     },
     {
       "path": "practice/sql/checks.sql",
@@ -80,11 +80,11 @@
     },
     {
       "path": "runs/2025-03/queries/monthly_sales.sql",
-      "sha256": "aa06f6f5d408fe222596d6b7e7503fa2578bebe8b2742e9e84ab898fab92f34e"
+      "sha256": "c87114379482f4e5799c5aa3f18cd26de9c82a34ede8050d555462b24a1f5576"
     },
     {
       "path": "runs/2025-03/run_manifest.txt",
-      "sha256": "6fa607184677fcbebc83bc6f858fec736bc643dc1f44f9e77c4dad3002ff7b33"
+      "sha256": "6bec02862a1b35ed11391ee566284ae7d6d534e5b6d9bd18624583c28a2b87a9"
     }
   ]
 }

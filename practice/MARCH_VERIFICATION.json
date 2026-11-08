@@ -1,5 +1,5 @@
 {
-  "at": "2026-11-08T20:13:20.550755+00:00",
+  "at": "2026-11-08T20:21:48.757966+00:00",
   "actualPsqlCommandPassed": true,
   "actualPsqlOutput": "BEGIN\nCREATE TABLE\nCOPY 4\n period  | order_count | monthly_revenue \n---------+-------------+-----------------\n 2025-03 |           4 |          125.00\n(1 row)\n\nCOMMIT\n",
   "observedFields": [
@@ -21,7 +21,7 @@
     },
     {
       "path": "queries/monthly_sales.sql",
-      "sha256": "aa06f6f5d408fe222596d6b7e7503fa2578bebe8b2742e9e84ab898fab92f34e"
+      "sha256": "c87114379482f4e5799c5aa3f18cd26de9c82a34ede8050d555462b24a1f5576"
     },
     {
       "path": "outputs/monthly_sales.csv",

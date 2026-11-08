@@ -26,8 +26,8 @@ query = """SELECT '2025-03' AS period,
        COUNT(DISTINCT order_id) AS order_count,
        SUM(line_revenue) AS monthly_revenue
 FROM orders_export
-WHERE order_date >= DATE '2025-03-01'
-  AND order_date < DATE '2025-04-01'
+WHERE (order_date::timestamp AT TIME ZONE 'UTC') >= TIMESTAMPTZ '2025-03-01 00:00:00+00'
+  AND (order_date::timestamp AT TIME ZONE 'UTC') < TIMESTAMPTZ '2025-04-01 00:00:00+00'
   AND status = 'completed';
 """
 (run / 'queries/monthly_sales.sql').write_text(query, encoding='utf-8')
@@ -37,17 +37,19 @@ with (run / 'outputs/monthly_sales.csv').open('w', newline='', encoding='utf-8')
     writer.writerow(['period','order_count','monthly_revenue'])
     writer.writerow(['2025-03', len({r['order_id'] for r in qualifying}),
                      f"{sum((Decimal(r['line_revenue']) for r in qualifying), Decimal('0')):.2f}"])
-lines = ['Report name: March monthly revenue', 'Run identifier: 2025-03-synthetic-retailer', '']
+lines = ['Report: March sales',
+         'Input: inputs\\orders_export.csv',
+         'Query: queries\\monthly_sales.sql',
+         'Output: outputs\\monthly_sales.csv']
 for label, path in [('Input','inputs/orders_export.csv'), ('Query','queries/monthly_sales.sql'), ('Output','outputs/monthly_sales.csv')]:
-    lines += [label + ' path, relative to this manifest: ' + path,
-              label + ' SHA256: ' + hashlib.sha256((run / path).read_bytes()).hexdigest(), '']
-lines += ['Input upstream export or snapshot ID: synthetic-retailer-v1',
-          'Query Git commit: not applicable (identified by SHA256)',
-          'Reporting start: 2025-03-01 inclusive; calendar dates, no timezone',
-          'Reporting cutoff: 2025-04-01 exclusive; calendar dates, no timezone',
+    lines.append(label + ' SHA256: ' + hashlib.sha256((run / path).read_bytes()).hexdigest())
+lines += ['Reporting start: 2025-03-01 00:00:00 UTC (inclusive)',
+          'Reporting cutoff: 2025-04-01 00:00:00 UTC (exclusive)',
           'Monthly revenue: Sum of line revenue for completed sales within the reporting window, USD; exclude return events; round to two decimal places for display only.',
           'Order count: Distinct order_id values for the same qualifying completed sales.',
           'Generated at: ' + datetime.now(timezone.utc).isoformat(),
+          'Input upstream export or snapshot ID: synthetic-retailer-v1',
+          'Query Git commit: not applicable (identified by SHA256)',
           'Calculation: Python Decimal; compare with PostgreSQL using practice/sql/run_march.sql.']
 (run / 'run_manifest.txt').write_text('\n'.join(lines) + '\n', encoding='utf-8')
 print('Created actual March files and SHA256 manifest.')

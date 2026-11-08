@@ -13,3 +13,5 @@ Open data/*.csv in Excel or Google Sheets with identifiers as text, ISO dates an
 See reproducibility.py for the actual March run and hash manifest. No generated value is labelled as an executed result until the supplied checks are run.
 
 From the repository root, run `python practice/reproducibility.py`, then `psql --dbname=practice --set=ON_ERROR_STOP=1 --file=practice/sql/run_march.sql` to verify the March CSV calculation in PostgreSQL. The run uses line revenue and distinct order IDs for completed sales, excludes return events, and preserves hashes and paths relative to the run manifest. The temporary import table disappears at commit.
+
+The March run interprets each supplied calendar date at midnight UTC and applies the saved lecture's exact inclusive start and exclusive cutoff: 2025-03-01 00:00:00 UTC through 2025-04-01 00:00:00 UTC. The SQL explicitly uses AT TIME ZONE and TIMESTAMPTZ; the base CSV dictionary still describes date-only source fields.
