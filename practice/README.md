@@ -21,3 +21,8 @@ The March run interprets each supplied calendar date at midnight UTC and applies
 The orders/customers walkthrough uses this starter kit directly. After loading it, the saved checks return 12 total orders, 12 matched orders, no duplicate customer keys and no null customer keys. The ordered join sample returns the first 10 rows; that LIMIT does not count all matching orders.
 
 [Executed queries, schemas and expected result rows](verification/lesson49_inner_join.json) record the actual checks against these synthetic files. Rerun the commands after changing data; do not copy a count from a screenshot. Other lessons can define independent inline VALUES fixtures, whose original data and answers remain separate.
+
+
+## Lesson 66: separate Project 2 schema
+
+Use [the Project 2 kit](project2/README.md) for the saved `order_ts` / `paid` analysis-pack queries. It includes a separate transactional loader, synthetic input CSVs, six actual answer extracts, four separate controls, an independent verifier and exercises. It does not change the basic kit or replace independent inline SQL fixtures.

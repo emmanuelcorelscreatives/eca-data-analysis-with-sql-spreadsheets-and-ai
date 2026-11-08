@@ -1,0 +1,15 @@
+PROJECT 2 METRIC AND CHECK NOTES
+Schema verified against: [database/schema and date checked]
+Reporting interval: 2025-01-01 00:00:00+00 inclusive to 2025-04-01 00:00:00+00 exclusive; reporting timezone UTC. Replace together in all statements if the assigned period differs.
+Qualifying population: orders whose status is paid within that interval.
+Gross revenue: sum of order-item quantity multiplied by unit price for qualifying orders. Returns/refunds are not deducted. Confirm this matches the case-study definition before submission.
+Q1 grain: one period total. Q2: one row per calendar month. Q3: one row per recorded category, including a null category until investigated. Q4: one row per product identifier; equal revenue shares dense rank. Q5: one row per customer identifier with qualifying item revenue. Q6: one row per customer with no qualifying paid order.
+Actual Q1 total: [from execution]
+Actual sums of Q2 / Q3 / Q4 / Q5 gross revenue: [from exports]
+C1 direct total and comparison outcome: [from execution]
+C2 exception counts, investigations, decisions, and rerun dates: [from execution]
+Q2 month-label and missing-month check: [from execution]
+Q4 observed ties, or 'no observed tie': [from execution]
+Q5 share-sum check when overall revenue is positive: [from execution]
+Unresolved limitations: [state them; do not replace unknowns with zero]
+Extracts reopened; column names and row counts checked against live results: [date and outcome]

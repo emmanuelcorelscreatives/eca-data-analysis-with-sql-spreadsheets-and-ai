@@ -1,5 +1,6 @@
 {
-  "at": "2026-11-08T22:09:59.578670+00:00",
+  "at": "2026-11-08T23:01:39.131Z",
+  "baseVerificationAt": "2026-11-08T22:09:59.578670+00:00",
   "loaderPassed": true,
   "checksPassed": true,
   "marchSqlResult": [
@@ -9,6 +10,11 @@
   ],
   "pythonOutputMatchesPostgreSQL": true,
   "existingTablesProtectedOnSecondLoad": true,
+  "project2VerificationAt": "2026-11-08T22:59:46.411270+00:00",
+  "project2Verification": "practice/project2/VERIFICATION.json",
+  "project2ChecksPassed": true,
+  "project2SavedResourcesUnchanged": true,
+  "project2SecondLoadProtected": true,
   "files": [
     {
       "path": "practice/CONTROL_TOTALS.json",
@@ -32,7 +38,7 @@
     },
     {
       "path": "practice/README.md",
-      "sha256": "bdcf265c2e9ca55bcbd094bc72d8af45e6cd0ef3419adeaf6fba05497257a18b"
+      "sha256": "b705ac5250d18ec970965a2b665a61d4791efdcdb8204e6d05099028c832a007"
     },
     {
       "path": "practice/data/customers.csv",
@@ -57,6 +63,110 @@
     {
       "path": "practice/load.py",
       "sha256": "6cfffd4634e6bcf4a27db4d3c5cc832ef8636e0ef45339ddd7a207d1a090c110"
+    },
+    {
+      "path": "practice/project2/EXERCISES.md",
+      "sha256": "2b8282f3cbef1750bbcaf302c5f23df9ec4d830da3f944175b380a2b0cdd058a"
+    },
+    {
+      "path": "practice/project2/LOADER_PROTECTION.json",
+      "sha256": "b5730216d903ca8bb1873bb55057621725c0cdb88e03081ab8f35bbbbe706cf3"
+    },
+    {
+      "path": "practice/project2/README.md",
+      "sha256": "31abf4919cbf08925bb8df2f90ed492c13b0ed82a432fa3c18b38c3613f26772"
+    },
+    {
+      "path": "practice/project2/VERIFICATION.json",
+      "sha256": "d44c2692cc1c14fe9680adb3dd477d885b126a5c99f9c41a911102e58d4940c6"
+    },
+    {
+      "path": "practice/project2/answers/q01_revenue.csv",
+      "sha256": "f0532b27a552c714786ca863a93b88a35b86607fbd8101b8bc4e6855415305f5"
+    },
+    {
+      "path": "practice/project2/answers/q02_monthly_revenue.csv",
+      "sha256": "8cdb8ade901557335f9e207769091b9bb17af1072e013191b5d9c22972cff26c"
+    },
+    {
+      "path": "practice/project2/answers/q03_category_revenue.csv",
+      "sha256": "7d93f66f2f42df2174658fe042d6d33bdc7f7dc64d08441a87af4d42a503e2a6"
+    },
+    {
+      "path": "practice/project2/answers/q04_product_ranking.csv",
+      "sha256": "f6b338b181c93aa7eba576cac50cc1046a8b973d07d314d221a992e8bfb5710f"
+    },
+    {
+      "path": "practice/project2/answers/q05_customer_share.csv",
+      "sha256": "10b897283cf72baf6434adb86934d520d084b8203d3772e02f996bbe9f381736"
+    },
+    {
+      "path": "practice/project2/answers/q06_customers_without_paid_orders.csv",
+      "sha256": "e324d833355b4aee431022912e60868fd341f633d5f1d4075b02a3af6f9dc4cf"
+    },
+    {
+      "path": "practice/project2/controls/c01_reconciliation.csv",
+      "sha256": "f55fa19dadd8288e37bd1102fdc3264cf7f389f4f64be9a0c58cbec327f4490e"
+    },
+    {
+      "path": "practice/project2/controls/c02_exceptions.csv",
+      "sha256": "71adba93f0043ebe7acf0e24e4b138ba5a82bae0e305eee954afd2556a687400"
+    },
+    {
+      "path": "practice/project2/controls/c03_month_coverage.csv",
+      "sha256": "3fdc22ea05107f25b90adb59d22c5f548f1c19a115a829f9fe4b1eaf21850122"
+    },
+    {
+      "path": "practice/project2/controls/c03_product_ties.csv",
+      "sha256": "1b454337b6e1fafb917ac9d37eab12017a8fc8f3899b9ec54e083bfeeaa61e75"
+    },
+    {
+      "path": "practice/project2/data/customers.csv",
+      "sha256": "06fbfc7f0e0dd36fb62c5f97a39e1fc3eedf3805f44e7b45b6f86761cf512a73"
+    },
+    {
+      "path": "practice/project2/data/order_items.csv",
+      "sha256": "5732b1a7b880dae58c968ec08fe5bdd627848f4db6d87d4629fd86b0e85fe60d"
+    },
+    {
+      "path": "practice/project2/data/orders.csv",
+      "sha256": "cb29c47a7bcc8354da8f6b3fa08eced167b7355102e7b8c31749ac61c330c308"
+    },
+    {
+      "path": "practice/project2/data/products.csv",
+      "sha256": "df0bb00af072efb7aaa7c723214a092c9c9b3131ddb41e5f455e2e3e8e705b6e"
+    },
+    {
+      "path": "practice/project2/data/returns.csv",
+      "sha256": "49c6d9f5ec32829389af23d811db681fa8296071a5d0fa9b490bf4c9fccacf89"
+    },
+    {
+      "path": "practice/project2/load.py",
+      "sha256": "50fb86ae66f6c364bcacaac63d3433f2bb92964e2e288ac5ab8e90f470a131ce"
+    },
+    {
+      "path": "practice/project2/metric_notes.txt",
+      "sha256": "934caf2d402bed2aa3856406acde30a72aef3d24701567dc37aee17e42ae8eab"
+    },
+    {
+      "path": "practice/project2/project2_analysis.sql",
+      "sha256": "838c02931c9bb2a4060e505efce952a3b874e4ce6721b4db10f74da5c30993a1"
+    },
+    {
+      "path": "practice/project2/project2_controls.sql",
+      "sha256": "516724f46df9d8d2adb85c7691872b453a0c265ebb6e545a8605ec0bc412801e"
+    },
+    {
+      "path": "practice/project2/schema.sql",
+      "sha256": "9c8117f118bde960781c3a79d297d9dc59e451acc4c8967676fbf2a218aeb67b"
+    },
+    {
+      "path": "practice/project2/submission_checklist.txt",
+      "sha256": "e65e6a79dc249a6419768fc7d171cbec2e7ced605f7a8b698a7ed034ffd57460"
+    },
+    {
+      "path": "practice/project2/verify.py",
+      "sha256": "97d06d592c79b0d6d85b6b97b89c43c3fe492b180231544359c46d7fdc6643ab"
     },
     {
       "path": "practice/reproducibility.py",

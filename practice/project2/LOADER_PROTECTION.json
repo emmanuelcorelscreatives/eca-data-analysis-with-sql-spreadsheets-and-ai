@@ -1,0 +1,93 @@
+{
+  "checkedAt": "2026-11-08T23:00:18.721151+00:00",
+  "actualExecution": true,
+  "existingSchemaProtectedOnSecondLoad": true,
+  "loaderExitCode": 1,
+  "expectedDatabaseRefusal": "schema eca_project2 already exists",
+  "allProject2AndBaseTablesUnchanged": true,
+  "fingerprintsBefore": {
+    "public.customers": {
+      "rows": 5,
+      "contentMd5": "6f0f0d34e225ecd6aab7b8302c838b7d"
+    },
+    "public.products": {
+      "rows": 4,
+      "contentMd5": "dad62023cf685c7b154dccff4b19cfdb"
+    },
+    "public.orders": {
+      "rows": 12,
+      "contentMd5": "51c7ee34735f9edec4f239a22519c9f1"
+    },
+    "public.order_items": {
+      "rows": 12,
+      "contentMd5": "b4af1df88cfb69ef6a178311b97f2b5e"
+    },
+    "public.returns": {
+      "rows": 4,
+      "contentMd5": "92f984082f6532570622635d588b68d7"
+    },
+    "eca_project2.customers": {
+      "rows": 6,
+      "contentMd5": "46f4430e80d0f92a47a267aaae4412b6"
+    },
+    "eca_project2.products": {
+      "rows": 3,
+      "contentMd5": "443ad302e446a9a16b6bc219298c83ea"
+    },
+    "eca_project2.orders": {
+      "rows": 9,
+      "contentMd5": "88477e9f425b42f09b71f94230100592"
+    },
+    "eca_project2.order_items": {
+      "rows": 11,
+      "contentMd5": "e713c91e782fd886eea86821b2461a59"
+    },
+    "eca_project2.returns": {
+      "rows": 1,
+      "contentMd5": "6642462c8621b14b4f74943e136d312f"
+    }
+  },
+  "fingerprintsAfter": {
+    "public.customers": {
+      "rows": 5,
+      "contentMd5": "6f0f0d34e225ecd6aab7b8302c838b7d"
+    },
+    "public.products": {
+      "rows": 4,
+      "contentMd5": "dad62023cf685c7b154dccff4b19cfdb"
+    },
+    "public.orders": {
+      "rows": 12,
+      "contentMd5": "51c7ee34735f9edec4f239a22519c9f1"
+    },
+    "public.order_items": {
+      "rows": 12,
+      "contentMd5": "b4af1df88cfb69ef6a178311b97f2b5e"
+    },
+    "public.returns": {
+      "rows": 4,
+      "contentMd5": "92f984082f6532570622635d588b68d7"
+    },
+    "eca_project2.customers": {
+      "rows": 6,
+      "contentMd5": "46f4430e80d0f92a47a267aaae4412b6"
+    },
+    "eca_project2.products": {
+      "rows": 3,
+      "contentMd5": "443ad302e446a9a16b6bc219298c83ea"
+    },
+    "eca_project2.orders": {
+      "rows": 9,
+      "contentMd5": "88477e9f425b42f09b71f94230100592"
+    },
+    "eca_project2.order_items": {
+      "rows": 11,
+      "contentMd5": "e713c91e782fd886eea86821b2461a59"
+    },
+    "eca_project2.returns": {
+      "rows": 1,
+      "contentMd5": "6642462c8621b14b4f74943e136d312f"
+    }
+  },
+  "loaderSha256": "50fb86ae66f6c364bcacaac63d3433f2bb92964e2e288ac5ab8e90f470a131ce"
+}
