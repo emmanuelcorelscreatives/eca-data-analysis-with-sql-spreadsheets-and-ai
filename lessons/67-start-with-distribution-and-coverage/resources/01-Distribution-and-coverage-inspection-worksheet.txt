@@ -1,0 +1,26 @@
+Synthetic example only; not an extract from the practice database. Paste this tab-separated block into A1 of a Google Sheets sheet:
+reporting_date	order_id	customer_id
+2025-01-01	O-101	C-01
+2025-01-02	O-102	C-01
+2025-01-04	O-103	C-02
+2025-01-04	O-104	C-03
+2025-01-06	O-105	C-02
+	O-106	C-04
+2025-01-09	O-107	
+2025-01-10	O-108	C-05
+
+Enter E2: =DATE(2025,1,1)
+Enter E3: =DATE(2025,1,10)
+Enter E5: =ROWS(A2:A9)
+Enter E6: =COUNT(A2:A9)
+Enter E7: =COUNTBLANK(A2:A9)
+Enter E8: =MIN(A2:A9)
+Enter E9: =MAX(A2:A9)
+Enter E10: =COUNTUNIQUE(FILTER(C2:C9,C2:C9<>""))
+Enter E11: =COUNTBLANK(C2:C9)
+Enter G2: =SEQUENCE($E$3-$E$2+1,1,$E$2,1)
+Enter H2: =COUNTIF($A$2:$A$9,G2), then fill through H11.
+Enter I2: =IF(H2=0,"No row; investigate","Observed"), then fill through I11.
+Format date cells as dates. Confirm COUNT(A2:A9) returns 7 before relying on the calendar comparison; if it does not, inspect date parsing rather than assuming formatting converted text. For this synthetic example, the expected calculations are 8 rows, 7 dated rows, 1 missing date, observed endpoints January 1 and January 10, 5 distinct nonblank customer identifiers, and 1 missing customer identifier. Zero-row dates are January 3, 5, 7, and 8; their causes are unknown.
+
+For your checked Project 2 output, record separately: row grain; intended period and where it was specified; observed first and last dates; query filters defining the included population; row count at that grain; missing values in fields the question requires; expected periods without output rows; extraction cutoff; and which source or query check can confirm each apparent gap. Change the ranges, fields, and calendar grain to fit that output. Do not label a zero-row period as zero sales or a source failure without checking the underlying coverage.

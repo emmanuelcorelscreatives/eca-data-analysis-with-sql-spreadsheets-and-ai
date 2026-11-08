@@ -1,0 +1,75 @@
+Run each query separately in pgAdmin 4 Query Tool. The eight VALUES rows are invented practice data, not records from the course database.
+
+1. Completed orders grouped by customer; expected customer_id | group_total: A | 120; B | 90; C | 110.
+WITH sample_orders(order_id, customer_id, order_status, order_total) AS (
+  VALUES
+    (101, 'A', 'completed', 80),
+    (102, 'A', 'completed', 40),
+    (103, 'A', 'cancelled', 500),
+    (104, 'B', 'completed', 90),
+    (105, 'B', 'cancelled', 60),
+    (106, 'C', 'completed', 55),
+    (107, 'C', 'completed', 55),
+    (108, 'D', 'cancelled', 200)
+)
+SELECT customer_id, SUM(order_total) AS group_total
+FROM sample_orders
+WHERE order_status = 'completed'
+GROUP BY customer_id
+ORDER BY customer_id;
+
+2. Completed orders, retaining only customer groups totaling at least 100; expected: A | 120; C | 110.
+WITH sample_orders(order_id, customer_id, order_status, order_total) AS (
+  VALUES
+    (101, 'A', 'completed', 80),
+    (102, 'A', 'completed', 40),
+    (103, 'A', 'cancelled', 500),
+    (104, 'B', 'completed', 90),
+    (105, 'B', 'cancelled', 60),
+    (106, 'C', 'completed', 55),
+    (107, 'C', 'completed', 55),
+    (108, 'D', 'cancelled', 200)
+)
+SELECT customer_id, SUM(order_total) AS group_total
+FROM sample_orders
+WHERE order_status = 'completed'
+GROUP BY customer_id
+HAVING SUM(order_total) >= 100
+ORDER BY customer_id;
+
+3. Remove the completed-order filter but retain the group threshold; expected: A | 620; B | 150; C | 110; D | 200. This answers a different question.
+WITH sample_orders(order_id, customer_id, order_status, order_total) AS (
+  VALUES
+    (101, 'A', 'completed', 80),
+    (102, 'A', 'completed', 40),
+    (103, 'A', 'cancelled', 500),
+    (104, 'B', 'completed', 90),
+    (105, 'B', 'cancelled', 60),
+    (106, 'C', 'completed', 55),
+    (107, 'C', 'completed', 55),
+    (108, 'D', 'cancelled', 200)
+)
+SELECT customer_id, SUM(order_total) AS group_total
+FROM sample_orders
+GROUP BY customer_id
+HAVING SUM(order_total) >= 100
+ORDER BY customer_id;
+
+4. Test whether each completed order is individually at least 100; expected: zero result rows. This is not the same as testing a customer group's total.
+WITH sample_orders(order_id, customer_id, order_status, order_total) AS (
+  VALUES
+    (101, 'A', 'completed', 80),
+    (102, 'A', 'completed', 40),
+    (103, 'A', 'cancelled', 500),
+    (104, 'B', 'completed', 90),
+    (105, 'B', 'cancelled', 60),
+    (106, 'C', 'completed', 55),
+    (107, 'C', 'completed', 55),
+    (108, 'D', 'cancelled', 200)
+)
+SELECT customer_id, SUM(order_total) AS group_total
+FROM sample_orders
+WHERE order_status = 'completed'
+  AND order_total >= 100
+GROUP BY customer_id
+ORDER BY customer_id;

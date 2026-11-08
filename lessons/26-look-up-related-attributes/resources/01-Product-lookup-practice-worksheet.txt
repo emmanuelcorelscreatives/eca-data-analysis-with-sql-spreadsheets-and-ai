@@ -1,0 +1,23 @@
+In Google Sheets, use tabs named Products and Lines. Products!A1:C5, as comma-separated fields:
+product_id,category,unit_price
+P-101,Stationery,5.00
+P-102,Electronics,24.00
+P-103,Home,12.50
+P-104,Stationery,8.00
+
+Lines!A1:C5, as comma-separated fields:
+line_id,product_id,quantity
+L-001,P-101,2
+L-002,P-103,1
+L-003,P-999,1
+L-004,P-102,3
+
+Put category in Lines!D1, unit_price in Lines!E1, lookup_status in Lines!F1, and index_match_category in Lines!H1.
+
+Lines!D2: =XLOOKUP(B2,Products!$A$2:$A$5,Products!$B$2:$B$5,"MISSING PRODUCT",0)
+Lines!E2: =XLOOKUP(B2,Products!$A$2:$A$5,Products!$C$2:$C$5,"MISSING PRODUCT",0)
+Lines!F2: =IF(D2="MISSING PRODUCT","REVIEW","MATCHED")
+Lines!H2: =IFNA(INDEX(Products!$B$2:$B$5,MATCH(B2,Products!$A$2:$A$5,0)),"MISSING PRODUCT")
+Copy each formula through row 5.
+
+Expected check from these inputs: P-101 returns Stationery and 5.00. P-103 returns Home and 12.50. P-999 returns MISSING PRODUCT for both attributes and REVIEW in lookup_status. P-102 returns Electronics and 24.00. The values in columns D and H should agree on all four lines. Confirm unique, populated product keys in the reference list before relying on either lookup. Do not use the price column for totals while a missing key remains unresolved.

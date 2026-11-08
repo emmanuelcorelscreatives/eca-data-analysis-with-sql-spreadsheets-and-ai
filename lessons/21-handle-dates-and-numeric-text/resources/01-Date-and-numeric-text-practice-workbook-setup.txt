@@ -1,0 +1,26 @@
+Create two sheets named Source notes and Working. All records and source notes below are fictional exercise inputs, not claims about an external export.
+
+Source notes, cells A1:E3, tab-separated:
+source_feed	date_rule	currency_rule	decimal_separator	grouping_separator
+Feed A	DMY	EUR	,	.
+Feed B	unconfirmed	unconfirmed	unconfirmed	unconfirmed
+
+Working, cells A1:F5, tab-separated. Set columns B and C to Excel Text format BEFORE entering or pasting these values; check that the original characters remain unchanged:
+record_id	raw_date	raw_amount	source_feed	date_rule	currency_rule
+R-101	03/04/2025	€1.234,50	Feed A	DMY	EUR
+R-102	14/04/2025	€20,00	Feed A	DMY	EUR
+R-103	05/06/2025	1,234.50	Feed B	unconfirmed	unconfirmed
+R-104	31/02/2025	€9,00	Feed A	DMY	EUR
+
+Add G1:I1: parsed_date, parsed_amount, status.
+
+In G2, enter and fill through G5:
+=IF(E2<>"DMY","",IFERROR(LET(d,--LEFT(B2,2),m,--MID(B2,4,2),y,--RIGHT(B2,4),v,DATE(y,m,d),IF(AND(LEN(B2)=10,MID(B2,3,1)="/",MID(B2,6,1)="/",YEAR(v)=y,MONTH(v)=m,DAY(v)=d),v,"")),""))
+
+In H2, enter and fill through H5:
+=IF(OR(F2<>"EUR",LEFT(C2,1)<>"€",LEN(SUBSTITUTE(C2,"€",""))=0),"",IFERROR(NUMBERVALUE(SUBSTITUTE(C2,"€",""),",","."),""))
+
+In I2, enter and fill through I5:
+=IF(E2<>"DMY","CHECK SOURCE FORMAT",IF(F2<>"EUR","CHECK CURRENCY",IF(G2="","INVALID DATE",IF(H2="","CHECK AMOUNT","READY"))))
+
+Display G with Excel custom number format yyyy-mm-dd. Display H as Number with two decimal places. Expected checks for this fictional input: R-101: 2025-04-03, 1234.50, READY. R-102: 2025-04-14, 20.00, READY. R-103: blank date, blank amount, CHECK SOURCE FORMAT; its currency and separators also remain unconfirmed. R-104: blank date, 9.00, INVALID DATE. These are expected outcomes to verify in your own workbook, not a claim that a live workbook was run. Keep the original columns. Request the missing Feed B specification and a correction or explanation for R-104 before treating either row as ready. Formula argument separators and function availability can vary with the spreadsheet application and its locale.

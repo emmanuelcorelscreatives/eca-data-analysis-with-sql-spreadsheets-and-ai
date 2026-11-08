@@ -1,0 +1,11 @@
+This is a fictional retail practice example. No real customer records or credentials are included.
+
+Tables:
+customers(customer_id: invented integer customer identifier, region: text)
+orders(order_id: invented integer order identifier, customer_id: customer identifier, order_date: date)
+
+Example rows (invented, not copied from a dataset):
+customers: (101, 'North')
+orders: (9001, 101, '2025-01-15')
+
+Please describe in plain language what these columns mean. Do not treat the invented example rows as evidence of actual sales.

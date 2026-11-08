@@ -1,0 +1,20 @@
+Create columns A:G in Google Sheets or Excel. Enter the headers and test rows below. Empty means leave the cell genuinely empty. For the text-price test, type '12.50 into C7; the leading apostrophe instructs the spreadsheet to store text. Expected amounts are numeric cells, optionally displayed to two decimal places.
+
+Row | A: Test case | B: Quantity | C: Unit price | D: Expected
+1 | Test case | Quantity | Unit price | Expected
+2 | Ordinary | 3 | 12.50 | 37.50
+3 | Missing quantity | [empty] | 12.50 | [empty]
+4 | Zero quantity | 0 | 12.50 | 0
+5 | Negative quantity | -1 | 12.50 | CHECK INPUT
+6 | Missing price | 3 | [empty] | [empty]
+7 | Text price | 3 | '12.50 | CHECK INPUT
+8 | Large quantity | 10000 | 0.01 | 100.00
+9 | Negative price | 3 | -2 | CHECK INPUT
+
+Add E1: Draft output; F1: Reviewed output; G1: Decision. Enter the draft in E2 and fill through E9:
+=IF(OR(B2="",C2=""),"",ROUND(B2*C2,2))
+
+Enter the reviewed candidate in F2 and fill through F9:
+=IF(OR(B2="",C2=""),"",IF(AND(ISNUMBER(B2),ISNUMBER(C2),B2>=0,C2>=0),ROUND(B2*C2,2),"CHECK INPUT"))
+
+Compare each output against column D before manually recording Pass or Fail in column G. The draft is intentionally deficient: it does not reject negative inputs or explicitly require numeric inputs. If your locale requires semicolons as function-argument separators, adapt the formulas before testing.

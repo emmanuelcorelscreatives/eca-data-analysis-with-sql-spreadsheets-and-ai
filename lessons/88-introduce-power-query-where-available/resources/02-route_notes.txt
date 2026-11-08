@@ -1,0 +1,19 @@
+Use the supplied fictional sales_extract.csv. Keep the original file unchanged.
+
+Optional Excel Power Query route:
+[ ] Import the controlled CSV through Data > From Text/CSV > Transform Data.
+[ ] Inspect the headers and preview. Remove an automatically added Changed Type step if it would convert order_id before you set its type deliberately.
+[ ] Set order_id to Text; confirm that 00101 retains both leading zeroes.
+[ ] Apply Trim to category; confirm that the first category becomes Home.
+[ ] Set revenue to Decimal Number only after confirming the source's decimal convention.
+[ ] Inspect Applied Steps, then Close & Load to a worksheet table. Save the workbook separately from the source CSV.
+[ ] For a replacement file with the same controlled location and structure, use Data > Refresh All, then inspect representative identifiers, categories, and numeric cells.
+
+Baseline CSV route, including Google Sheets or Excel without these Power Query controls:
+[ ] Keep the source CSV unchanged and reload it through the controlled import-and-refresh route established in the previous lesson.
+[ ] Specify or verify text handling for order_id at import; confirm that 00101 remains 00101.
+[ ] Preserve the imported category and put trimmed values in a separate working column; confirm that the first working value is Home.
+[ ] Verify revenue is interpreted numerically using the source's decimal convention.
+[ ] After reloading, inspect representative identifiers, categories, and numeric cells before using the output.
+
+Power Query is optional; neither a paid connector nor Power Query itself is required.

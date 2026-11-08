@@ -1,0 +1,5 @@
+Sample-file specification: UTF-8 encoding; comma delimiter; first row is the header; quoted fields can contain commas; order_id and customer_id are text identifiers; order_date uses day/month/year; units is a whole-number count; unit_price uses a decimal point. The file contains three data records.
+
+Before loading: confirm the documented encoding and readable accented characters; confirm the delimiter, six headers, and intact quoted fields; prevent automatic type conversion from stripping identifier zeros; select a date locale only when the source date order is known; assign numeric types according to the field definitions. After loading: compare record count, headers, identifiers, dates, numeric values, and a quoted-field example with the source. If a check fails, correct the import rather than editing the original CSV.
+
+Product documentation for the demonstrated controls and type behavior: https://learn.microsoft.com/en-us/power-query/connectors/text-csv ; https://learn.microsoft.com/en-us/power-query/data-types ; https://learn.microsoft.com/en-us/power-query/using-locale

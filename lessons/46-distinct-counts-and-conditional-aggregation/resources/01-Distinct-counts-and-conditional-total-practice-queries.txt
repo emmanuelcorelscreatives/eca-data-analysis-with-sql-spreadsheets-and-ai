@@ -1,0 +1,67 @@
+-- 1. Inspect the six source rows. One row represents one item.
+WITH demo_items(item_id, order_id, customer_id, line_value, status) AS (
+    VALUES
+        (101, 5001, 201, 20, 'paid'),
+        (102, 5001, 201, 15, 'paid'),
+        (103, 5002, 202, 30, 'paid'),
+        (104, 5003, 201, 12, 'returned'),
+        (105, 5004, 203, 8, 'paid'),
+        (106, 5004, 203, 7, 'returned')
+)
+SELECT item_id, order_id, customer_id, line_value, status
+FROM demo_items
+ORDER BY item_id;
+
+-- 2. Count item rows and distinct entity keys.
+WITH demo_items(item_id, order_id, customer_id, line_value, status) AS (
+    VALUES
+        (101, 5001, 201, 20, 'paid'),
+        (102, 5001, 201, 15, 'paid'),
+        (103, 5002, 202, 30, 'paid'),
+        (104, 5003, 201, 12, 'returned'),
+        (105, 5004, 203, 8, 'paid'),
+        (106, 5004, 203, 7, 'returned')
+)
+SELECT
+    COUNT(*) AS item_rows,
+    COUNT(DISTINCT order_id) AS orders,
+    COUNT(DISTINCT customer_id) AS customers
+FROM demo_items;
+
+-- 3. Inspect each contribution before summing it.
+WITH demo_items(item_id, order_id, customer_id, line_value, status) AS (
+    VALUES
+        (101, 5001, 201, 20, 'paid'),
+        (102, 5001, 201, 15, 'paid'),
+        (103, 5002, 202, 30, 'paid'),
+        (104, 5003, 201, 12, 'returned'),
+        (105, 5004, 203, 8, 'paid'),
+        (106, 5004, 203, 7, 'returned')
+)
+SELECT
+    item_id,
+    status,
+    line_value,
+    CASE WHEN status = 'paid' THEN line_value ELSE 0 END AS paid_contribution
+FROM demo_items
+ORDER BY item_id;
+
+-- 4. Count entities and sum paid contributions without removing other rows.
+WITH demo_items(item_id, order_id, customer_id, line_value, status) AS (
+    VALUES
+        (101, 5001, 201, 20, 'paid'),
+        (102, 5001, 201, 15, 'paid'),
+        (103, 5002, 202, 30, 'paid'),
+        (104, 5003, 201, 12, 'returned'),
+        (105, 5004, 203, 8, 'paid'),
+        (106, 5004, 203, 7, 'returned')
+)
+SELECT
+    COUNT(*) AS item_rows,
+    COUNT(DISTINCT order_id) AS orders,
+    COUNT(DISTINCT customer_id) AS customers,
+    SUM(CASE WHEN status = 'paid' THEN line_value ELSE 0 END) AS paid_total
+FROM demo_items;
+
+-- Expected from these literal records, not a claim about any practice table:
+-- item_rows = 6; orders = 4; customers = 3; paid_total = 73.

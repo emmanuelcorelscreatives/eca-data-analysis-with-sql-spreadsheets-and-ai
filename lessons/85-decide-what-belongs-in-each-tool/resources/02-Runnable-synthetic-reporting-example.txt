@@ -1,0 +1,22 @@
+Run in a PostgreSQL query editor. These are synthetic rows; the March row tests the selection boundary.
+
+SELECT
+  date_trunc('month', sale_date)::date AS reporting_month,
+  category,
+  SUM(line_revenue) AS revenue
+FROM (VALUES
+  (DATE '2025-01-12', 'Accessories', 100.00::numeric),
+  (DATE '2025-01-23', 'Accessories', 50.00::numeric),
+  (DATE '2025-01-29', 'Home', 200.00::numeric),
+  (DATE '2025-02-04', 'Accessories', 80.00::numeric),
+  (DATE '2025-02-11', 'Home', 120.00::numeric),
+  (DATE '2025-03-01', 'Home', 999.00::numeric)
+) AS items(sale_date, category, line_revenue)
+WHERE sale_date >= DATE '2025-01-01'
+  AND sale_date < DATE '2025-03-01'
+GROUP BY 1, 2
+ORDER BY 1, 2;
+
+Independent arithmetic check on the supplied inputs: included amounts total 100 + 50 + 200 + 80 + 120 = 550. Verify the returned rows in your own query editor before entering them in the sheet.
+
+Product references: PostgreSQL SELECT documentation, https://www.postgresql.org/docs/current/sql-select.html ; Google Sheets Help, https://support.google.com/docs/ .

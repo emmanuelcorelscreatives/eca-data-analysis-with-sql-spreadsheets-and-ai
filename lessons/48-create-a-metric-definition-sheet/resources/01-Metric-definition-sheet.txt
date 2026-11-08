@@ -1,0 +1,13 @@
+Field	Revenue	Orders	Average order value	Return rate
+Grain	One value per order month	One value per order month	One value per order month	One value per order month
+Population	Completed orders placed in month before cutoff	Completed orders placed in month before cutoff	Same eligible orders as revenue and orders	Same eligible orders as orders
+Numerator	Sum of net merchandise USD after discounts, before refunds	Count of eligible orders once each	Revenue for the same eligible orders	Count of eligible orders with at least one approved return recorded before cutoff; count each order once
+Denominator	Not applicable	Not applicable	Orders for the same eligible population and month; undefined if zero	Eligible orders placed in month; undefined if zero
+Reporting date	Order date in agreed reporting calendar	Order date in agreed reporting calendar	Order date in agreed reporting calendar	Original order date determines month; return date determines qualification by cutoff
+Currency	USD	Order count	USD per order	Fraction; display as percent
+Cutoff	Order date before exclusive snapshot cutoff	Order date before exclusive snapshot cutoff	Same cutoff as revenue and orders	Order date before exclusive snapshot cutoff; approved return recorded before cutoff
+Discounts	Subtract merchandise discounts once in the source amount	Discounts do not change count	Use discounted revenue numerator	Discounts do not change order counts
+Cancellations	Exclude cancelled orders	Exclude cancelled orders	Exclude cancelled orders from both components	Exclude cancelled orders from numerator and denominator
+Returns	Do not subtract later refunds from order-date sales	Returned eligible orders still count	Use the same revenue policy	Count an eligible order once if at least one approved return qualifies; partial returns qualify
+Tax	Exclude from merchandise amount	No effect on count	Exclude from numerator	No effect on counts
+Shipping	Exclude from merchandise amount	No effect on count	Exclude from numerator	No effect on counts

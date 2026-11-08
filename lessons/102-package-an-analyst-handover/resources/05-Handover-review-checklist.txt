@@ -1,0 +1,8 @@
+- [ ] `README.md` names the purpose, owner, version or preparation date, cutoff, and approved input location.
+- [ ] Every path in the file map opens the intended file.
+- [ ] The SQL and workbook are the checked versions, and their actual names appear in the README and runbook.
+- [ ] Dictionary entries explain relevant fields, row grain, null rules, sources, and metric definitions.
+- [ ] Prior verified checks identify their run and cutoff; no unmeasured check is marked as passed.
+- [ ] The runbook specifies refresh order, completion checks, output location, and failure handling.
+- [ ] Shared files contain no credentials or unauthorized raw exports.
+- [ ] A colleague can identify what to run, what to compare, and whom to contact when checks disagree.

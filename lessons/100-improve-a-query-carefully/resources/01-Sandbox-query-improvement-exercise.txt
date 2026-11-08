@@ -1,0 +1,90 @@
+-- Run all statements in the same sandbox database session.
+CREATE TEMP TABLE perf_customers (
+    customer_id integer PRIMARY KEY,
+    region text NOT NULL
+);
+CREATE TEMP TABLE perf_orders (
+    order_id integer PRIMARY KEY,
+    customer_id integer NOT NULL,
+    amount numeric(12,2) NOT NULL
+);
+
+INSERT INTO perf_customers
+SELECT g, CASE WHEN g <= 500 THEN 'East' ELSE 'West' END
+FROM generate_series(1, 1000) AS g;
+
+INSERT INTO perf_orders
+SELECT g, ((g - 1) % 1000) + 1, 10.00 + (g % 5)
+FROM generate_series(1, 20000) AS g;
+
+ANALYZE perf_customers;
+ANALYZE perf_orders;
+
+-- Check the generated source before comparing queries.
+SELECT (SELECT COUNT(*) FROM perf_customers) AS customer_rows,
+       COUNT(*) AS order_rows,
+       SUM(amount) AS total_amount
+FROM perf_orders;
+
+CREATE TEMP VIEW perf_baseline AS
+WITH detail AS (
+    SELECT o.*, c.*
+    FROM perf_orders AS o
+    JOIN perf_customers AS c
+      ON c.customer_id = o.customer_id
+)
+SELECT region, COUNT(*) AS order_count, SUM(amount) AS revenue
+FROM detail
+GROUP BY region;
+
+CREATE TEMP VIEW perf_revised AS
+WITH detail AS (
+    SELECT o.amount, c.region
+    FROM perf_orders AS o
+    JOIN perf_customers AS c
+      ON c.customer_id = o.customer_id
+)
+SELECT region, COUNT(*) AS order_count, SUM(amount) AS revenue
+FROM detail
+GROUP BY region;
+
+-- Inspect the summary and reconcile its totals to the source.
+SELECT * FROM perf_revised ORDER BY region;
+SELECT SUM(order_count) AS summarized_orders,
+       SUM(revenue) AS summarized_revenue
+FROM perf_revised;
+
+-- An empty result means neither view has rows missing from the other.
+SELECT 'baseline_only' AS discrepancy, d.*
+FROM (
+    SELECT * FROM perf_baseline
+    EXCEPT ALL
+    SELECT * FROM perf_revised
+) AS d
+UNION ALL
+SELECT 'revised_only', d.*
+FROM (
+    SELECT * FROM perf_revised
+    EXCEPT ALL
+    SELECT * FROM perf_baseline
+) AS d;
+
+-- Plan the accidental Cartesian join; do not execute the large join.
+EXPLAIN
+SELECT c.region, COUNT(*) AS order_count
+FROM perf_orders AS o
+CROSS JOIN perf_customers AS c
+GROUP BY c.region;
+
+-- Check the row count after restoring the matching-key condition.
+SELECT COUNT(*) AS matched_order_rows
+FROM perf_orders AS o
+JOIN perf_customers AS c
+  ON c.customer_id = o.customer_id;
+
+-- These SELECT statements execute. Alternate them and repeat several times.
+EXPLAIN (ANALYZE, BUFFERS) SELECT * FROM perf_baseline;
+EXPLAIN (ANALYZE, BUFFERS) SELECT * FROM perf_revised;
+
+-- Record each run's Execution Time. Compare typical times only after
+-- confirming equal output, on data representative of the intended workload.

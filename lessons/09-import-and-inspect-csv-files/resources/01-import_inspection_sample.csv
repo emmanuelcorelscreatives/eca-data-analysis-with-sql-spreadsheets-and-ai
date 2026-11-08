@@ -1,0 +1,4 @@
+order_id,order_date,customer_id,units,unit_price,product_name
+000041,04/05/2025,0007,2,12.50,Café Mug
+000042,13/05/2025,0021,1,8.75,Notebook
+000043,31/05/2025,0007,0,0.00,"Pen, Blue"

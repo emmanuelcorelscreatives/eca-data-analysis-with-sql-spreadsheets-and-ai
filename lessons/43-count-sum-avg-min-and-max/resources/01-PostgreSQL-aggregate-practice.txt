@@ -1,0 +1,73 @@
+Reference: PostgreSQL documentation, Aggregate Functions: https://www.postgresql.org/docs/current/functions-aggregate.html
+
+Run each statement separately in pgAdmin 4 Query Tool. These statements are read-only and use generated sample rows, not course tables.
+
+1. Inspect the input:
+WITH sample (sale_id, amount) AS (
+  VALUES
+    (101, 10::integer),
+    (102, 20::integer),
+    (103, NULL::integer),
+    (104, 0::integer)
+)
+SELECT sale_id, amount
+FROM sample
+ORDER BY sale_id;
+
+Expected: four rows with amounts 10, 20, null, and 0.
+
+2. Aggregate the four rows:
+WITH sample (sale_id, amount) AS (
+  VALUES
+    (101, 10::integer),
+    (102, 20::integer),
+    (103, NULL::integer),
+    (104, 0::integer)
+)
+SELECT
+  COUNT(*) AS count_rows,
+  COUNT(amount) AS count_amount,
+  SUM(amount) AS sum_amount,
+  AVG(amount) AS avg_amount,
+  MIN(amount) AS min_amount,
+  MAX(amount) AS max_amount
+FROM sample;
+
+Expected numeric values in column order: 4, 3, 30, 10, 0, 20. AVG may display additional decimal places.
+
+3. Aggregate two rows whose amounts are null:
+WITH sample (sale_id, amount) AS (
+  VALUES
+    (201, NULL::integer),
+    (202, NULL::integer)
+)
+SELECT
+  COUNT(*) AS count_rows,
+  COUNT(amount) AS count_amount,
+  SUM(amount) AS sum_amount,
+  AVG(amount) AS avg_amount,
+  MIN(amount) AS min_amount,
+  MAX(amount) AS max_amount
+FROM sample;
+
+Expected: one result row; counts 2 and 0; the remaining four results are null.
+
+4. Aggregate no matching rows:
+WITH sample (sale_id, amount) AS (
+  VALUES
+    (101, 10::integer),
+    (102, 20::integer),
+    (103, NULL::integer),
+    (104, 0::integer)
+)
+SELECT
+  COUNT(*) AS count_rows,
+  COUNT(amount) AS count_amount,
+  SUM(amount) AS sum_amount,
+  AVG(amount) AS avg_amount,
+  MIN(amount) AS min_amount,
+  MAX(amount) AS max_amount
+FROM sample
+WHERE sale_id < 0;
+
+Expected: one result row; both counts are 0; the remaining four results are null.

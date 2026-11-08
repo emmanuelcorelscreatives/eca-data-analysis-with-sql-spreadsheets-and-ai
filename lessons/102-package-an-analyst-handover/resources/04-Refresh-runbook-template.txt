@@ -1,0 +1,15 @@
+# Refresh runbook
+
+Owner: [Approved contact]
+Required access: [Approved database, input, and output permissions; never record passwords]
+Approved input location: [Location and identifier]
+Approved output location: [Location]
+Reporting cutoff and time basis: [Rule]
+
+1. Confirm the approved input and reporting cutoff. Record a new run identifier. Completion check: the input identifier and cutoff are written in the run record.
+2. Run `sql/sales_summary.sql` in the authorized environment. Save its output using [agreed file name and location]. Completion check: identify the saved output and its cutoff.
+3. Refresh `workbook/sales_report.xlsx` from that controlled output. Completion check: confirm the workbook displays the intended period.
+4. Calculate and record checks in `checks/control_totals.csv`. Specify the source output and workbook location used for each value: [input rows], [distinct business keys, if applicable], [missing reference keys], [report financial total]. Compare against an independently established value for the same population and period.
+5. Publish to [approved location] only when required checks pass and the owner has approved the run under the team's process.
+
+If a check fails: do not publish the refreshed result. Retain the prior approved report. Record the run identifier, cutoff, expected value, actual value, and source of each value; contact the owner to resolve the mismatch.

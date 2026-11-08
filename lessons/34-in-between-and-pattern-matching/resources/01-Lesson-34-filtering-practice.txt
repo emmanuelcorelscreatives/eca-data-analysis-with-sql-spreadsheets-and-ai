@@ -1,0 +1,25 @@
+Use pgAdmin 4 Query Tool with the PostgreSQL practice connection. For each test, run this complete read-only query after replacing the final WHERE line with one condition below:
+
+SELECT order_ref, category, units, product_name
+FROM (VALUES
+  ('A101', 'Books', 1, 'Desk Lamp'),
+  ('A102', 'Home', 2, 'lamp cord'),
+  ('A103', 'Toys', 3, 'Lamp Shade'),
+  ('A104', 'Books', 4, 'Bookcase'),
+  ('A105', 'Garden', 5, 'Garden Lamp'),
+  ('A106', 'Home', 6, 'Lamp'),
+  ('A107', 'Garden', 7, 'Lamp2')
+) AS sample(order_ref, category, units, product_name)
+WHERE category IN ('Books', 'Home');
+
+Replace only the WHERE line and retain the semicolon. Expected order_ref values, regardless of display order:
+WHERE category IN ('Books', 'Home'); → A101, A102, A104, A106
+WHERE units BETWEEN 2 AND 4; → A102, A103, A104
+WHERE units BETWEEN 4 AND 4; → A104
+WHERE product_name LIKE 'Lamp%'; → A103, A106, A107
+WHERE product_name LIKE '%Lamp%'; → A101, A103, A105, A106, A107
+WHERE product_name LIKE '%lamp%'; → A102
+WHERE product_name ILIKE '%lamp%'; → A101, A102, A103, A105, A106, A107
+WHERE product_name LIKE 'Lamp_'; → A107
+
+These are expected matches calculated from the seven fictional rows, not claims about a course database. Check the returned values yourself after each run. PostgreSQL reference: https://www.postgresql.org/docs/current/functions-comparison.html for IN and BETWEEN; https://www.postgresql.org/docs/current/functions-matching.html for LIKE, ILIKE, percent, and underscore.

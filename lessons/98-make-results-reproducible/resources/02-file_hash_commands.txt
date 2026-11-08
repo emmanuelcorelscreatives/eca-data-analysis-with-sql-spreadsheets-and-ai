@@ -1,0 +1,13 @@
+From the workspace root in Windows PowerShell:
+Get-FileHash -Algorithm SHA256 -LiteralPath '.\runs\2025-03\inputs\orders_export.csv'
+Get-FileHash -Algorithm SHA256 -LiteralPath '.\runs\2025-03\queries\monthly_sales.sql'
+Get-FileHash -Algorithm SHA256 -LiteralPath '.\runs\2025-03\outputs\monthly_sales.csv'
+Get-Date -Format o
+
+From a workspace root on macOS, for a file at the indicated path:
+shasum -a 256 'runs/2025-03/inputs/orders_export.csv'
+
+From a workspace root on Linux, for a file at the indicated path:
+sha256sum 'runs/2025-03/inputs/orders_export.csv'
+
+Substitute the paths for your actual files. Run the output-file command only after that file exists; copy the hash and timestamp produced on your machine.

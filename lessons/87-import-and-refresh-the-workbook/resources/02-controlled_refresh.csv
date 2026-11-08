@@ -1,0 +1,6 @@
+order_id,order_month,category,revenue
+ORD-5001,2025M01,Electronics,120
+ORD-5002,2025M01,Home,30
+ORD-5003,2025M02,Electronics,90
+ORD-5004,2025M02,Home,60
+ORD-5005,2025M03,Home,80

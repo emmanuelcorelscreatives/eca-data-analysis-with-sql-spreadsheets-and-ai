@@ -1,0 +1,49 @@
+Use a blank Google Sheets spreadsheet. Paste the first block into A1. Paste each subsequent tab-separated block into the stated starting cell. Do not delete A11 when making the comparison.
+
+Paste into A1:
+Order value
+20
+22
+24
+26
+28
+30
+32
+34
+36
+180
+
+Paste into C1:
+Measure	All ten
+Count	=COUNT(A2:A11)
+Total	=SUM(A2:A11)
+Mean	=AVERAGE(A2:A11)
+Median	=MEDIAN(A2:A11)
+
+Paste into C6:
+Minimum	=MIN(A2:A11)
+Maximum	=MAX(A2:A11)
+Range	=D7-D6
+
+Paste into C9:
+Lower quartile	=QUARTILE(A2:A11,1)
+Upper quartile	=QUARTILE(A2:A11,3)
+Middle-half spread	=D10-D9
+
+Paste into E1:
+Without 180
+=COUNT(A2:A10)
+=SUM(A2:A10)
+=AVERAGE(A2:A10)
+=MEDIAN(A2:A10)
+=MIN(A2:A10)
+=MAX(A2:A10)
+=E7-E6
+=QUARTILE(A2:A10,1)
+=QUARTILE(A2:A10,3)
+=E10-E9
+
+Known-answer checks, in row order from Count through Middle-half spread:
+All ten: 10; 432; 43.2; 29; 20; 180; 160; 24.5; 33.5; 9.
+Without 180: 9; 252; 28; 28; 20; 36; 16; 24; 32; 8.
+Hand checks: the first nine values total 252; adding 180 gives 432. The ten-value median is (28 + 30) / 2 = 29. The ten-value range is 180 - 20 = 160. The nine-value range is 36 - 20 = 16. The comparison changes the formula ranges, not the source data.

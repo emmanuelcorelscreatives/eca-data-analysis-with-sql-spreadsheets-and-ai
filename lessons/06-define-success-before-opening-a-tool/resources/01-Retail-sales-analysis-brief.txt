@@ -1,0 +1,29 @@
+RETAIL SALES ANALYSIS BRIEF — PROPOSED, NOT ANALYZED
+
+Audience: Retail operations manager.
+Decision: Decide where to investigate a possible sales decline. Do not treat an observed change as proof of its cause.
+
+Proposed reporting window: January 1–March 31, 2025.
+Population: Orders in that window by recorded order date, if the date field is suitable. If coverage is incomplete, agree a replacement window before analysis.
+
+Questions
+1. How does recorded sales value change month by month in the window?
+2. Which product categories contribute the most recorded sales value in the same window?
+3. How many distinct customers placed orders in each month of the window?
+
+Acceptance criteria
+- Deliver one clearly labeled answer per question, showing its period and population.
+- Proposed sales value: item quantity multiplied by recorded unit price, if those fields are available. This is not approved as net revenue. Agree how returns and cancellations will be treated before drawing conclusions.
+- Count distinct customers for question 3, not order rows.
+- Confirm period coverage and identify incomplete months.
+- Report missing order dates, customer identifiers, and product categories among relevant records.
+- Reconcile monthly and category sales to the same eligible item-level total; account for missing categories. State exclusions and use the approved population and measure.
+
+Limits and decisions to resolve
+- Available date coverage has not been confirmed.
+- A consistent treatment of returns and cancellations has not been established.
+- Category labels or customer identifiers may be missing; report the extent rather than assuming a rate.
+- Transaction records alone cannot establish why shopper behavior changed.
+- If a required field or approved definition is unavailable, document the gap and agree a narrower question before presenting a result.
+
+Review decision: Approve or revise the window, population, proposed measure, and unresolved treatments before analysis.

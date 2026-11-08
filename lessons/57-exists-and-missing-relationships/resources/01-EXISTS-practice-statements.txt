@@ -1,0 +1,106 @@
+Run each statement independently in a PostgreSQL query editor. These inline VALUES datasets exist only for the duration of each statement; they do not alter tables.
+
+1. Inspect customers. Expected IDs and names: 1 Ava, 2 Bo, 3 Cy, 4 Dee.
+WITH demo_customers (customer_id, customer_name) AS (
+    VALUES (1, 'Ava'), (2, 'Bo'), (3, 'Cy'), (4, 'Dee')
+), demo_orders (order_id, customer_id, order_date, order_status) AS (
+    VALUES
+        (101, 1, DATE '2025-04-03', 'completed'),
+        (102, 1, DATE '2025-04-10', 'completed'),
+        (103, 2, DATE '2025-04-11', 'cancelled'),
+        (104, 3, DATE '2025-03-31', 'completed'),
+        (105, 3, DATE '2025-05-01', 'completed')
+)
+SELECT c.customer_id, c.customer_name
+FROM demo_customers AS c
+ORDER BY c.customer_id;
+
+2. Customers with at least one completed April 2025 order. Expected: 1 Ava, once.
+WITH demo_customers (customer_id, customer_name) AS (
+    VALUES (1, 'Ava'), (2, 'Bo'), (3, 'Cy'), (4, 'Dee')
+), demo_orders (order_id, customer_id, order_date, order_status) AS (
+    VALUES
+        (101, 1, DATE '2025-04-03', 'completed'),
+        (102, 1, DATE '2025-04-10', 'completed'),
+        (103, 2, DATE '2025-04-11', 'cancelled'),
+        (104, 3, DATE '2025-03-31', 'completed'),
+        (105, 3, DATE '2025-05-01', 'completed')
+)
+SELECT c.customer_id, c.customer_name
+FROM demo_customers AS c
+WHERE EXISTS (
+    SELECT 1
+    FROM demo_orders AS o
+    WHERE o.customer_id = c.customer_id
+      AND o.order_date >= DATE '2025-04-01'
+      AND o.order_date < DATE '2025-05-01'
+      AND o.order_status = 'completed'
+)
+ORDER BY c.customer_id;
+
+3. Customers with no completed April 2025 order. Expected: 2 Bo, 3 Cy, 4 Dee.
+WITH demo_customers (customer_id, customer_name) AS (
+    VALUES (1, 'Ava'), (2, 'Bo'), (3, 'Cy'), (4, 'Dee')
+), demo_orders (order_id, customer_id, order_date, order_status) AS (
+    VALUES
+        (101, 1, DATE '2025-04-03', 'completed'),
+        (102, 1, DATE '2025-04-10', 'completed'),
+        (103, 2, DATE '2025-04-11', 'cancelled'),
+        (104, 3, DATE '2025-03-31', 'completed'),
+        (105, 3, DATE '2025-05-01', 'completed')
+)
+SELECT c.customer_id, c.customer_name
+FROM demo_customers AS c
+WHERE NOT EXISTS (
+    SELECT 1
+    FROM demo_orders AS o
+    WHERE o.customer_id = c.customer_id
+      AND o.order_date >= DATE '2025-04-01'
+      AND o.order_date < DATE '2025-05-01'
+      AND o.order_status = 'completed'
+)
+ORDER BY c.customer_id;
+
+4. Customer with no order at all in the example. Expected: 4 Dee.
+WITH demo_customers (customer_id, customer_name) AS (
+    VALUES (1, 'Ava'), (2, 'Bo'), (3, 'Cy'), (4, 'Dee')
+), demo_orders (order_id, customer_id, order_date, order_status) AS (
+    VALUES
+        (101, 1, DATE '2025-04-03', 'completed'),
+        (102, 1, DATE '2025-04-10', 'completed'),
+        (103, 2, DATE '2025-04-11', 'cancelled'),
+        (104, 3, DATE '2025-03-31', 'completed'),
+        (105, 3, DATE '2025-05-01', 'completed')
+)
+SELECT c.customer_id, c.customer_name
+FROM demo_customers AS c
+WHERE NOT EXISTS (
+    SELECT 1
+    FROM demo_orders AS o
+    WHERE o.customer_id = c.customer_id
+)
+ORDER BY c.customer_id;
+
+5. Count matching joined order rows for comparison. Expected: Ava has 2 matching order rows.
+WITH demo_customers (customer_id, customer_name) AS (
+    VALUES (1, 'Ava'), (2, 'Bo'), (3, 'Cy'), (4, 'Dee')
+), demo_orders (order_id, customer_id, order_date, order_status) AS (
+    VALUES
+        (101, 1, DATE '2025-04-03', 'completed'),
+        (102, 1, DATE '2025-04-10', 'completed'),
+        (103, 2, DATE '2025-04-11', 'cancelled'),
+        (104, 3, DATE '2025-03-31', 'completed'),
+        (105, 3, DATE '2025-05-01', 'completed')
+)
+SELECT c.customer_id, c.customer_name,
+       COUNT(*) AS matching_order_rows
+FROM demo_customers AS c
+JOIN demo_orders AS o
+  ON o.customer_id = c.customer_id
+WHERE o.order_date >= DATE '2025-04-01'
+  AND o.order_date < DATE '2025-05-01'
+  AND o.order_status = 'completed'
+GROUP BY c.customer_id, c.customer_name
+ORDER BY c.customer_id;
+
+Before adapting statements 2 or 3 to course tables, verify the actual table names, customer key, order-date field and any status field. Replace the example names with confirmed names; preserve the customer-key condition and the qualifications inside the subquery.

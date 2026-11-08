@@ -1,0 +1,9 @@
+Project: retail-analysis
+Log date: [enter today's date]
+Source: synthetic lesson practice file, saved in Downloads
+Original: 01_original_csv\orders_sample.csv | copied; unchanged
+Working: 02_working\cleaning\orders_work_v01.csv | copied from original; no cleaning performed
+SQL: 03_sql\sales_summary_v01.sql | planned; not created
+Report: 04_reports\sales_report_v01.xlsx | planned; not created
+
+For your own inputs, replace the source description and filenames with the actual ones. Before marking an entry as existing, check its path in File Explorer. When you create a new version, record its filename, the file it came from, and why you made it. If your report is a Google Sheets document, record its actual link instead of an Excel filename. Do not record credentials or sensitive row data here.

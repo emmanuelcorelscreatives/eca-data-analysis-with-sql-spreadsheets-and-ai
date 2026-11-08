@@ -1,0 +1,15 @@
+For each finding:
+[ ] Name the measure, population, and comparison period.
+[ ] State the direction and size of the result; identify the base of any percentage.
+[ ] Cite the exact location and version of the previously validated result.
+[ ] Explain the decision-relevant implication without claiming an untested cause.
+[ ] Keep material coverage and measure limitations beside the claim.
+[ ] Put any proposed action in a separate recommendation and make its status clear.
+[ ] Remove or qualify words such as “because,” “always,” and “proves” unless the evidence supports them.
+
+Draft pattern:
+Finding: In [defined population], [measure] was [value] in [period] versus [value] in [comparison period], a [difference] ([percentage with stated base]).
+Evidence: [Exact validated result location and relevant breakdown].
+Implication: [What this checked comparison helps the reader prioritize].
+Limit: [Material boundary on this interpretation].
+Recommendation: [Proposed next step, explicitly not an established fact].

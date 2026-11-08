@@ -1,0 +1,10 @@
+1. ReadMe identifies unchanged original inputs, storage location, observed period, and receipt date without inventing missing details.
+2. CleaningLog records actual rules, actions, and affected-row counts; unresolved issues remain visible.
+3. Working retains source line identifiers and documents the sales definition used.
+4. Product lookup exposes unmatched identifiers; unmatched lines and value are reported, not silently discarded.
+5. Raw and working row counts agree or have a documented explanation.
+6. Raw calculated value and working line value agree or have a documented explanation.
+7. Refreshed pivot grand total agrees with working value; selected month-category cells are checked against source lines.
+8. Monthly and category chart source ranges include all intended periods and categories, including an unmatched category where present; neither includes a grand total as a normal period or category.
+9. Each of three findings cites a checked workbook range, states its period and population, and distinguishes observations from unresolved exceptions.
+10. Do not mark the handover complete while a reconciliation is unexplained.

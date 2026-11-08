@@ -1,0 +1,46 @@
+-- Run this complete statement in a PostgreSQL query editor.
+-- The six VALUES rows are fictional practice data.
+WITH
+input_rows (order_id, order_date, product_category, quantity, unit_price) AS (
+    -- Grain: one order item
+    VALUES
+        (1001, DATE '2025-01-05', 'Books', 2, 10.00::numeric),
+        (1001, DATE '2025-01-05', 'Games', 1, 30.00::numeric),
+        (1002, DATE '2025-01-21', 'Books', 1, 10.00::numeric),
+        (1003, DATE '2025-02-03', 'Books', 3, 10.00::numeric),
+        (1004, DATE '2025-02-10', 'Games', 2, 30.00::numeric),
+        (1005, DATE '2025-02-14', 'Books', 1, 10.00::numeric)
+),
+prepared AS (
+    -- Grain: one retained order item
+    SELECT
+        date_trunc('month', order_date)::date AS reporting_month,
+        product_category,
+        quantity * unit_price AS line_revenue
+    FROM input_rows
+    WHERE order_date >= DATE '2025-01-01'
+      AND order_date < DATE '2025-03-01'
+),
+monthly_category AS (
+    -- Grain: one reporting month and product category
+    SELECT
+        reporting_month,
+        product_category,
+        SUM(line_revenue) AS revenue
+    FROM prepared
+    GROUP BY reporting_month, product_category
+)
+-- Grain: one reporting month and product category
+SELECT reporting_month, product_category, revenue
+FROM monthly_category
+ORDER BY reporting_month, product_category;
+
+To inspect prepared, replace only the final SELECT and its preceding reporting-grain comment with:
+SELECT * FROM prepared ORDER BY reporting_month, product_category, line_revenue;
+
+To inspect the grouped stage, replace only the final SELECT and its preceding reporting-grain comment with:
+SELECT * FROM monthly_category ORDER BY reporting_month, product_category;
+
+Execute the entire WITH statement each time. Hand checks from the supplied VALUES, not a claimed execution result: six input items; six prepared items; four month/category groups; January Books 30.00; January Games 30.00; February Books 40.00; February Games 60.00; total revenue 160.00. Compare those expectations with your actual results.
+
+PostgreSQL reference: https://www.postgresql.org/docs/current/queries-with.html

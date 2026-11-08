@@ -1,0 +1,17 @@
+Check date and time: ______
+Source file and location: raw_data/source_count_check.csv
+Source file changed during check? No / investigate
+Spreadsheet application and source tab: Google Sheets / ______
+Spreadsheet count boundary: data identifiers in A2:A6; exclude header in row 1
+Spreadsheet count observed: ______
+Database and session identification, excluding credentials: ______
+Database table counted: temporary table source_count_check
+Database counting query: SELECT COUNT(*) AS source_rows FROM source_count_check;
+First database count observed, using HEADER false: ______
+Mismatch observed? ______
+Evidence from sampled rows: ______
+Correction made: emptied temporary table; re-imported the same file using HEADER true
+Database count observed after correction: ______
+Final comparison: match / explained mismatch / unresolved mismatch
+Next action if unresolved: ______
+Note: For the supplied, unchanged file, the predicted data-record count is 5 and the predicted deliberate-header-error count is 6. Predictions are not substitutes for observed results.

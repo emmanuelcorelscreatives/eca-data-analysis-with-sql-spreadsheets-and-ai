@@ -1,0 +1,17 @@
+Paste this tab-separated table into cell A1 of a blank Google Sheet. The examples are synthetic; no customer data is used.
+
+Order ID	Region	Category	Amount
+S001	North	Home	29
+S002	South	Electronics	45
+S003	North	Apparel	72
+S004	West	Home	65
+S005	East	Apparel	18
+S006	North	Home	120
+S007	South	Home	34
+S008	North	Electronics	90
+S009	West	Apparel	55
+S010	North	Home	75
+S011	East	Home	42
+S012	South	Apparel	110
+
+Check against this constructed input: there are 12 data records. Sorting Amount from largest to smallest places S006 first and S005 last without changing either record's other fields. Filtering Region to North leaves S006, S008, S010, S003, and S001 visible. Also filtering Category to Home leaves S006, S010, and S001 visible. Removing the filters reveals all 12 records again; the descending sort remains.

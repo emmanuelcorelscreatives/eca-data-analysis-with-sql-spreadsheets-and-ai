@@ -1,0 +1,5 @@
+Use these columns in a spreadsheet: metric | period_start | period_end_exclusive | reported | independent | difference | decision | source_records | independent_method | unresolved_exceptions.
+
+For the fictional lesson fixture only, row 2 can contain: known-price sales | 2025-04-01 | 2025-05-01 | 42.00 | 42.00 | =D2-E2 | agrees for fixture | lines 102, 103, 104, 105, 107 | record-by-record hand arithmetic | line 107 has no known unit price.
+
+For a real figure, enter the outputs actually observed from each method. If the difference is nonzero, leave the decision unreconciled until you identify the differing records or rule. A zero difference does not remove documented missing-data limitations.

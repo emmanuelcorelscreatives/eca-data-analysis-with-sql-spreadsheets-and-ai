@@ -1,0 +1,8 @@
+Before using an assistant:
+[ ] Name its limited job: suggest questions, draft syntax, explain supplied text, or edit supplied notes.
+[ ] Use only information you are allowed to share; prefer invented examples when real records are unnecessary.
+[ ] State what output would be useful without treating that output as a verified result.
+[ ] Identify a separate review: compare suggestions with the business question, test a formula in the intended workbook, compare a query explanation with the actual query, or compare edited prose with the source notes.
+[ ] Reject invented facts, changed qualifications, unsupported conclusions, and claims that the assistant ran checks it did not run.
+[ ] Keep responsibility for definitions, evidence, decisions, and final publication with the analyst.
+If no independent review is possible, narrow the request rather than accepting its answer.

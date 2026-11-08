@@ -1,0 +1,21 @@
+Task: Draft one read-only PostgreSQL SELECT query showing monthly gross sales by product category for 2025-01-01 through 2025-03-31. Return one row per order month and category. Do not run the query.
+
+Schema (illustrative; replace with verified course schema before use):
+customers: one row per customer; customer_id text, primary key.
+orders: one row per order; order_id text, primary key; customer_id text, foreign key to customers.customer_id; order_date date; status text.
+order_items: one row per order item; order_item_id text, primary key; order_id text, foreign key to orders.order_id; product_id text, foreign key to products.product_id; quantity integer; unit_price numeric(12,2).
+products: one row per product; product_id text, primary key; category text.
+returns: one row per return event; return_id text, primary key; order_item_id text, foreign key to order_items.order_item_id; returned_quantity integer; returned_date date.
+
+Relationships: one customer can have many orders; one order can have many order items; one product can appear on many order items; one order item can have multiple return events.
+
+Metric rules: gross_sales = sum of order_items.quantity * order_items.unit_price for orders.status = 'completed'. This is before refunds or discounts; do not join returns. Assign sales to orders.order_date and products.category. Include order dates from 2025-01-01 through 2025-03-31 inclusive. Group at calendar-month-and-category grain. Do not count each order once in place of its items.
+
+Synthetic examples only (not real records):
+customers: customer_id = 'C001'
+orders: order_id = 'O101', customer_id = 'C001', order_date = '2025-01-15', status = 'completed'
+order_items: order_item_id = 'I501', order_id = 'O101', product_id = 'P010', quantity = 2, unit_price = 12.50
+products: product_id = 'P010', category = 'Home'
+returns: return_id = 'R001', order_item_id = 'I501', returned_quantity = 1, returned_date = '2025-02-04'
+
+Output: Return only the proposed read-only PostgreSQL SELECT query and a brief list of assumptions. Use only listed fields. If any required detail is unclear, ask a question rather than inventing a rule. Do not claim to have run the query.

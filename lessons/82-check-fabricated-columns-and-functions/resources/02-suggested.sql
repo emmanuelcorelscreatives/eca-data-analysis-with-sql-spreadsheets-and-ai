@@ -1,0 +1,1 @@
+SELECT DATE_FORMAT(order_date, '%Y-%m') AS report_month FROM orders;

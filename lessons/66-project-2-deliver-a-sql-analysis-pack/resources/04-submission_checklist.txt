@@ -1,0 +1,11 @@
+Before submission:
+[ ] Check assumed identifiers and business rules against the supplied schema; edit all affected queries consistently.
+[ ] Run each of six read-only answer statements and retain its question comment in project2_analysis.sql.
+[ ] Export the actual six results as q01_revenue.csv, q02_monthly_revenue.csv, q03_category_revenue.csv, q04_product_ranking.csv, q05_customer_share.csv, and q06_customers_without_paid_orders.csv.
+[ ] Run the separate statements in project2_controls.sql; retain their actual outputs apart from the answer extracts.
+[ ] Reconcile Q1 with C1 and the revenue sums from Q2 through Q5; investigate differences.
+[ ] Investigate null inputs, unmatched references, missing categories, and paid orders without items; record decisions and regenerate affected exports.
+[ ] Confirm Q2 contains the intended three months; confirm or explicitly mark an unexercised Q4 tie rule.
+[ ] Check Q5's denominator and shares; check Q6 means no paid orders, not no revenue.
+[ ] Complete metric_notes.txt without inventing an observed result.
+[ ] Reopen every export and compare its headers and row count with the corresponding executed result.

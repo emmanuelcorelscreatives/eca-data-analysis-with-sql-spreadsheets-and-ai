@@ -1,0 +1,7 @@
+□ Identify the first header cell and the last actual record cell.
+□ Include exactly one header row; give every column a distinct, meaningful header.
+□ Keep one kind of information in each column and one record on each row.
+□ Exclude unrelated notes, totals, and empty surrounding rows or columns.
+□ In Excel, select the exact range, use Insert > Table, check My table has headers, and confirm the finished boundary and header filter arrows.
+□ In Google Sheets, select the exact range, use Data > Create a filter, and confirm filter controls appear on the intended headers.
+□ Leave values and exceptions unchanged for now; this check concerns structure, not cleaning or calculations.

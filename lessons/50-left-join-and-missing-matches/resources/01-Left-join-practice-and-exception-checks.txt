@@ -1,0 +1,43 @@
+These queries assume order_items(order_item_id, product_id) and products(product_id, category). Confirm names against the supplied schema before running them. PostgreSQL's documented left-join behavior is described at https://www.postgresql.org/docs/current/queries-table-expressions.html#QUERIES-JOIN .
+
+-- 1. Record the starting item count.
+SELECT COUNT(*) AS item_rows FROM order_items;
+
+-- 2. Preview retained items and product attributes.
+SELECT oi.order_item_id, oi.product_id, p.product_id AS matched_product_id, p.category
+FROM order_items AS oi
+LEFT JOIN products AS p ON oi.product_id = p.product_id
+ORDER BY oi.order_item_id
+LIMIT 20;
+
+-- 3. Compare the joined count with item_rows; count unmatched rows.
+SELECT COUNT(*) AS joined_rows,
+       COUNT(p.product_id) AS matched_rows,
+       COUNT(*) FILTER (WHERE p.product_id IS NULL) AS no_product_match_rows
+FROM order_items AS oi
+LEFT JOIN products AS p ON oi.product_id = p.product_id;
+
+-- 4. List present item keys absent from products.
+SELECT oi.product_id, COUNT(*) AS affected_items
+FROM order_items AS oi
+LEFT JOIN products AS p ON oi.product_id = p.product_id
+WHERE p.product_id IS NULL
+  AND oi.product_id IS NOT NULL
+GROUP BY oi.product_id
+ORDER BY affected_items DESC, oi.product_id;
+
+-- 5. Count missing keys on the item itself, separately.
+SELECT COUNT(*) AS missing_item_product_keys
+FROM order_items
+WHERE product_id IS NULL;
+
+-- 6. Review a sample of unmatched item rows; this is not a total count.
+SELECT oi.order_item_id, oi.product_id,
+       p.product_id AS matched_product_id, p.category
+FROM order_items AS oi
+LEFT JOIN products AS p ON oi.product_id = p.product_id
+WHERE p.product_id IS NULL
+ORDER BY oi.order_item_id
+LIMIT 50;
+
+Record the actual item_rows, joined_rows, no_product_match_rows, and missing_item_product_keys values. Keep any absent-reference keys as exceptions; do not assign their rows an apparently valid product category.

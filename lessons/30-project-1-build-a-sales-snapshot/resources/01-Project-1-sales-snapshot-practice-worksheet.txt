@@ -1,0 +1,37 @@
+Illustrative practice input only. Enter dates as real spreadsheet dates and quantities and prices as numbers.
+
+RawLines columns: line_id, order_date, product_id, quantity, unit_price
+L001,2025-01-05,P01,2,10
+L002,2025-01-11,P02,1,30
+L003,2025-02-02,P01,1,10
+L004,2025-02-14,P03,2,20
+L005,2025-02-18,P99,1,15
+L006,2025-03-03,P02,2,30
+
+Products columns: product_id, product_name, category
+P01,Ground coffee,Coffee
+P02,Black tea,Tea
+P03,Crackers,Snacks
+Do not add P99: it is the deliberate unmatched-key test.
+
+Workbook sheets: ReadMe (original-input references and period), RawLines (unchanged input table), Products (reference table), CleaningLog (documented decisions), Working (copied input and calculated columns), Pivot (month-by-category sales), Checks (reconciliations and exceptions), Summary (two charts and three findings). Name the Excel tables RawLines, Products, and WorkingLines. Keep original files unchanged.
+
+WorkingLines calculated columns:
+line_value: =[@quantity]*[@unit_price]
+category: =IFNA(XLOOKUP([@product_id],Products[product_id],Products[category]),"UNMATCHED")
+month: =DATE(YEAR([@order_date]),MONTH([@order_date]),1)
+Pivot fields: month in Rows; category in Columns; Sum of line_value in Values. Retain UNMATCHED and grand totals.
+
+Checks formulas:
+Raw rows: =ROWS(RawLines[line_id])
+Working rows: =ROWS(WorkingLines[line_id])
+Raw value: =SUMPRODUCT(RawLines[quantity],RawLines[unit_price])
+Working value: =SUM(WorkingLines[line_value])
+Pivot value: reference the actual pivot grand-total cell after refreshing.
+Unmatched lines: =COUNTIF(WorkingLines[category],"UNMATCHED")
+Unmatched value: =SUMIF(WorkingLines[category],"UNMATCHED",WorkingLines[line_value])
+
+Summary month source: A1:B4, with Month and Line value headers and first-of-month dates 2025-01-01, 2025-02-01, 2025-03-01 in A2:A4. In B2 enter =SUMIFS(WorkingLines[line_value],WorkingLines[month],A2) and fill down. Chart A1:B4 as a line chart.
+Summary category source: D1:E5, with Category and Line value headers and Coffee, Tea, Snacks, UNMATCHED in D2:D5. In E2 enter =SUMIF(WorkingLines[category],D2,WorkingLines[line_value]) and fill down. Chart D1:E5 as a bar chart.
+
+Hand-calculated expectations for this illustrative input, to verify against Excel rather than paste over formulas: six input and working rows; line values 20, 30, 10, 40, 15, 60; total 175; January 50, February 65, March 60; Coffee 30, Tea 90, Snacks 40, UNMATCHED 15; one unmatched line, L005, with product_id P99. The named-category values total 160, so omitting UNMATCHED would fail to account for 15. If a live value differs, investigate before writing a finding. The supplied project extract may have different columns, definitions, dates, and results.

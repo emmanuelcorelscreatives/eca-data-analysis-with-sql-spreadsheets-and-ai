@@ -1,0 +1,15 @@
+Use the supplied data dictionary as the authority for exact table names, fields, and definitions. For each entry below, find its dictionary description and confirm what one row represents.
+
+Customers — Purpose: describes a customer or customer account. Expected grain to check: one customer per row. Dictionary entry located: ______. Notes or differences: ______.
+
+Products — Purpose: describes a product offered for sale. Expected grain to check: one product per row. Dictionary entry located: ______. Notes or differences: ______.
+
+Orders — Purpose: describes a purchase at the order level. Expected grain to check: one order per row. Dictionary entry located: ______. Notes or differences: ______.
+
+Order items — Purpose: describes purchased lines within orders. Expected grain to check: one purchased line per row. Dictionary entry located: ______. Notes or differences: ______.
+
+Return events — Purpose: describes recorded return events associated with items. Expected grain to check: one return event per row. Dictionary entry located: ______. Notes or differences: ______.
+
+Relationship checks: Can an order have multiple item rows? ______. Can an item have multiple return events? ______. Record any qualification stated in the dictionary: ______.
+
+Do not substitute a row count for a definition of grain, or assume that one item row equals one physical unit. Do not invent field names or return details absent from the dictionary.

@@ -1,0 +1,24 @@
+Create a Google Sheets file named Retail association demo with tabs Data, Overall, By visitors, and Questions. Paste this tab-separated block into Data!A1:
+Store-week	Promotion	Visitors	Revenue
+L1	promo	100	900
+L2	no promo	100	1000
+L3	no promo	100	1000
+L4	no promo	100	1000
+H1	promo	300	2900
+H2	promo	300	2900
+H3	promo	300	2900
+H4	no promo	300	3000
+
+In Overall!A1:D1 enter Promotion, Store-weeks, Total revenue, Average revenue. Enter no promo in A2 and promo in A3. In B2 enter =COUNTIF(Data!B$2:B$9,A2); in C2 enter =SUMIF(Data!B$2:B$9,A2,Data!D$2:D$9); in D2 enter =AVERAGEIF(Data!B$2:B$9,A2,Data!D$2:D$9). Copy B2:D2 to row 3. Expected rows: no promo, 4, 6000, 1500; promo, 4, 9600, 2400.
+
+In By visitors!A1:D1 enter Visitors, Promotion, Store-weeks, Average revenue. Enter 100 and no promo in A2:B2; 100 and promo in A3:B3; 300 and no promo in A4:B4; 300 and promo in A5:B5. In C2 enter =COUNTIFS(Data!C$2:C$9,A2,Data!B$2:B$9,B2). In D2 enter =AVERAGEIFS(Data!D$2:D$9,Data!C$2:C$9,A2,Data!B$2:B$9,B2). Copy C2:D2 through row 5. Expected counts and averages by row: 3 and 1000; 1 and 900; 1 and 3000; 3 and 2900.
+
+In Questions!A1:C6 enter:
+Possible explanation	Evidence to request	Question to investigate
+Baseline foot traffic	Prior visits; promotion schedule	Were busy stores selected?
+Seasonal demand	Store-week dates; holiday calendar	Did demand and scheduling move together?
+Pricing and product mix	Actual prices; items sold	Did sales composition differ?
+Availability	Stockout records	Could stores sell the same items?
+Reverse causality	Sales forecast; decision log	Did expected sales trigger promotion?
+
+Practice: State the overall association without claiming an effect. Explain why the visitor-group comparisons differ from the overall comparison. Identify whether visitors measured during a promotion must be a pre-existing confounder. Answer check: promoted store-weeks average 2400 versus 1500 for unpromoted store-weeks; the groups have different visitor mixes; visitors measured during promotion might themselves be affected by promotion. Neither comparison establishes what promotion caused.

@@ -1,0 +1,6 @@
+1. Record the generated table, column, and function names exactly.
+2. In the supplied data dictionary, match each column to its table; check spelling, type, and documented meaning. Do not infer that similar names are interchangeable.
+3. If authorized to inspect the live PostgreSQL schema, compare the dictionary with information_schema.columns, including table_schema. An absent or inaccessible column remains unresolved.
+4. Identify the database product and version. Check a questionable function's arguments, accepted types, and return type in that version's official documentation.
+5. Record what was verified, what remains unverified, and any proposed change. Do not report a query result unless the query was actually run and checked.
+Official PostgreSQL references: https://www.postgresql.org/docs/current/infoschema-columns.html ; https://www.postgresql.org/docs/current/functions-datetime.html ; https://www.postgresql.org/docs/current/functions-formatting.html . The /current/ pages track the current documentation; use your installed version's documentation if it differs.

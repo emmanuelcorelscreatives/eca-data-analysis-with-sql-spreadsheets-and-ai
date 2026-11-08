@@ -1,0 +1,9 @@
+Create a Google Sheets sheet with headers A1:E1: row_ref | category_original | category_key | category_approved | review_status. Enter row_ref 1 through 9 in A2:A10. Enter B2:B9, in order: two ordinary leading spaces + Home Goods + two ordinary trailing spaces; home goods; HOME GOODS; Homewares; Electronics; elec; Gift Cards; Home goods?. Leave B10 empty. Do not change column B.
+
+Enter mapping headers G1:I1: variant_key | approved_category | rule_note. Enter rows G2:I6: home goods | Home Goods | Case and spaces; homewares | Home Goods | Owner-approved synonym in exercise; electronics | Electronics | Case; elec | Electronics | Owner-approved abbreviation in exercise; gift cards | Gift Cards | Case. The owner approvals are assumptions for this fictional exercise; obtain real approval before applying such rules to actual data.
+
+Enter =LOWER(TRIM(B2)) in C2 and fill through C10. Enter =IF(B2="","REVIEW",IFNA(VLOOKUP(C2,$G$2:$H$6,2,FALSE),"REVIEW")) in D2 and fill through D10. Enter =IF(D2="REVIEW","Needs decision","Mapped") in E2 and fill through E10. These formulas use comma argument separators, as in a Google Sheets locale configured for commas.
+
+Expected checks for this constructed example: nine source records remain; D2:D5 are Home Goods; D6:D7 are Electronics; D8 is Gift Cards; D9:D10 are REVIEW; E9:E10 are Needs decision. If a check fails, inspect the original text, the normalized key, and the mapping range. Do not overwrite a source value or force an uncertain match.
+
+For real use, extend the rule log with: comparison key; approved category; reason or evidence; approver; approval date; and rule version. Resolve conflicting entries for the same key before using the mapping. Record unresolved original values separately for a decision.

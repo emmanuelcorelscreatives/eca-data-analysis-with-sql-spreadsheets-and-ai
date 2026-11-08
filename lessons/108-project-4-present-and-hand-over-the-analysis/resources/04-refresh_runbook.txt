@@ -1,0 +1,6 @@
+Before refresh: record the reporting period, extract filename and version, output grain, measure definitions, and independently established expected count and total. Retain the last checked extract and report.
+Replace the workbook's controlled input with the new extract; do not append it to the old input. Confirm the header, types, period, and representative records.
+Recalculate checks. Compare row count and financial total with expectations recorded outside the workbook. Check distinct keys, missing required values, exceptions, and dependent report cells. Investigate any failure before publishing.
+Revise the brief and findings if the checked numbers change. Record the extract version, checks performed, exceptions and resolutions, and the reviewer or owner. Keep credentials out of shared files.
+Final handover: open the submitted SQL, workbook, decision brief, AI log, quality checklist, runbook, and extract records. Confirm that the reported period, source version, definitions, figures, limitations, and correction record agree.
+For the synthetic demonstration: first extract expects 3 rows and 3500 cents; second extract expects 4 rows and 3750 cents. These expectations are supplied independently of workbook formulas.

@@ -1,0 +1,20 @@
+Create a Google Sheets workbook named segment_mix_practice. Paste this tab-separated input into A1:
+Period	Category	Customer group	Orders	Revenue
+Mar 2025	Everyday	New	20	400
+Mar 2025	Everyday	Returning	10	200
+Mar 2025	Premium	New	5	500
+Mar 2025	Premium	Returning	5	500
+Mar 2026	Everyday	New	5	90
+Mar 2026	Everyday	Returning	5	90
+Mar 2026	Premium	New	10	900
+Mar 2026	Premium	Returning	20	1800
+
+Category summary: enter Period, Category, Orders, Revenue, Avg/order, Order share in G1:L1. Enter Mar 2025 / Everyday, Mar 2025 / Premium, Mar 2026 / Everyday, and Mar 2026 / Premium in G2:H5. In I2 enter =SUMIFS($D$2:$D$9,$A$2:$A$9,G2,$B$2:$B$9,H2). In J2 enter =SUMIFS($E$2:$E$9,$A$2:$A$9,G2,$B$2:$B$9,H2). In K2 enter =J2/I2. In L2 enter =I2/SUMIF($A$2:$A$9,G2,$D$2:$D$9). Fill I2:L2 down through row 5. Format L as a percentage.
+
+Overall summary: enter Period, Orders, Revenue, Avg/order in G8:J8; enter Mar 2025 and Mar 2026 in G9:G10. In H9 enter =SUMIF($A$2:$A$9,G9,$D$2:$D$9). In I9 enter =SUMIF($A$2:$A$9,G9,$E$2:$E$9). In J9 enter =I9/H9. Fill H9:J9 down one row.
+
+Mix scenario: enter Scenario, Orders, Revenue, Avg/order in G20:J20. Enter 2026 mix, 2025 rates in G21. Enter =I4+I5 in H21, =I4*K2+I5*K3 in I21, and =I21/H21 in J21. This is hypothetical, not observed revenue.
+
+Customer-group summary: enter Period, Customer group, Orders, Revenue, Avg/order, Order share in G13:L13. Enter Mar 2025 / New, Mar 2025 / Returning, Mar 2026 / New, and Mar 2026 / Returning in G14:H17. In I14 enter =SUMIFS($D$2:$D$9,$A$2:$A$9,G14,$C$2:$C$9,H14). In J14 enter =SUMIFS($E$2:$E$9,$A$2:$A$9,G14,$C$2:$C$9,H14). In K14 enter =J14/I14. In L14 enter =I14/SUMIF($A$2:$A$9,G14,$D$2:$D$9). Fill I14:L14 down through row 17. Format L as a percentage.
+
+Hand-check targets for this constructed input: overall orders are 40 and 40; revenue is 1600 and 2880; average per order is 40 and 72. Category orders are Everyday 30 then 10 and Premium 10 then 30; category averages are 20 then 18 and 100 then 90. Premium order share is 25% then 75%. The hypothetical new-mix, old-rate average is (10 × 20 + 30 × 100) / 40 = 80. Customer-group orders are New 25 then 15 and Returning 15 then 25; their averages are 36 then 66 and approximately 46.67 then 75.60. For each period, the two category counts and revenues must separately reconcile to the same overall totals as the two customer-group counts and revenues; shares must sum to 100% within each cut.

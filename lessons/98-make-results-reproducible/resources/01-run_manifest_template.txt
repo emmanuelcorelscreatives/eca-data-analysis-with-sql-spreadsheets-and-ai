@@ -1,0 +1,21 @@
+Report name: [name]
+Run identifier: [unique run identifier]
+
+Input 1 path, relative to this manifest: [path]
+Input 1 SHA256: [actual file hash]
+Input 1 upstream export or snapshot ID, if available: [ID or not available]
+Additional inputs: [give each input its own path, hash, and upstream ID field]
+
+Query path, relative to this manifest: [path]
+Query SHA256: [actual file hash]
+Query Git commit, if used: [commit ID or not applicable]
+
+Reporting start: [timestamp, timezone, inclusive or exclusive]
+Reporting cutoff: [timestamp, timezone, inclusive or exclusive]
+Metric definitions: [for each reported metric, state the calculation, qualifying records, exclusions, units, and rounding rule]
+
+Output path, relative to this manifest: [path]
+Output SHA256: [actual file hash after creation]
+Generated at: [actual timestamp with timezone]
+
+Fill every field from the completed run. Replace pending entries before using this as the record of a delivered result.

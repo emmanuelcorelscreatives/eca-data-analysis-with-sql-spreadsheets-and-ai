@@ -1,0 +1,83 @@
+Each query stands alone. The rows are synthetic and exist only while its query runs.
+
+1. Inspect all four rows:
+WITH example_orders(order_id, shipped_at) AS (
+  VALUES (101, DATE '2025-03-02'),
+         (102, NULL),
+         (103, DATE '2025-03-05'),
+         (104, NULL)
+)
+SELECT order_id, shipped_at
+FROM example_orders
+ORDER BY order_id;
+Expected order IDs: 101, 102, 103, 104.
+
+2. Test the incorrect equality comparison:
+WITH example_orders(order_id, shipped_at) AS (
+  VALUES (101, DATE '2025-03-02'),
+         (102, NULL),
+         (103, DATE '2025-03-05'),
+         (104, NULL)
+)
+SELECT order_id, shipped_at
+FROM example_orders
+WHERE shipped_at = NULL
+ORDER BY order_id;
+Expected: no rows. This does not mean the example has no missing dates.
+
+3. Inspect the condition results:
+WITH example_orders(order_id, shipped_at) AS (
+  VALUES (101, DATE '2025-03-02'),
+         (102, NULL),
+         (103, DATE '2025-03-05'),
+         (104, NULL)
+)
+SELECT order_id,
+       shipped_at = NULL AS equals_null,
+       shipped_at IS NULL AS missing,
+       shipped_at IS NOT NULL AS present
+FROM example_orders
+ORDER BY order_id;
+Expected: equals_null is SQL NULL for every row; missing is true for 102 and 104; present is true for 101 and 103.
+
+4. Find missing dates:
+WITH example_orders(order_id, shipped_at) AS (
+  VALUES (101, DATE '2025-03-02'),
+         (102, NULL),
+         (103, DATE '2025-03-05'),
+         (104, NULL)
+)
+SELECT order_id, shipped_at
+FROM example_orders
+WHERE shipped_at IS NULL
+ORDER BY order_id;
+Expected order IDs: 102, 104.
+
+5. Find present dates:
+WITH example_orders(order_id, shipped_at) AS (
+  VALUES (101, DATE '2025-03-02'),
+         (102, NULL),
+         (103, DATE '2025-03-05'),
+         (104, NULL)
+)
+SELECT order_id, shipped_at
+FROM example_orders
+WHERE shipped_at IS NOT NULL
+ORDER BY order_id;
+Expected order IDs: 101, 103.
+
+6. Include later dates and missing dates deliberately:
+WITH example_orders(order_id, shipped_at) AS (
+  VALUES (101, DATE '2025-03-02'),
+         (102, NULL),
+         (103, DATE '2025-03-05'),
+         (104, NULL)
+)
+SELECT order_id, shipped_at
+FROM example_orders
+WHERE shipped_at >= DATE '2025-03-04'
+   OR shipped_at IS NULL
+ORDER BY order_id;
+Expected order IDs: 102, 103, 104.
+
+PostgreSQL reference: https://www.postgresql.org/docs/current/functions-comparison.html and https://www.postgresql.org/docs/current/functions-logical.html

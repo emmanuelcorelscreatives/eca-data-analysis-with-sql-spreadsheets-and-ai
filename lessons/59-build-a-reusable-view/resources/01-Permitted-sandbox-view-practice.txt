@@ -1,0 +1,37 @@
+Prerequisite: Connect to the supplied PostgreSQL practice database using your approved method. The example assumes that sandbox already exists and that your account may create a view there. If the approved schema has another name, replace sandbox consistently. Stop on a permission error; do not create objects in a shared schema.
+
+1. Check the source SELECT:
+SELECT table_name
+FROM information_schema.tables
+WHERE table_schema = 'public'
+  AND table_type = 'BASE TABLE'
+ORDER BY table_name;
+
+2. Create the view in the permitted sandbox:
+CREATE VIEW sandbox.public_table_inventory AS
+SELECT table_name
+FROM information_schema.tables
+WHERE table_schema = 'public'
+  AND table_type = 'BASE TABLE';
+
+3. Read it, requesting an explicit display order:
+SELECT table_name FROM sandbox.public_table_inventory ORDER BY table_name;
+
+4. Compare current result counts; read the returned values rather than assuming them:
+SELECT
+  (SELECT COUNT(*)
+   FROM information_schema.tables
+   WHERE table_schema = 'public'
+     AND table_type = 'BASE TABLE') AS source_count,
+  (SELECT COUNT(*)
+   FROM sandbox.public_table_inventory) AS view_count;
+
+5. Inspect the saved definition:
+SELECT definition
+FROM pg_catalog.pg_views
+WHERE schemaname = 'sandbox'
+  AND viewname = 'public_table_inventory';
+
+An empty inventory can be a valid result; confirm that public is the intended source schema before treating it as a retail-table report. A standard view stores its definition, not fixed result rows. Creating it changes the sandbox; the inspection SELECT statements are read-only.
+
+PostgreSQL documentation: CREATE VIEW, https://www.postgresql.org/docs/current/sql-createview.html ; information_schema.tables, https://www.postgresql.org/docs/current/infoschema-tables.html ; pg_views, https://www.postgresql.org/docs/current/view-pg-views.html .

@@ -1,0 +1,35 @@
+Create three Google Sheets tabs named Items, Orders, and Checks.
+
+Items, columns A–F (enter order_date as actual date values; DATE(year,month,day) can be used to enter them):
+item_id | order_id | order_date | quantity | unit_price | line_total
+101 | O-10 | 2025-04-01 | 2 | 10 | 20
+102 | O-10 | 2025-04-01 | 1 | 15 | 15
+103 | O-11 | 2025-04-30 | 3 | 5 | 15
+104 | O-99 | 2025-04-15 | 1 | 10 | 10
+104 | O-99 | 2025-04-15 | 1 | 10 | 10
+105 | O-12 | 2025-05-01 | -1 | 10 | -10
+106 | O-12 | 2025-04-20 | 1 | [leave empty] | [leave empty]
+
+Orders, column A:
+order_id
+O-10
+O-11
+O-12
+
+On Items, put order_match in G1. Put this formula in G2 and fill through G8:
+=IF(B2="","",IF(COUNTIF(Orders!$A$2:$A$4,B2)=0,"unmatched","matched"))
+
+Checks, columns A–F:
+Area | Test | Expected | Observed | Outcome | Action
+Keys | Duplicate item IDs | 0 | =COUNTA(Items!A2:A8)-COUNTUNIQUE(Items!A2:A8) | [formula] | Inspect both rows against original items
+Completeness | Blank required cells | 0 | =COUNTBLANK(Items!A2:F8) | [formula] | Resolve missing price and line total
+Ranges | Invalid quantities or prices | 0 | =COUNTIF(Items!D2:D8,"<=0")+COUNTIF(Items!E2:E8,"<0") | [formula] | Inspect nonpositive quantity
+Relationships | Unmatched item rows | 0 | =COUNTIF(Items!G2:G8,"unmatched") | [formula] | Check order reference against source records
+Totals | April line total versus control | 60 | =SUMIFS(Items!F2:F8,Items!C2:C8,">="&DATE(2025,4,1),Items!C2:C8,"<"&DATE(2025,5,1)) | [formula] | Reconcile April items to control
+Time boundaries | Item dates outside April | 0 | =COUNTIF(Items!C2:C8,"<"&DATE(2025,4,1))+COUNTIF(Items!C2:C8,">="&DATE(2025,5,1)) | [formula] | Check May item and intended period
+Row coverage | Item rows present | 7 | =COUNTA(Items!A2:A8) | [formula] | Confirm the expected row count for the next extract
+Arithmetic | Line totals disagree with calculation | 0 | [leave empty pending missing inputs] | [formula] | Resolve missing inputs, then check calculations
+
+Put =IF(D2="","Investigate",IF(D2=C2,"Pass","Fail")) in Checks!E2 and fill through E9. For the supplied example, observed values in rows 2–8 are 1, 2, 1, 2, 70, 1, and 7. Row 9 remains Investigate. The independent April control of 60 is a supplied practice value, not a total calculated from Items.
+
+Reusable rule: write the population and acceptable value for each check; calculate an observed value; use Pass only when the comparison is sound; use Fail for a measured difference; use Investigate when required evidence is missing; and give every non-pass result a specific follow-up action.

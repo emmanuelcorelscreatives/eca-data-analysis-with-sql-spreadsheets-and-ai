@@ -1,0 +1,20 @@
+Create one Excel worksheet. Place the following tab-separated data in A1:D9. The entries beginning with =DATE are formulas so column A contains real Excel dates; format A2:A9 as yyyy-mm-dd.
+
+Sale date	Category	Amount	Status
+=DATE(2025,4,2)	Accessories	40	Completed
+=DATE(2025,4,5)	Apparel	100	Completed
+=DATE(2025,4,10)	Accessories	25	Returned
+=DATE(2025,4,20)	Accessories	60	Completed
+=DATE(2025,5,1)	Accessories	80	Completed
+=DATE(2025,4,30)	Apparel	30	Completed
+=DATE(2025,4,15)	Accessories	0	Completed
+=DATE(2025,4,25)	Accessories	15	Pending
+
+Put Measure in F1 and Result in G1. Put Accessories rows in F2, Accessories amount in F3, Completed April Accessories rows in F4, and Completed April Accessories amount in F5.
+
+G2: =COUNTIF(B2:B9,"Accessories")
+G3: =SUMIF(B2:B9,"Accessories",C2:C9)
+G4: =COUNTIFS(B2:B9,"Accessories",A2:A9,">="&DATE(2025,4,1),A2:A9,"<"&DATE(2025,5,1),D2:D9,"Completed")
+G5: =SUMIFS(C2:C9,B2:B9,"Accessories",A2:A9,">="&DATE(2025,4,1),A2:A9,"<"&DATE(2025,5,1),D2:D9,"Completed")
+
+Expected results for these exact sample rows: G2 = 6; G3 = 220; G4 = 3; G5 = 100. Hand check for G5: source rows 2, 5, and 8 qualify, and 40 + 60 + 0 = 100. The formulas use comma argument separators; use the separator required by your Excel locale.

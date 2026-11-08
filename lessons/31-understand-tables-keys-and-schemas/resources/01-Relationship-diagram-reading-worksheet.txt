@@ -1,0 +1,5 @@
+Use the supplied relationship diagram as the source of truth. For each table, record: table name | column or columns marked as primary key | what one row represents. For each relationship line, record: referenced table and key | referring table and foreign-key column | one-side table | many-side table | whether zero related rows are allowed | any unclear marking. Copy column names exactly. If a marking is absent or ambiguous, write 'unconfirmed' rather than guessing.
+
+Illustrative example only—not a transcription of the supplied diagram:
+Primary keys: customers.customer_id; orders.order_id; order_items.order_item_id; products.product_id; returns.return_id.
+Relationships: customers.customer_id → orders.customer_id; orders.order_id → order_items.order_id; products.product_id → order_items.product_id; order_items.order_item_id → returns.order_item_id. In this illustration, each arrow points from a primary key to a referring foreign key, and the referring table is the many side. Verify every name, connection, and optionality against the supplied diagram before using it as a course-specific answer.

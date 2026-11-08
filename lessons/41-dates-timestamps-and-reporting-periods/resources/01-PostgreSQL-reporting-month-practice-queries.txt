@@ -1,0 +1,58 @@
+Run each query separately in a PostgreSQL Query Tool. The inline rows are synthetic; these queries do not read or change course tables.
+
+-- 1. Derive the local reporting month.
+WITH input(event_id, occurred_at) AS (
+  VALUES
+    ('before_start', TIMESTAMPTZ '2025-03-01 04:59:59+00'),
+    ('at_start',     TIMESTAMPTZ '2025-03-01 05:00:00+00'),
+    ('before_end',   TIMESTAMPTZ '2025-04-01 03:59:59+00'),
+    ('at_end',       TIMESTAMPTZ '2025-04-01 04:00:00+00')
+)
+SELECT
+  event_id,
+  occurred_at,
+  occurred_at AT TIME ZONE 'America/New_York' AS local_time,
+  EXTRACT(YEAR FROM occurred_at AT TIME ZONE 'America/New_York') AS report_year,
+  EXTRACT(MONTH FROM occurred_at AT TIME ZONE 'America/New_York') AS report_month,
+  DATE_TRUNC('month', occurred_at AT TIME ZONE 'America/New_York') AS month_start
+FROM input
+ORDER BY occurred_at;
+
+-- 2. Test inclusion without removing the boundary rows.
+WITH input(event_id, occurred_at) AS (
+  VALUES
+    ('before_start', TIMESTAMPTZ '2025-03-01 04:59:59+00'),
+    ('at_start',     TIMESTAMPTZ '2025-03-01 05:00:00+00'),
+    ('before_end',   TIMESTAMPTZ '2025-04-01 03:59:59+00'),
+    ('at_end',       TIMESTAMPTZ '2025-04-01 04:00:00+00')
+)
+SELECT
+  event_id,
+  occurred_at AT TIME ZONE 'America/New_York' AS local_time,
+  (
+    occurred_at >= (TIMESTAMP '2025-03-01 00:00:00' AT TIME ZONE 'America/New_York')
+    AND occurred_at < (TIMESTAMP '2025-04-01 00:00:00' AT TIME ZONE 'America/New_York')
+  ) AS inside_march
+FROM input
+ORDER BY occurred_at;
+
+-- 3. Apply the tested filter.
+WITH input(event_id, occurred_at) AS (
+  VALUES
+    ('before_start', TIMESTAMPTZ '2025-03-01 04:59:59+00'),
+    ('at_start',     TIMESTAMPTZ '2025-03-01 05:00:00+00'),
+    ('before_end',   TIMESTAMPTZ '2025-04-01 03:59:59+00'),
+    ('at_end',       TIMESTAMPTZ '2025-04-01 04:00:00+00')
+)
+SELECT
+  event_id,
+  occurred_at AT TIME ZONE 'America/New_York' AS local_time,
+  DATE_TRUNC('month', occurred_at AT TIME ZONE 'America/New_York') AS month_start
+FROM input
+WHERE occurred_at >= (TIMESTAMP '2025-03-01 00:00:00' AT TIME ZONE 'America/New_York')
+  AND occurred_at < (TIMESTAMP '2025-04-01 00:00:00' AT TIME ZONE 'America/New_York')
+ORDER BY occurred_at;
+
+Check: In query 2, inspect all four rows for false, true, true, false in order. In query 3, inspect whether only at_start and before_end remain. If a check differs, inspect the entered timestamps and boundary operators rather than assuming the result is correct.
+
+Syntax reference: PostgreSQL documentation, Date/Time Functions and Operators: https://www.postgresql.org/docs/current/functions-datetime.html

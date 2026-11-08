@@ -1,0 +1,4 @@
+Save as `dictionary/data_dictionary.csv`:
+file_or_table,column,meaning,data_type,row_grain,null_rule,source
+
+Add one row per relevant field. For calculated measures, describe the calculation and point to the approved metric definition. Describe whether a blank is allowed and what it means. Record the source file or table; do not guess missing definitions.

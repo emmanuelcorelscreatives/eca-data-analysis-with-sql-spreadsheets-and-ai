@@ -1,0 +1,25 @@
+BLANK TEMPLATE
+Reader: [One specific role]
+Decision: [What choice must this reader make?]
+When: [At what review or deadline?]
+Action if unclear: [What should happen if evidence is insufficient?]
+
+Priority | Required question | How it helps the decision
+1 | [First question] | [Decision need]
+2 | [Second question] | [Decision need]
+3 | [Third question] | [Decision need]
+
+Outside scope: [What the available evidence cannot establish or this report will not decide]
+Success check: [What the reader can do after reading, including when to defer]
+Reader confirmation: [Ask the intended reader whether this is the right decision and whether a required question is missing]
+
+ILLUSTRATIVE RETAIL EXAMPLE — NOT ANALYSIS RESULTS
+Reader: Retail sales manager
+Decision: Which product category should we investigate first for a revenue decline?
+When: Monthly review after the latest complete month
+Action if unclear: Defer ranking and ask for data coverage or definition review
+1 | Are periods and coverage comparable? | Establish whether a fair comparison is possible
+2 | Did defined revenue fall, and by how much? | Test the premise and establish the size of the change
+3 | Which categories contributed most to the change? | Identify candidates for investigation
+Outside scope: Why revenue changed; which campaign to launch
+Success check: Reader can name a category to investigate, or state why selection must wait

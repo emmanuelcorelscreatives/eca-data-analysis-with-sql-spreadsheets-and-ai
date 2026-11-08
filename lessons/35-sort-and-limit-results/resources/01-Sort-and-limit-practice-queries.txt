@@ -1,0 +1,34 @@
+-- An unordered limit does not define the highest-revenue products.
+WITH item_sales(product_name, revenue) AS (
+    VALUES
+        ('Mug', 80.00),
+        ('Notebook', 125.00),
+        ('Pen set', 125.00),
+        ('Bottle', 45.00),
+        ('Tote', 95.00),
+        ('Sticker', 12.00)
+)
+SELECT product_name, revenue
+FROM item_sales
+WHERE revenue >= 50
+LIMIT 3;
+
+-- Define the top-three rule before applying the limit.
+WITH item_sales(product_name, revenue) AS (
+    VALUES
+        ('Mug', 80.00),
+        ('Notebook', 125.00),
+        ('Pen set', 125.00),
+        ('Bottle', 45.00),
+        ('Tote', 95.00),
+        ('Sticker', 12.00)
+)
+SELECT product_name, revenue
+FROM item_sales
+WHERE revenue >= 50
+ORDER BY revenue DESC, product_name ASC
+LIMIT 3;
+
+-- Check against the supplied values: the expected order is Notebook 125.00,
+-- Pen set 125.00, Tote 95.00. This is a prediction to verify by running
+-- the query, not a result claimed from the course practice database.

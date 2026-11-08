@@ -1,0 +1,34 @@
+Use only after confirming that your practice database contains orders(order_id, customer_id) and customers(customer_id, customer_name). Adapt names to the verified schema if necessary; do not guess.
+
+\d orders
+\d customers
+
+SELECT customer_id, COUNT(*) AS key_rows
+FROM customers
+GROUP BY customer_id
+HAVING COUNT(*) > 1
+ORDER BY key_rows DESC, customer_id;
+
+SELECT COUNT(*) AS null_customer_keys
+FROM customers
+WHERE customer_id IS NULL;
+
+SELECT COUNT(*) AS total_orders
+FROM orders;
+
+SELECT o.order_id,
+       o.customer_id AS order_customer_id,
+       c.customer_id AS customer_customer_id,
+       c.customer_name
+FROM orders AS o
+INNER JOIN customers AS c
+  ON o.customer_id = c.customer_id
+ORDER BY o.order_id
+LIMIT 10;
+
+SELECT COUNT(*) AS matched_orders
+FROM orders AS o
+INNER JOIN customers AS c
+  ON o.customer_id = c.customer_id;
+
+Record your actual total_orders and matched_orders results. Pause if the customer-key checks reveal duplicates or missing keys. PostgreSQL references: https://www.postgresql.org/docs/current/queries-table-expressions.html#QUERIES-JOIN ; https://www.postgresql.org/docs/current/queries-group.html ; https://www.postgresql.org/docs/current/app-psql.html

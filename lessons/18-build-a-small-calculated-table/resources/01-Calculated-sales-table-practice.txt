@@ -1,0 +1,22 @@
+Paste this tab-separated block into Google Sheets cell A1:
+order_id	product_id	quantity	unit_price
+O-1001	P-101	2	12.50
+O-1002	P-102	3	7.20
+O-1003	P-103	1	19.99
+O-1004	P-104	0	5.00
+O-1005	P-105		8.00
+O-1006	P-106	oops	6.50
+
+Enter line_value in E1 and status in F1.
+Enter in E2: =IF(OR(C2="",D2=""),"",C2*D2)
+Enter in F2: =IF(OR(C2="",D2=""),"Needs review",IF(AND(ISNUMBER(C2),ISNUMBER(D2)),"Ready","Needs review"))
+Copy E2:F2 through row 7. Format D2:E7 as Number.
+
+Independent hand checks to enter as constants in H1:I5:
+order_id	hand_value
+O-1001	25.00
+O-1002	21.60
+O-1003	19.99
+O-1004	0.00
+
+Compare each hand value with its row in column E. Expected exceptional behavior: O-1005 has an empty line value and Needs review; O-1006 has a visible line-value error and Needs review. Do not replace those results for this exercise.

@@ -1,0 +1,6 @@
+Question: Monthly revenue by category for the agreed reporting period.
+SQL owns: selecting qualifying source records; applying the approved period and metric rules; producing one repeatable revenue total per month and category.
+Spreadsheet receives: reporting_month, category, revenue.
+Spreadsheet owns: inspecting received rows; a clearly scoped transfer check; review notes; readable presentation; explicitly labeled small what-if assumptions.
+Decision test: If a rule must produce the same official answer on every refresh, keep its governed implementation upstream. If it helps a person inspect an answer or explore a clearly labeled assumption, it may belong in the workbook.
+Exception to record: If the workbook reveals a wrong population, category, or revenue definition, fix and rerun the governed logic rather than patching one copied result.

@@ -1,0 +1,15 @@
+Google Sheets tab SQL output: A1 month; B1 revenue; C1 row_count. Paste the monthly query's actual returned rows into A2:C3 as values. For these six literal inputs, expected rows are 2025-01 | 120 | 3 and 2025-02 | 150 | 3; do not use expectations in place of checking the run.
+
+Dashboard: A1 Sample retail revenue, January–February 2025; A2 Period; B2 2025-01-01 ≤ date < 2025-03-01; A3 Revenue; B3 =SUM('SQL output'!B2:B3); A4 Rows; B4 =SUM('SQL output'!C2:C3); A6 Month; B6 Revenue; A7 ='SQL output'!A2; B7 ='SQL output'!B2; A8 ='SQL output'!A3; B8 ='SQL output'!B3. Select A6:B8 and insert a column chart. Verify its range is Dashboard!A6:B8. In a real extract, extend and verify all source and chart ranges for its actual number of months.
+
+Checks: A1 Control; B1 SQL; C1 Dashboard; D1 Difference. A2 Revenue; A3 Rows; A4 January revenue; A5 February revenue. Leave B2:B5 blank until the separate control query returns; then enter its four returned values in that order. C2 ='Dashboard'!B3; C3 ='Dashboard'!B4; C4 ='Dashboard'!B7; C5 ='Dashboard'!B8. D2 =IF(B2="","",C2-B2); copy D2 through D5. Review-ready condition: B2:B5 are filled from the control output, D2:D5 all equal zero, and both queries and the brief use the same period and metric. Zero differences alone do not validate the underlying source definition.
+
+One-page Google Docs sample brief:
+Sample retail revenue: January–February 2025
+Reader and decision: Retail category lead; decide whether to investigate the higher February revenue in this constructed practice example.
+Observation: Revenue is 120 for January and 150 for February, a rise of 30, or 25 percent relative to January. Total revenue is 270 across six included orders, three in each month.
+Basis: These are sums of the sample revenue field for order dates on or after 2025-01-01 and before 2025-03-01. The monthly results and dashboard were compared with separate SQL controls. Retain the executed outputs with the sample workbook.
+Recommendation: Investigate the contributing products and orders before making an operational decision. The figures alone do not establish why revenue rose.
+Limitations: Only six constructed orders and two months are present; they do not establish a durable trend or describe an actual store. Costs, returns, and promotions are absent, so this example cannot establish profit or the cause of the change.
+
+For an actual project handoff, replace the practice data, reader, findings, and limitations with checked project-specific evidence. Google Sheets chart interface reference: https://support.google.com/docs/answer/63824.

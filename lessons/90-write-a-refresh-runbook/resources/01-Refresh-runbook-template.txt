@@ -1,0 +1,36 @@
+# Reporting refresh runbook
+
+Replace every bracketed field and illustrative path before operational use. This template records a procedure; it does not report a completed refresh.
+
+## Purpose and ownership
+Refresh the report for the requested reporting period. Publish only after all required checks pass and the report reviewer approves release. Do not change source records or metric definitions under this procedure.
+
+Refresh operator: [name and contact]
+Report reviewer and release approver: [name and contact]
+Query or source owner for escalation: [name and contact]
+Requested reporting period and cutoff: [enter for each run]
+
+## Locations and access
+Approved PostgreSQL environment and database: [names; never include credentials]
+Approved read-only query: sql/report_extract.sql
+Staged export: staging/report_extract.csv
+Review workbook: staging/sales_report_review.xlsx
+Workbook's configured export source: staging/report_extract.csv
+Approved published workbook: published/sales_report.xlsx
+Run log: docs/refresh_log.md
+
+The paths above illustrate a project layout. Replace them with working locations and confirm that the workbook connection uses the stated export.
+
+## Ordered procedure
+1. Preflight. Record run start time, period, and cutoff. Confirm the approved query and database, read-only access, workbook source location, and presence of the last approved published workbook. Stop and contact the owner if any item is unclear.
+2. Query. In the team's PostgreSQL query tool, select the approved database and run the reviewed query file for the recorded period and cutoff. In this example the tool is pgAdmin 4 Query Tool. Do not change metric rules during the refresh. Stop and log any execution error.
+3. Export. Save this run's result using the established controlled settings to staging/report_extract.csv. Confirm the actual file location, filename, expected column headers, and period. Stop if export fails; do not reuse an older file.
+4. Import. Open staging/sales_report_review.xlsx and refresh its established connection to the staged export. For a workbook configured for this route, use Excel Data > Refresh All. If your import route differs, replace this instruction. Confirm completion and the period shown by dependent outputs. Do not publish yet.
+5. Validate. For the same reporting period, grain, and metric definitions, record and compare source and workbook row counts, distinct business keys, required-field missingness, and the financial control total. Confirm the refresh timestamp and review exceptions. Record any documented, approved exception rule; otherwise a mismatch fails the check.
+6. Release. Only after all checks pass and reviewer approval is recorded, copy the approved review workbook to the published location using the project's controlled release process. Record the final published location and time.
+
+## Record every attempt
+In docs/refresh_log.md record: run start and end times; period and cutoff; reviewed query reference or version; database environment; actual export and review workbook locations; source and workbook control values; exceptions; errors; operator; reviewer; approval; and final decision. Enter observed values only after running the process. Log failed attempts even when nothing is published.
+
+## Failure rule
+If query execution, export, import, period, a control comparison, or an exception review fails: STOP. Do not replace published/sales_report.xlsx. Record the failed step, expected condition, observed result, and exact error if present. Notify the report reviewer and appropriate query or source owner. After an authorized correction, restart at the affected step and repeat every downstream check. Publish only after a passing run and documented reviewer approval.

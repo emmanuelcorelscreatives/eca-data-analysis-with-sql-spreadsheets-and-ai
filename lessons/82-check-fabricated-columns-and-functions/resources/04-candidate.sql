@@ -1,0 +1,1 @@
+SELECT date_trunc('month', placed_at) AS report_month FROM orders;

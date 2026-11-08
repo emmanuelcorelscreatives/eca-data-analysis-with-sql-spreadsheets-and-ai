@@ -1,0 +1,20 @@
+Run these separately against the supplied PostgreSQL practice database after confirming its table and column names.
+
+-- Original column headings
+SELECT
+    order_id,
+    order_date,
+    customer_id
+FROM orders;
+
+-- Readable output headings
+SELECT
+    order_id AS "Order ID",
+    order_date AS "Order Date",
+    customer_id AS "Customer ID"
+FROM orders;
+
+-- Comparison only: all current columns
+SELECT * FROM orders;
+
+Check the headings in your own results; do not assume particular row values or counts. PostgreSQL reference for SELECT lists and output aliases: https://www.postgresql.org/docs/current/sql-select.html

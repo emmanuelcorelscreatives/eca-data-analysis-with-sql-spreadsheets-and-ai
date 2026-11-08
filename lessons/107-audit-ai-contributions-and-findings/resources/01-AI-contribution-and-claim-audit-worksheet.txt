@@ -1,0 +1,13 @@
+Copy these two tables into separate workbook tabs.
+
+AI Log columns: ID | Suggestion | Where used | Test or review | Evidence and observed outcome | Decision (Accept, Revise, or Reject) | Correction or reason | Report location.
+Example AI-01 | =(B2-A2)/A2 | Formula Test | Test 1000→1200 and 0→100 | 20% for the ordinary case; percentage undefined from a zero baseline | Revise | =IF(A3=0,"n/a",(B3-A3)/A3) | Sample claim C-01.
+Example AI-02 | New customers drove the April revenue increase. | Draft finding | Compare the wording with the four sample order rows | The revenue change is calculable; the cause is not established | Reject causal claim | Retain only the checked numerical observation | Sample claim C-01.
+Blank row: ID: ____ | Suggestion: ____ | Where used: ____ | Test or review: ____ | Evidence and observed outcome: ____ | Decision: ____ | Correction or reason: ____ | Report location: ____.
+
+Claims columns: ID | Final wording or discarded draft | Evidence location and metric definition | Independent check | Population and period | Limitation | Status (Verified, Revise, or Remove) | Report location.
+Example C-01 | In this sample, April 2024 revenue was 1,200, up 200, or 20%, from March 2024. | Evidence!B2:B5; sum of sample order revenue by month | 400+600=1000; 500+700=1200; 1200-1000=200; 200/1000=20% | Four invented rows, March and April 2024 | Does not establish a cause | Verified (sample only) | Sample finding.
+Example C-02 | New customers drove the April revenue increase. | None for cause | Revenue arithmetic cannot test cause | Four invented rows, March and April 2024 | Customer status and cause not established | Remove | Do not include.
+Blank row: ID: ____ | Wording: ____ | Evidence location and metric definition: ____ | Independent check: ____ | Population and period: ____ | Limitation: ____ | Status: ____ | Report location: ____.
+
+For the capstone, replace every sample value and location with your own checked output. Retain a contribution only with its decision and test recorded. Include a final claim only when its wording, calculation, population, period, and limitations agree with its evidence.

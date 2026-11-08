@@ -1,0 +1,30 @@
+PostgreSQL reference: https://www.postgresql.org/docs/current/functions-window.html
+
+Run in pgAdmin 4 Query Tool:
+
+WITH product_totals (product_id, product_name, revenue) AS (
+  VALUES
+    (101, 'Kettle', 240.00),
+    (102, 'Lamp', 240.00),
+    (103, 'Mug', 180.00),
+    (104, 'Tray', 120.00),
+    (105, 'Vase', 120.00)
+)
+SELECT
+  product_id,
+  product_name,
+  revenue,
+  ROW_NUMBER() OVER (ORDER BY revenue DESC, product_id ASC) AS display_position,
+  RANK() OVER (ORDER BY revenue DESC) AS rank_position,
+  DENSE_RANK() OVER (ORDER BY revenue DESC) AS dense_position
+FROM product_totals
+ORDER BY revenue DESC, product_id ASC;
+
+Expected rows (product_id | product_name | revenue | display_position | rank_position | dense_position):
+101 | Kettle | 240.00 | 1 | 1 | 1
+102 | Lamp | 240.00 | 2 | 1 | 1
+103 | Mug | 180.00 | 3 | 3 | 2
+104 | Tray | 120.00 | 4 | 4 | 3
+105 | Vase | 120.00 | 5 | 4 | 3
+
+Check: tied revenues share RANK and DENSE_RANK values. RANK skips positions after ties; DENSE_RANK does not. The distinct product_id breaks ties only for ROW_NUMBER. When adapting the query, use a stable, unique product identifier for individual ordering.

@@ -1,0 +1,35 @@
+Paste into the pgAdmin 4 Query Tool and execute against a PostgreSQL connection. This query reads only its own VALUES rows; it creates or changes no database objects.
+
+WITH monthly (month_start, revenue) AS (
+  VALUES
+    (DATE '2025-01-01', 120.00::numeric),
+    (DATE '2025-02-01', 0.00::numeric),
+    (DATE '2025-04-01', 90.00::numeric),
+    (DATE '2025-05-01', 105.00::numeric)
+),
+with_previous AS (
+  SELECT
+    month_start, revenue,
+    LAG(month_start) OVER (ORDER BY month_start) AS previous_observed_month,
+    LAG(revenue) OVER (ORDER BY month_start) AS previous_observed_revenue
+  FROM monthly
+)
+SELECT
+  month_start, revenue, previous_observed_month, previous_observed_revenue,
+  CASE
+    WHEN previous_observed_month IS NULL THEN 'first observed month'
+    WHEN previous_observed_month <> (month_start - INTERVAL '1 month')::date
+      THEN 'missing calendar month'
+    ELSE 'consecutive months'
+  END AS comparison_status,
+  CASE
+    WHEN previous_observed_month = (month_start - INTERVAL '1 month')::date
+      THEN revenue - previous_observed_revenue
+    ELSE NULL
+  END AS calendar_month_change
+FROM with_previous
+ORDER BY month_start;
+
+Expected from these literal rows, not a claim about course-table data: January → first observed month, NULL change; February → consecutive months, -120.00; April → missing calendar month, NULL change; May → consecutive months, 15.00. For a hypothetical zero-valued March test, insert (DATE '2025-03-01', 0.00::numeric) between February and April in VALUES. Expected March change: 0.00. Expected April change: 90.00, now consecutive. Do not make that insertion in actual reporting without evidence that the absent month represents zero activity.
+
+Product references: PostgreSQL window functions, https://www.postgresql.org/docs/current/functions-window.html ; pgAdmin 4 Query Tool, https://www.pgadmin.org/docs/pgadmin4/latest/query_tool.html .

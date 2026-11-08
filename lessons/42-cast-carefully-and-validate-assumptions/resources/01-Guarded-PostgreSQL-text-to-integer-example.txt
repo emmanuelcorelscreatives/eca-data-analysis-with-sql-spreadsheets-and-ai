@@ -1,0 +1,49 @@
+Run this complete query in pgAdmin 4 Query Tool:
+
+WITH raw_input(source_row, raw_units) AS (
+    VALUES (1, '12'::text),
+           (2, '007'),
+           (3, '12x'),
+           (4, ''),
+           (5, NULL::text),
+           (6, '2147483648'),
+           (7, ' 8 '),
+           (8, '0')
+),
+format_checked AS (
+    SELECT source_row, raw_units,
+           raw_units ~ '^[0-9]{1,10}$' AS format_ok
+    FROM raw_input
+),
+numeric_checked AS (
+    SELECT source_row, raw_units, format_ok,
+           CASE WHEN format_ok THEN raw_units::numeric
+                ELSE NULL END AS candidate_value
+    FROM format_checked
+),
+classified AS (
+    SELECT source_row, raw_units, format_ok, candidate_value,
+           CASE
+               WHEN raw_units IS NULL THEN 'missing: NULL'
+               WHEN raw_units = '' THEN 'missing: empty'
+               WHEN format_ok IS NOT TRUE THEN 'bad format or length'
+               WHEN candidate_value > 2147483647 THEN 'out of range'
+               ELSE 'valid'
+           END AS status
+    FROM numeric_checked
+)
+SELECT source_row, raw_units, status,
+       CASE WHEN status = 'valid'
+            THEN candidate_value::integer
+            ELSE NULL END AS units
+FROM classified
+ORDER BY source_row;
+
+To view only exceptions, keep the entire query through the closing parenthesis of classified and replace its final SELECT with:
+
+SELECT source_row, raw_units, status
+FROM classified
+WHERE status <> 'valid'
+ORDER BY source_row;
+
+These inline values are constructed examples, not course-table records. The pattern enforces the stated one-to-ten-digit text rule; the range check is separate. Keep original text and source-row identifiers when investigating exceptions.

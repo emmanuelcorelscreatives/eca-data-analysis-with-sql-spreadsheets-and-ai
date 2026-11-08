@@ -1,0 +1,7 @@
+For each chart, record its question, source range, unit, and reporting period.
+Axis: Check the first tick and scale. For bar or column comparisons, check whether a nonzero baseline exaggerates differences. Verify units and readable tick labels.
+Denominator: For every percentage or rate, record the numerator, denominator, population, and period. Keep counts and percentages on clearly identified scales.
+Ordering: Decide whether calendar, alphabetical, or ranked order answers the question. Verify the first and last displayed categories against chart-input cells.
+Missing periods: Compare the displayed periods with the expected calendar sequence. Distinguish no observation from a measured zero; inspect how the chosen chart renders blanks.
+Clutter: Remove redundant legends and unnecessary decoration, not essential labels or coverage warnings.
+Final check: Read a plotted value from each chart, compare it with the chart-input cell and validated source, and record any remaining presentation limitation.

@@ -1,0 +1,11 @@
+For each stage, record: query version; expected row count; observed row count; expected total; observed total; key and value types, if relevant; and one sample row that explains a mismatch.
+
+Synthetic example control record:
+Input items: 4 rows, 3 distinct orders, gross 40.00.
+Input returns: 3 events, refunds 13.00.
+Types: item and return keys integer; line values and refund amounts numeric.
+First unexpected stage: joining return events directly to items yields 5 rows, not 4, and gross 60.00, not 40.00.
+Explaining row: item 101 appears twice, with its 20.00 line value beside refunds of 2.00 and 3.00.
+Focused change: aggregate refunds to one row per item before the join.
+Post-change controls: 4 joined rows; 4 distinct items; 3 orders; gross 40.00; refunds 13.00; net 27.00.
+Rule for your own work: if an earlier stage fails, investigate it before editing a later one. After a repair, compare all previously verified counts and totals, not just the headline result.

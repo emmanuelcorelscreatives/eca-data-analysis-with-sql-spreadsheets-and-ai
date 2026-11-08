@@ -1,0 +1,41 @@
+ORIGINAL BUSINESS REQUEST
+Write the request in the requester's words: ____________________
+
+DECISION
+What must be established before investigating possible causes? ____________________
+
+PERIOD — WHEN
+Exact start and end dates of the period being examined: ____________________
+
+COMPARISON — COMPARED WITH WHAT
+Exact start and end dates of the comparison period: ____________________
+Why this comparison? ____________________
+
+POPULATION — WHO
+Channel, geography, and other boundaries: ____________________
+Which records qualify? ____________________
+Which records are excluded? ____________________
+Apply the same eligibility rules to both periods.
+
+OUTCOME — MEASURED HOW
+Choose one primary measure: ____________________
+State what it includes and excludes: ____________________
+State which date assigns activity to a period: ____________________
+If asking for a percentage change, identify the reference period: ____________________
+
+REWRITTEN DATA QUESTION
+Did ____________________ for ____________________ during ____________________ change compared with ____________________, and by how much ____________________?
+
+CONFIRM BEFORE ANALYSIS
+[ ] The requester agrees with the population, dates, comparison, and outcome.
+[ ] Both periods have the required coverage; otherwise the limitation is stated.
+[ ] The proposed eligibility and measurement rules can be supported; otherwise the question is revised.
+[ ] No result or cause has been assumed.
+
+ILLUSTRATIVE EXAMPLE — NOT A FINDING
+Population: Online orders for delivery in the United States; completed, paid customer orders, excluding test and canceled orders.
+Period: October 1–December 31, 2025.
+Comparison: October 1–December 31, 2024.
+Outcome: Net product sales in dollars after discounts and linked refunds, excluding sales tax and delivery charges; assigned to the original order placement date.
+Question: Did net product sales for eligible United States online orders placed October 1–December 31, 2025 decrease versus October 1–December 31, 2024, and by how much in dollars and as a percentage of the earlier period?
+Checks still needed: Coverage of both windows, eligibility rules, linked refunds, and consistent reporting currency.

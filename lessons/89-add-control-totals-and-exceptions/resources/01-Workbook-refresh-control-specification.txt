@@ -1,0 +1,19 @@
+Google Sheets example. Sheet name: Extract. Header row: A1 item_id; B1 order_id; C1 customer_id; D1 order_date; E1 line_revenue. One data row per order item. This specification assumes order_id is populated on every data row and item_id must be unique. If order_id can be blank, establish a reliably populated source-row anchor before using these counts.
+
+Create a sheet named Control. Column A labels and column B contents:
+A2 Source reporting cutoff | B2 Enter the cutoff supplied with the source extract; do not substitute refresh time.
+A3 Refresh recorded at | B3 After a completed refresh, enter =NOW(), copy B3, and use Edit > Paste special > Values only. Confirm the spreadsheet time zone in File > Settings.
+A5 Expected rows | B5 Enter an independently checked source count; otherwise leave blank.
+A6 Loaded rows | B6 =COUNTA(Extract!B2:B)
+A7 Distinct item keys | B7 =IFERROR(COUNTUNIQUE(FILTER(Extract!A2:A,Extract!A2:A<>"")),0)
+A8 Missing item keys | B8 =COUNTIFS(Extract!B2:B,"<>",Extract!A2:A,"")
+A9 Extra item-key occurrences | B9 =B6-B7-B8
+A10 Missing customer IDs | B10 =COUNTIFS(Extract!B2:B,"<>",Extract!C2:C,"")
+A11 Missing revenue | B11 =COUNTIFS(Extract!B2:B,"<>",Extract!E2:E,"")
+A12 Loaded revenue | B12 =SUM(Extract!E2:E)
+A13 Expected revenue | B13 Enter an independently checked source total; otherwise leave blank. Enter 0 for a genuine expected zero.
+A14 Revenue difference | B14 =ROUND(B12-B13,2)
+A15 Status | B15 =IF(OR(B2="",B3="",B5="",B13=""),"INCOMPLETE",IF(AND(B6=B5,B8=0,B9=0,B10=0,B11=0,B14=0),"PASS","REVIEW"))
+A16 Exceptions | B16 =IF(B15="INCOMPLETE","Missing cutoff, timestamp, or independent expectations",IF(B15="PASS","None",TEXTJOIN("; ",TRUE,IF(B6<>B5,"Row count",""),IF(B8<>0,"Missing item key",""),IF(B9<>0,"Duplicate item key",""),IF(B10<>0,"Missing customer key",""),IF(B11<>0,"Missing revenue",""),IF(B14<>0,"Revenue total",""))))
+
+Before trusting PASS, confirm the imported line_revenue values are numeric and compare the displayed source reporting cutoff with the period you intended to report. Do not derive expected figures from the same loaded sheet. In Excel, use the corresponding worksheet formulas and paste the NOW() result as a value; keep the same distinction between cutoff and refresh time.

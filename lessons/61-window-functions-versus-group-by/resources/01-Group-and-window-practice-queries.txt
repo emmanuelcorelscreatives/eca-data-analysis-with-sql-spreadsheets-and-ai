@@ -1,0 +1,45 @@
+Run each query separately in the pgAdmin 4 Query Tool.
+
+1. One row per category:
+WITH sample_lines(line_id, category, line_revenue) AS (
+    VALUES
+        (101, 'Books', 12::numeric),
+        (102, 'Books', 18::numeric),
+        (103, 'Games', 20::numeric),
+        (104, 'Games', 30::numeric),
+        (105, 'Kitchen', 15::numeric)
+)
+SELECT category, SUM(line_revenue) AS category_revenue
+FROM sample_lines
+GROUP BY category
+ORDER BY category;
+
+2. Individual lines with a category total beside each one:
+WITH sample_lines(line_id, category, line_revenue) AS (
+    VALUES
+        (101, 'Books', 12::numeric),
+        (102, 'Books', 18::numeric),
+        (103, 'Games', 20::numeric),
+        (104, 'Games', 30::numeric),
+        (105, 'Kitchen', 15::numeric)
+)
+SELECT line_id, category, line_revenue,
+       SUM(line_revenue) OVER (PARTITION BY category) AS category_revenue
+FROM sample_lines
+ORDER BY line_id;
+
+3. Individual lines with the total across all five beside each one:
+WITH sample_lines(line_id, category, line_revenue) AS (
+    VALUES
+        (101, 'Books', 12::numeric),
+        (102, 'Books', 18::numeric),
+        (103, 'Games', 20::numeric),
+        (104, 'Games', 30::numeric),
+        (105, 'Kitchen', 15::numeric)
+)
+SELECT line_id, category, line_revenue,
+       SUM(line_revenue) OVER () AS all_revenue
+FROM sample_lines
+ORDER BY line_id;
+
+Checks calculated from these supplied values: query 1 returns three rows, with Books 30, Games 50, and Kitchen 15. Queries 2 and 3 each return five rows. In query 2, category_revenue is 30 for both Books lines, 50 for both Games lines, and 15 for Kitchen. In query 3, all_revenue is 95 on each line. Repeated window totals are context; do not sum them down the output column.

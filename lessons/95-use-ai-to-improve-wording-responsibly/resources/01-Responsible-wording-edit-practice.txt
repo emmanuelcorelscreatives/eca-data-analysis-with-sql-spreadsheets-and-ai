@@ -1,0 +1,24 @@
+FICTIONAL PRACTICE TEXT — not a real business result.
+
+Original checked-for-exercise paragraph:
+In this fictional practice example, online paid-order revenue rose from $100,000 in Q1 2025 to $120,000 in Q2 2025, a $20,000, 20% increase. Refunds are excluded. This comparison alone does not establish why revenue changed.
+
+Copy-ready editing request:
+Edit the following fictional report paragraph for clarity only. Preserve the online paid-order population, Q1 2025 and Q2 2025, every amount and percentage, the refunds exclusion, and the statement that the comparison does not establish a cause. Do not add numbers, causes, recommendations, or certainty. Return a revised paragraph and a brief list of what you changed. Do not claim to have verified the facts.
+Original paragraph: In this fictional practice example, online paid-order revenue rose from $100,000 in Q1 2025 to $120,000 in Q2 2025, a $20,000, 20% increase. Refunds are excluded. This comparison alone does not establish why revenue changed.
+
+Deliberately flawed practice candidate, written for this exercise rather than attributed to an AI response:
+Sales jumped 20% in Q2, driven by a successful promotion.
+
+Review each proposed revision against the original:
+[ ] Population remains online paid orders; it has not become all sales.
+[ ] Q1 2025 and Q2 2025 remain identifiable.
+[ ] $100,000, $120,000, $20,000, and 20% are unchanged and describe the same comparison.
+[ ] The exclusion of refunds remains explicit.
+[ ] No unsupported cause, recommendation, or extra certainty has appeared.
+[ ] Every other factual claim has support in the checked original; otherwise remove it or return to the evidence.
+
+One acceptable exercise edit:
+For online paid orders, revenue increased by $20,000 (20%), from $100,000 in Q1 2025 to $120,000 in Q2 2025. Refunds are excluded, and this comparison does not establish the cause.
+
+For a real report, share text with an external AI service only if your organization permits it. Record the original, proposed revision, accepted version, and the person’s completed review. The editing service does not validate the underlying evidence.

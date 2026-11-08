@@ -1,0 +1,38 @@
+Monthly query:
+WITH sample_orders(order_id, order_date, category, revenue) AS (
+  VALUES
+    ('A01', DATE '2025-01-05', 'Books', 40::numeric),
+    ('A02', DATE '2025-01-11', 'Home', 60::numeric),
+    ('A03', DATE '2025-01-26', 'Books', 20::numeric),
+    ('A04', DATE '2025-02-04', 'Books', 50::numeric),
+    ('A05', DATE '2025-02-17', 'Home', 30::numeric),
+    ('A06', DATE '2025-02-26', 'Home', 70::numeric)
+)
+SELECT to_char(order_date, 'YYYY-MM') AS month,
+       SUM(revenue) AS revenue,
+       COUNT(*) AS row_count
+FROM sample_orders
+WHERE order_date >= DATE '2025-01-01'
+  AND order_date < DATE '2025-03-01'
+GROUP BY 1
+ORDER BY 1;
+
+Separate control query; run it independently of the monthly query and copy its returned values, not the expectations below:
+WITH sample_orders(order_id, order_date, category, revenue) AS (
+  VALUES
+    ('A01', DATE '2025-01-05', 'Books', 40::numeric),
+    ('A02', DATE '2025-01-11', 'Home', 60::numeric),
+    ('A03', DATE '2025-01-26', 'Books', 20::numeric),
+    ('A04', DATE '2025-02-04', 'Books', 50::numeric),
+    ('A05', DATE '2025-02-17', 'Home', 30::numeric),
+    ('A06', DATE '2025-02-26', 'Home', 70::numeric)
+)
+SELECT SUM(revenue) AS revenue,
+       COUNT(*) AS row_count,
+       SUM(revenue) FILTER (WHERE order_date >= DATE '2025-01-01' AND order_date < DATE '2025-02-01') AS january_revenue,
+       SUM(revenue) FILTER (WHERE order_date >= DATE '2025-02-01' AND order_date < DATE '2025-03-01') AS february_revenue
+FROM sample_orders
+WHERE order_date >= DATE '2025-01-01'
+  AND order_date < DATE '2025-03-01';
+
+Hand-calculated expectations from the six literal rows, not a claim of executed output: monthly rows (2025-01, 120, 3) and (2025-02, 150, 3); controls (270, 6, 120, 150). Stop and investigate if execution disagrees. PostgreSQL reference: https://www.postgresql.org/docs/current/queries-values.html and https://www.postgresql.org/docs/current/functions-aggregate.html.

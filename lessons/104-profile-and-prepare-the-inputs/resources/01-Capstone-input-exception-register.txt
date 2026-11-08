@@ -1,0 +1,13 @@
+Sources sheet columns: Source version | Input reference | Raw rows | Distinct record keys | Period start inclusive | Period end exclusive | Captured on | Unchanged input location | Extraction query location. Enter actual capture details only when known.
+
+Exceptions sheet columns: Source version | Record key or affected-row count | Observed issue | Planned treatment | Reason or effect on question | Check needed | Check outcome | Final decision. Leave Check outcome and Final decision blank until the check is performed.
+
+Worked synthetic example; source version synthetic_q1_items_v1; eight raw rows; seven distinct line IDs; period [2025-01-01, 2025-04-01):
+502 | Line identifier appears twice; displayed row values match | Hold repeated row for investigation | Avoid removing a legitimate event or counting a repeated import | Compare source or import records
+503 | Category missing for product P99 | Retain; flag category | Cannot assign a named category without evidence | Check product reference
+504 | Order date missing | Keep in raw input; omit from monthly grouping pending recovery | No defensible month assignment | Find source order date
+505 | Category is ' outdoors '; quantity is zero | Check approved label mapping; flag quantity | Text may normalize, but zero needs a transaction rule | Confirm category and transaction meaning
+506 | Order date is 2025-04-01 | Outside selected period; retain raw row | Date is outside the question, not necessarily erroneous | Confirm period boundary
+507 | Unit price is -4.00 | Flag pending review | Could represent a credit or an error | Confirm transaction meaning
+
+Before treatment, confirm that the recorded baseline belongs to the stated source version. Keep raw inputs unchanged. Record the evidence and resulting count effect when a pending check becomes a final decision.

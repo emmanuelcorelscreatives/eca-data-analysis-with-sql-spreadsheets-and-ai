@@ -1,0 +1,27 @@
+WITH example_orders (order_id, order_date, status, net_merchandise_usd, return_on) AS (
+  VALUES
+    ('O-101', DATE '2025-01-05', 'completed', 90.00::numeric, NULL::date),
+    ('O-102', DATE '2025-01-20', 'cancelled', 50.00::numeric, NULL::date),
+    ('O-103', DATE '2025-01-31', 'completed', 200.00::numeric, DATE '2025-02-04'),
+    ('O-104', DATE '2025-02-02', 'completed', 80.00::numeric, NULL::date),
+    ('O-105', DATE '2025-02-26', 'completed', 30.00::numeric, DATE '2025-03-02'),
+    ('O-106', DATE '2025-02-28', 'completed', 40.00::numeric, NULL::date),
+    ('O-107', DATE '2025-03-01', 'completed', 700.00::numeric, NULL::date)
+)
+SELECT
+  date_trunc('month', order_date)::date AS order_month,
+  SUM(net_merchandise_usd) AS revenue_usd,
+  COUNT(*) AS orders,
+  ROUND(SUM(net_merchandise_usd) / NULLIF(COUNT(*), 0), 2) AS average_order_value_usd,
+  COUNT(*) FILTER (
+    WHERE return_on IS NOT NULL AND return_on < DATE '2025-03-01'
+  ) AS returned_orders,
+  COUNT(*) FILTER (
+    WHERE return_on IS NOT NULL AND return_on < DATE '2025-03-01'
+  )::numeric / NULLIF(COUNT(*), 0) AS return_rate
+FROM example_orders
+WHERE status = 'completed'
+  AND order_date >= DATE '2025-01-01'
+  AND order_date < DATE '2025-03-01'
+GROUP BY date_trunc('month', order_date)::date
+ORDER BY order_month;

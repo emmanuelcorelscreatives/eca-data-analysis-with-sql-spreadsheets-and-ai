@@ -1,0 +1,74 @@
+Run each statement separately in a PostgreSQL query editor. The records are invented for practice; no table is created or changed.
+
+1. Inspect the six source records:
+SELECT *
+FROM (VALUES
+    ('2025-01-01'::date, 'Books', 20.00),
+    ('2025-01-01'::date, 'Books', 30.00),
+    ('2025-01-01'::date, 'Games', 40.00),
+    ('2025-02-01'::date, 'Books', 15.00),
+    ('2025-02-01'::date, 'Games', 25.00),
+    ('2025-02-01'::date, 'Games', 35.00)
+) AS sales_rows(report_month, category, line_revenue);
+
+2. One row per category:
+SELECT category,
+       COUNT(*) AS source_rows,
+       SUM(line_revenue) AS revenue
+FROM (VALUES
+    ('2025-01-01'::date, 'Books', 20.00),
+    ('2025-01-01'::date, 'Books', 30.00),
+    ('2025-01-01'::date, 'Games', 40.00),
+    ('2025-02-01'::date, 'Books', 15.00),
+    ('2025-02-01'::date, 'Games', 25.00),
+    ('2025-02-01'::date, 'Games', 35.00)
+) AS sales_rows(report_month, category, line_revenue)
+GROUP BY category
+ORDER BY category;
+Expected: Books, 3, 65.00; Games, 3, 100.00.
+
+3. One row per reporting month:
+SELECT report_month,
+       COUNT(*) AS source_rows,
+       SUM(line_revenue) AS revenue
+FROM (VALUES
+    ('2025-01-01'::date, 'Books', 20.00),
+    ('2025-01-01'::date, 'Books', 30.00),
+    ('2025-01-01'::date, 'Games', 40.00),
+    ('2025-02-01'::date, 'Books', 15.00),
+    ('2025-02-01'::date, 'Games', 25.00),
+    ('2025-02-01'::date, 'Games', 35.00)
+) AS sales_rows(report_month, category, line_revenue)
+GROUP BY report_month
+ORDER BY report_month;
+Expected: 2025-01-01, 3, 90.00; 2025-02-01, 3, 75.00.
+
+4. One row per reporting-month-and-category pair:
+SELECT report_month,
+       category,
+       COUNT(*) AS source_rows,
+       SUM(line_revenue) AS revenue
+FROM (VALUES
+    ('2025-01-01'::date, 'Books', 20.00),
+    ('2025-01-01'::date, 'Books', 30.00),
+    ('2025-01-01'::date, 'Games', 40.00),
+    ('2025-02-01'::date, 'Books', 15.00),
+    ('2025-02-01'::date, 'Games', 25.00),
+    ('2025-02-01'::date, 'Games', 35.00)
+) AS sales_rows(report_month, category, line_revenue)
+GROUP BY report_month, category
+ORDER BY report_month, category;
+Expected: 2025-01-01, Books, 2, 50.00; 2025-01-01, Games, 1, 40.00; 2025-02-01, Books, 1, 15.00; 2025-02-01, Games, 2, 60.00.
+
+5. Check the source total:
+SELECT COUNT(*) AS source_rows,
+       SUM(line_revenue) AS revenue
+FROM (VALUES
+    ('2025-01-01'::date, 'Books', 20.00),
+    ('2025-01-01'::date, 'Books', 30.00),
+    ('2025-01-01'::date, 'Games', 40.00),
+    ('2025-02-01'::date, 'Books', 15.00),
+    ('2025-02-01'::date, 'Games', 25.00),
+    ('2025-02-01'::date, 'Games', 35.00)
+) AS sales_rows(report_month, category, line_revenue);
+Expected: 6 source rows and 165.00 revenue. For each grouped query, the result-row counts sum to 6 and the revenues sum to 165.00.

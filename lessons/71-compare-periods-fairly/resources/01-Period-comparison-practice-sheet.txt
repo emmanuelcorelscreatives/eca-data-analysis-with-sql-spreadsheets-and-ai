@@ -1,0 +1,22 @@
+In a Google Sheets sheet, enter the following data in cells A1:F6. Revenue figures are fictional; the matching-days row for March 10–12 overlaps the recent full-week row and must not be added to it.
+
+Window	Start	End	Observed through	Days observed	Revenue
+Prior full week	3/3/2025	3/9/2025	3/9/2025	7	10000
+Recent full week	3/10/2025	3/16/2025	3/16/2025	7	12000
+Latest partial week	3/17/2025	3/23/2025	3/19/2025	3	5000
+Prior matching days	3/10/2025	3/12/2025	3/12/2025	3	4500
+Latest matching days	3/17/2025	3/19/2025	3/19/2025	3	5000
+
+Enter these comparison headings in A9:E9: Comparison | Prior | Current | Dollar change | Percent change.
+A10: Full weeks
+B10: =F2
+C10: =F3
+D10: =C10-B10
+E10: =D10/B10
+A11: Matched 3 days
+B11: =F5
+C11: =F6
+D11: =C11-B11
+E11: =D11/B11
+
+Format revenue and dollar-change cells as currency; format E10:E11 as percentages with two decimal places. Check results: full weeks, $2,000 and 20.00%; matched three-day windows, $500 and approximately 11.11%. Interpret each percentage using its prior value as the denominator. Do not compare the incomplete March 17–23 week with a completed seven-day week. If a prior value is zero, percentage change is undefined.

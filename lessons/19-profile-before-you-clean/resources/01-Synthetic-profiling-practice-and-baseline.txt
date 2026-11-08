@@ -1,0 +1,41 @@
+Create a Google Sheets tab named Working copy. Paste this tab-separated example into A1. These are synthetic demonstration records, not supplied course data.
+item_id	product_id	category	quantity	unit_price
+I001	P01	Home	2	15
+I002	P02	Beauty	1	8
+I003	P03	Home	3	12
+I004	P04	beauty	1	9
+I005	P05	Toys	0	20
+I006		Home	2	15
+I007	P02	Beauty		8
+I008	P07	Toys	2	9999
+I009	P08	Home	1	11
+I009	P08	Home	1	11
+
+Create a Baseline tab. Enter the following labels in A1:A13 and formulas in B2:B13; B1 is the header Value. These formulas cover the fixed demonstration extent, rows 2–11. For your own data, verify and replace that extent before profiling.
+A1: Metric
+A2: Input rows | B2: =ROWS('Working copy'!A2:A11)
+A3: Blank item_id | B3: =COUNTBLANK('Working copy'!A2:A11)
+A4: Blank product_id | B4: =COUNTBLANK('Working copy'!B2:B11)
+A5: Blank category | B5: =COUNTBLANK('Working copy'!C2:C11)
+A6: Blank quantity | B6: =COUNTBLANK('Working copy'!D2:D11)
+A7: Blank unit_price | B7: =COUNTBLANK('Working copy'!E2:E11)
+A8: Distinct item_id | B8: =COUNTUNIQUE('Working copy'!A2:A11)
+A9: Extra repeated IDs | B9: =B2-B8
+A10: Minimum quantity | B10: =MIN('Working copy'!D2:D11)
+A11: Maximum quantity | B11: =MAX('Working copy'!D2:D11)
+A12: Minimum unit_price | B12: =MIN('Working copy'!E2:E11)
+A13: Maximum unit_price | B13: =MAX('Working copy'!E2:E11)
+In D1 enter: =QUERY('Working copy'!C1:C11,"select C, count(C) where C is not null group by C label C 'category', count(C) 'rows'",1)
+
+Check the calculated demonstration results rather than typing them over formulas: 10 input rows; blank counts 0, 1, 0, 1, 0 in field order; 9 distinct item IDs; 1 extra repeated ID; quantity minimum 0 and maximum 3; unit_price minimum 8 and maximum 9999. The category results should be Beauty 2, Home 5, Toys 2, and beauty 1. Check that the category counts total 10. A different input requires its own observed results.
+
+Create an Exceptions tab and enter this tab-separated observation list in A1. Empty observed-value cells below are intentionally empty.
+Source row	item_id	field	observed value	reason to review
+5	I004	category	beauty	Different capitalization from Beauty
+6	I005	quantity	0	Zero quantity; meaning not yet checked
+7	I006	product_id		Empty product_id
+8	I007	quantity		Empty quantity
+9	I008	unit_price	9999	Much higher than other displayed prices
+10 and 11	I009	item_id	I009	Repeated ID and matching displayed records; meaning not yet checked
+
+Do not alter Working copy while recording these observations. A repeated-ID calculation is a candidate check, not proof that a purchase should be removed.

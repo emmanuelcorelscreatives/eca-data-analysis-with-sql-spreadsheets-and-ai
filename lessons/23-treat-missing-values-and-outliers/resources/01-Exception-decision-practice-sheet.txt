@@ -1,0 +1,22 @@
+Create a Google Sheets file named Exception decisions with tabs Rows, Decisions, and Impact.
+
+Rows, cells A1:D6 (leave B4 genuinely empty):
+line_id,region,sale_amount,evidence
+L101,North,40,
+L102,South,75,
+L103,,60,No source region supplied
+L104,North,9600,Invoice not reviewed
+L105,South,90,
+
+Decisions, cells A1:G3:
+line_id | affected_field | question | decision | basis | consequence | status
+L103 | region | All sales; sales by region | Retain; exclude from named-region view | No source region supplied | Overall includes 60; named-region figures omit 60 | Open: seek source
+L104 | sale_amount | All sales | Retain and flag | Invoice not reviewed | Total includes 9600; show without-line sensitivity | Open: verify invoice
+
+Impact:
+A1: measure; B1: amount
+A2: All sales; B2: =SUM(Rows!C2:C6) [exercise result: 9865]
+A3: Known-region sales; B3: =SUMIF(Rows!B2:B6,"<>",Rows!C2:C6) [exercise result: 9805]
+A4: Excluding pending line for sensitivity only; B4: =B2-Rows!C5 [exercise result: 265]
+
+Decision questions for another exception: What result is being asked for? What is observed, and what has not been verified? Will the record be retained, flagged, excluded from a specified view, or imputed under a documented rule? Which reported amount or population changes? What evidence would close an open decision? Keep a sensitivity comparison separate from a corrected result.

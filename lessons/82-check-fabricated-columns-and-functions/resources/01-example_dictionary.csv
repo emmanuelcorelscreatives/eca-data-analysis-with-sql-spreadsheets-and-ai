@@ -1,0 +1,4 @@
+table_name,column_name,data_type,description
+orders,order_id,bigint,Unique order identifier
+orders,placed_at,timestamp without time zone,Time the order was placed
+orders,amount,numeric,Recorded order amount

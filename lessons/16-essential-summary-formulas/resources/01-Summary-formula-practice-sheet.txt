@@ -1,0 +1,10 @@
+Enter headers: A1 Record; B1 Units sold; C1 Function; D1 Result.
+Enter records A2:A10 as 1, 2, 3, 4, 5, 6, 7, 8, 9.
+Enter B2 12; B3 8; leave B4 empty; B5 pending; B6 0; B7 20; B8 10; leave B9 empty; B10 5. Leave B4 and B9 genuinely empty.
+Enter C2 SUM and D2 =SUM(B2:B10). Expected result: 55.
+Enter C3 COUNT and D3 =COUNT(B2:B10). Expected result: 6 numeric cells.
+Enter C4 COUNTA and D4 =COUNTA(B2:B10). Expected result: 7 nonempty cells.
+Enter C5 AVERAGE and D5 =AVERAGE(B2:B10). Expected result: 55/6, approximately 9.17; displayed precision may vary.
+Enter C6 MIN and D6 =MIN(B2:B10). Expected result: 0.
+Enter C7 MAX and D7 =MAX(B2:B10). Expected result: 20.
+Check: B2:B10 has nine cells—six numbers, one text entry, and two empty cells. The six numbers add to 55.

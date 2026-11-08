@@ -1,0 +1,8 @@
+This is practice data, not a course-database result. On an Outputs sheet, enter A1:E5 as follows.
+Month | Net sales (dollars) | Category | Net sales (dollars) | Orders
+Jan 2025 | 10000 | Apparel | 13500 | 100
+Feb 2025 | 12000 | Home | 10000 | 120
+Mar 2025 | 9000 | Electronics | 7500 | 90
+Total | 31000 | Total | 31000 | 310
+
+The two net-sales blocks each total 31000; the monthly order figures total 310. On Dashboard, use A5 =Outputs!B5, C5 =Outputs!E5, and E5 =A5/C5. The resulting fictional average order value is 100 dollars. Use Outputs!A1:B4 for the monthly line chart and Outputs!C1:D4 for the category bar chart. Display the period, dollars as the sales unit, and these example metric definitions on the dashboard: net sales is approved after-return sales; orders is distinct qualifying orders; average order value is net sales divided by orders. For a real report, replace these values and definitions with the approved, verified outputs for its stated period.

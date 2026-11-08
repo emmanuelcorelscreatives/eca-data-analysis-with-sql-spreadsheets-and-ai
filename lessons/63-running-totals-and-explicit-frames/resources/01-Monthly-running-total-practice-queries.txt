@@ -1,0 +1,37 @@
+Run the first statement in pgAdmin Query Tool to check the input:
+
+WITH monthly_revenue(month_start, revenue) AS (
+  VALUES
+    (DATE '2025-01-01', 120.00::numeric),
+    (DATE '2025-02-01', 80.00::numeric),
+    (DATE '2025-03-01', 150.00::numeric),
+    (DATE '2025-04-01', 50.00::numeric)
+)
+SELECT COUNT(*) AS month_rows,
+       COUNT(DISTINCT month_start) AS distinct_months,
+       SUM(revenue) AS period_revenue
+FROM monthly_revenue;
+
+For these literal inputs, check for 4 month_rows, 4 distinct_months, and 400.00 period_revenue.
+
+Then run this statement:
+
+WITH monthly_revenue(month_start, revenue) AS (
+  VALUES
+    (DATE '2025-01-01', 120.00::numeric),
+    (DATE '2025-02-01', 80.00::numeric),
+    (DATE '2025-03-01', 150.00::numeric),
+    (DATE '2025-04-01', 50.00::numeric)
+)
+SELECT month_start, revenue,
+       SUM(revenue) OVER (
+         ORDER BY month_start
+         ROWS BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW
+       ) AS cumulative_revenue,
+       (SELECT SUM(revenue) FROM monthly_revenue) AS period_revenue
+FROM monthly_revenue
+ORDER BY month_start;
+
+Hand-calculated cumulative checks, in date order: 120.00, 200.00, 350.00, 400.00. The final cumulative value must equal the independently calculated 400.00 period total. If substituting your own monthly summary, validate its grain and revenue definition first.
+
+PostgreSQL documentation: https://www.postgresql.org/docs/current/tutorial-window.html and https://www.postgresql.org/docs/current/sql-expressions.html#SYNTAX-WINDOW-FUNCTIONS

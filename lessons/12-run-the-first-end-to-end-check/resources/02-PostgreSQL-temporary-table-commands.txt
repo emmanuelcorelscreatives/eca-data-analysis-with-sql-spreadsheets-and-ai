@@ -1,0 +1,8 @@
+CREATE TEMP TABLE source_count_check (source_row_id text, customer_note text);
+\copy source_count_check (source_row_id, customer_note) FROM 'raw_data/source_count_check.csv' WITH (FORMAT csv, HEADER false);
+SELECT COUNT(*) AS source_rows FROM source_count_check;
+SELECT source_row_id, customer_note FROM source_count_check ORDER BY source_row_id LIMIT 6;
+TRUNCATE source_count_check;
+\copy source_count_check (source_row_id, customer_note) FROM 'raw_data/source_count_check.csv' WITH (FORMAT csv, HEADER true);
+SELECT COUNT(*) AS source_rows FROM source_count_check;
+SELECT source_row_id, customer_note FROM source_count_check ORDER BY source_row_id LIMIT 6;

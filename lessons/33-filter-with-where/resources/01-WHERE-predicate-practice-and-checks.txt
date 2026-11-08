@@ -1,0 +1,22 @@
+Target: orders in March 2025, paid or shipped, with order_total at least 100. Run this complete read-only PostgreSQL statement in a query editor:
+
+WITH orders (order_id, order_date, status, order_total) AS (
+  VALUES
+    (101, DATE '2025-03-04', 'paid', 120.00),
+    (102, DATE '2025-03-08', 'paid', 60.00),
+    (103, DATE '2025-03-12', 'pending', 150.00),
+    (104, DATE '2025-04-02', 'paid', 200.00),
+    (105, DATE '2025-03-18', 'shipped', 130.00),
+    (106, DATE '2025-03-20', 'shipped', 40.00),
+    (107, DATE '2025-04-05', 'shipped', 170.00),
+    (108, DATE '2025-03-25', 'cancelled', 300.00)
+)
+SELECT order_id FROM orders
+WHERE order_date >= DATE '2025-03-01'
+  AND order_date < DATE '2025-04-01'
+  AND order_total >= 100
+  AND (status = 'paid' OR status = 'shipped');
+
+Check membership, regardless of display order: qualifying IDs 101 and 105. Exclusions: 102 and 106 are below 100; 103 is pending; 104 and 107 are outside March; 108 is cancelled. Remove only the status parentheses to test precedence: the result contains 101, 105, 106, and 107. Restore the parentheses afterward. These are expected results for the supplied synthetic rows, not results from the course database.
+
+PostgreSQL reference: WHERE in table expressions, https://www.postgresql.org/docs/current/queries-table-expressions.html#QUERIES-WHERE ; logical operators and their precedence, https://www.postgresql.org/docs/current/functions-logical.html and https://www.postgresql.org/docs/current/sql-syntax-lexical.html#SQL-PRECEDENCE .

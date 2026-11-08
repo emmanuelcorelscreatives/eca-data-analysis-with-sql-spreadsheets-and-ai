@@ -1,0 +1,40 @@
+Run each statement separately in pgAdmin 4 Query Tool. These are synthetic practice records, not course-database results.
+
+1. One-value result; expect one column and one row containing 40.00:
+SELECT (
+  SELECT ROUND(AVG(v.amount), 2)
+  FROM (VALUES (20::numeric), (40::numeric), (60::numeric)) AS v(amount)
+) AS benchmark_amount;
+
+2. Scalar value in a comparison; expect order 103 with amount 60:
+SELECT o.order_id, o.amount
+FROM (VALUES
+  (101, 20::numeric),
+  (102, 40::numeric),
+  (103, 60::numeric)
+) AS o(order_id, amount)
+WHERE o.amount > (
+  SELECT ROUND(AVG(v.amount), 2)
+  FROM (VALUES (20::numeric), (40::numeric), (60::numeric)) AS v(amount)
+)
+ORDER BY o.order_id;
+
+3. Table source in FROM; expect North, count 2, average 30.00:
+SELECT s.region, s.order_count, s.avg_amount
+FROM (
+  SELECT o.region,
+         COUNT(*) AS order_count,
+         ROUND(AVG(o.amount), 2) AS avg_amount
+  FROM (VALUES
+    ('North', 20::numeric),
+    ('North', 40::numeric),
+    ('South', 60::numeric)
+  ) AS o(region, amount)
+  GROUP BY o.region
+) AS s
+WHERE s.order_count >= 2
+ORDER BY s.region;
+
+Check before reusing a subquery: What does the outer expression or FROM clause expect? How many columns and rows can the inner query return? Which inner output columns are available to the outer query?
+
+PostgreSQL reference: https://www.postgresql.org/docs/current/sql-expressions.html#SQL-SYNTAX-SCALAR-SUBQUERIES and https://www.postgresql.org/docs/current/queries-table-expressions.html#QUERIES-SUBQUERIES

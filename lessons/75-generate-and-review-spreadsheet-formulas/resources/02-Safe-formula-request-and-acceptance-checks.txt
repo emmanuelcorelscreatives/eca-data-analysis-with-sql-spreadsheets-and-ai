@@ -1,0 +1,13 @@
+Request to adapt and submit: Give me one Google Sheets formula for E2 and list its assumptions and failure cases. B2 is quantity; C2 is unit price. Both must be numbers at least zero. If either cell is blank, return a blank. Zero is valid. Reject negative values and text, including numeric-looking text, with CHECK INPUT. Otherwise multiply quantity by unit price and round to two decimal places. Would the formula also work in current Excel? Use only this synthetic specification.
+
+Acceptance checks:
+[ ] The stated assumptions match the agreed rules; no missing input has silently become zero.
+[ ] Ordinary input matches hand multiplication.
+[ ] Each genuinely empty input produces a blank result.
+[ ] Numeric zero produces numeric zero, not a blank.
+[ ] Negative quantity and negative price produce CHECK INPUT.
+[ ] A price stored as numeric-looking text produces CHECK INPUT.
+[ ] The larger-quantity test matches the hand calculation.
+[ ] Copied formulas refer to the quantity and price on their own row.
+[ ] Results were checked in the actual spreadsheet version and locale being used.
+[ ] Any failed test was resolved by an explicit formula revision or an explicitly revised rule, followed by a rerun.

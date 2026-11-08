@@ -1,0 +1,4 @@
+Save as `checks/control_totals.csv`:
+run_id,extract_cutoff,check_name,expected,actual,status,notes
+
+Add rows only for measured runs. Record where each expected value came from in `notes`; use the same population and period on both sides. Include the applicable input row count, distinct business-key count, missing reference-key count, and report financial total. Append a new run rather than replacing a previous verified run. Record mismatches rather than forcing values to agree.

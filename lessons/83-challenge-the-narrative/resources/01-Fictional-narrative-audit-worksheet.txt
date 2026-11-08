@@ -1,0 +1,24 @@
+This is fictional practice data, not a course-database extract.
+
+Orders sheet, cells A1:C7:
+order_id,month,revenue_dollars
+O101,2025-04,120
+O102,2025-04,80
+O103,2025-04,200
+O104,2025-05,90
+O105,2025-05,60
+O106,2025-05,150
+
+Evidence sheet:
+A1 metric | B1 value
+A2 April 2025 revenue | B2 =SUMIF(Orders!B2:B7,"2025-04",Orders!C2:C7)
+A3 May 2025 revenue | B3 =SUMIF(Orders!B2:B7,"2025-05",Orders!C2:C7)
+A4 May minus April | B4 =B3-B2
+A5 Change relative to April | B5 =B4/B2
+Format B5 as a percentage. For these fictional inputs, the respective values are 400, 300, -100, and -25%.
+
+Unreviewed draft: Company revenue fell 25% in May 2025, a $100 loss. Stockouts caused the decline. May had 20% fewer customers. Demand is collapsing, so revenue will keep falling. May revenue was $300. All categories performed worse.
+
+Trace each component: 25% → Evidence!B5, limited to this example; $100 → Evidence!B4, a revenue decrease rather than a profit loss; April $400 → Evidence!B2; May $300 → Evidence!B3. Stockouts → no inventory evidence. Fewer customers → no customer field. Demand and future decline → no supporting measure or future result. Category performance → no category field.
+
+Warranted revision: In this six-order example, recorded revenue totals $400 in April 2025 and $300 in May 2025. That is $100 lower, or 25% lower relative to April. These rows do not establish the cause of the change or whether the pattern holds outside this example.

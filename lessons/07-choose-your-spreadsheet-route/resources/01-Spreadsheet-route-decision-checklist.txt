@@ -1,0 +1,12 @@
+Choose one main route: Microsoft Excel or Google Sheets.
+
+[ ] I can open the application with an account I am permitted to use.
+[ ] I can create an empty workbook or spreadsheet and reopen it later.
+[ ] I have a permitted location for my course working files.
+[ ] I can locate the grid, formula bar, and chart command.
+[ ] I understand that menus, table features, and availability may differ by version or account.
+
+My main route: __________
+Access or storage limitation to resolve: __________
+
+Official interface references: Microsoft Excel help: https://support.microsoft.com/excel ; Google Sheets help: https://support.google.com/docs/?hl=en .

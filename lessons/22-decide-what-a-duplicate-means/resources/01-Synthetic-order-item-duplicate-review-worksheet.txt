@@ -1,0 +1,34 @@
+Create four tabs with the following tab-separated contents. Treat identifiers as text. Raw_order_items is the untouched input; source_row in Working_review refers to its sheet row number.
+
+Raw_order_items
+order_item_id	order_id	customer_id	product_id	order_date	quantity	unit_price	source_batch
+OI-501	ORD-201	C-17	P-04	2025-03-04	1	12.00	batch_A
+OI-502	ORD-201	C-17	P-09	2025-03-04	2	8.00	batch_A
+OI-503	ORD-202	C-17	P-04	2025-03-06	1	12.00	batch_A
+OI-504	ORD-203	C-25	P-04	2025-03-06	1	12.00	batch_A
+OI-501	ORD-201	C-17	P-04	2025-03-04	1	12.00	batch_B
+OI-505	ORD-204	C-17	P-04	2025-03-06	1	12.00	batch_B
+OI-503	ORD-202	C-17	P-04	2025-03-06	2	12.00	batch_B
+OI-506	ORD-205	C-31	P-09	2025-03-07	1	8.00	batch_B
+
+Working_review
+order_item_id	order_id	customer_id	product_id	order_date	quantity	unit_price	source_batch	source_row
+OI-501	ORD-201	C-17	P-04	2025-03-04	1	12.00	batch_A	2
+OI-501	ORD-201	C-17	P-04	2025-03-04	1	12.00	batch_B	6
+OI-502	ORD-201	C-17	P-09	2025-03-04	2	8.00	batch_A	3
+OI-503	ORD-202	C-17	P-04	2025-03-06	1	12.00	batch_A	4
+OI-503	ORD-202	C-17	P-04	2025-03-06	2	12.00	batch_B	8
+OI-504	ORD-203	C-25	P-04	2025-03-06	1	12.00	batch_A	5
+OI-505	ORD-204	C-17	P-04	2025-03-06	1	12.00	batch_B	7
+OI-506	ORD-205	C-31	P-09	2025-03-07	1	8.00	batch_B	9
+
+Batch_manifest
+batch_name	snapshot_time	source_note
+batch_A	2025-03-06 18:00	Overlapping snapshot extract; selected rows shown
+batch_B	2025-03-07 18:00	Later overlapping snapshot extract; selected rows shown; order_item_id persists across snapshots
+
+Duplicate_review
+order_item_id	raw_rows	field_comparison	batch_evidence	decision	reason	next_action
+OI-501	2, 6	Order, customer, product, date, quantity and price match	Overlapping snapshots; stable item ID	Duplicate import confirmed	One item appears in both extracts	Count once in approved working set; retain raw rows
+OI-503	4, 8	Quantity 1 versus 2; other fields match	Overlapping snapshots	Unresolved key conflict	Possible revision; not a second item	Verify change history before selecting a version
+OI-505	7	Shares customer, product, date, quantity and price with raw row 4; order and item IDs differ	batch_B	Keep: separate purchase	ORD-204 differs from ORD-202	Retain as valid order item

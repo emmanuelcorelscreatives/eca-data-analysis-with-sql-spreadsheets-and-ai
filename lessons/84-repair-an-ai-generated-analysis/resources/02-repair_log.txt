@@ -1,0 +1,12 @@
+Case: Fictional retail repair exercise
+Question: How did monthly net sales change for completed orders placed in January and February 2025?
+Metric and boundaries: Item quantity times unit price, less refunds recorded before 2025-03-15 00:00:00+00. Report by UTC order month. Include orders placed from 2025-01-01 00:00:00+00 up to but not including 2025-03-01 00:00:00+00. Exclude cancelled orders.
+
+Original claim: Net sales were 390 across January and February. February fell from 280 to 110, about 61%, because returns rose.
+Failed rule: Refund events were joined to items using order_id only, although refunds identify both order_id and item_id. Order 101's two items each matched its two refund events. This multiplied gross and refund amounts.
+Material correction: Original two-month net 390; corrected two-month net 290. Original January net 280; corrected January net 180. February net 110. Corrected February change: 110 - 180 = -70; -70 / 180 is approximately -38.9%.
+Repaired rule: Sum eligible refunds once per (order_id, item_id), then left-join that result to the scoped items on both keys. Assign results to UTC order month; treat no matching refund as zero for this metric.
+Independent controls: Hand totals are January gross 230 less refunds 50 = net 180; February gross 120 less refunds 10 = net 110. A separate order-level calculation should agree. Expect four qualifying item rows before and after the repaired join, zero unmatched refund keys, and two-month net 290. The flawed join should reproduce six rows and January net 280.
+Revised summary: For completed orders placed in January and February 2025, net sales after refunds recorded before March 15 were 180 and 110 respectively. February was 70 lower, or about 38.9% below January. This small example does not establish the cause of the change.
+Actual run outcome: [Record the observed check results and any discrepancy after executing analysis_repair.sql. Do not prefill.]
+Acceptance decision: [Accept only after material numbers are corrected and all independent controls pass; otherwise record the failure and leave unaccepted.]

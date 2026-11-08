@@ -1,0 +1,20 @@
+Fill in each field for your own capstone.
+
+Business question: [Name the outcome, comparison, and periods.]
+Audience: [Name the person or team who will use the answer.]
+Decision: [State what the audience will decide or investigate.]
+Population: [State which records are eligible.]
+Reporting date: [State which date places a record in a period.]
+Comparison period: [Start date inclusive; end date exclusive.]
+Current period: [Start date inclusive; end date exclusive.]
+Measure: [Define the quantity being compared and what it excludes.]
+Output grain: [State what one final row represents.]
+Coverage rule: [State which groups must appear and what needs to be flagged.]
+Acceptance—dates: [Describe the required period coverage and boundaries.]
+Acceptance—totals: [State which totals must reconcile.]
+Acceptance—change: [Define the subtraction order and any percentage-change rule.]
+Acceptance—output: [State uniqueness and agreement checks.]
+Deliverables: [List the files and written answer required.]
+Open assumptions: [List items to confirm before treating the scope as final.]
+
+Worked example: Ask which product categories had the largest decrease in recorded item sales from October–December 2024 to January–March 2025. The audience is a retail merchandising manager deciding which category declines need investigation. Use order items linked to orders in those windows, placed by order date. Define recorded item sales as item quantity times recorded unit price, before returns and tax. Present one row per category with both quarter totals and the current-minus-earlier change. Require complete, nonoverlapping windows; category totals that reconcile to eligible-item totals or have explained differences; one final row per category; and workbook figures that match the checked extract. Confirm source coverage, price-field availability, and category mapping before committing to the analysis.

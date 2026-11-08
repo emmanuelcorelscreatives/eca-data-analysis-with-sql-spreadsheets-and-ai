@@ -1,0 +1,19 @@
+Before analysis
+[ ] Confirm the connected PostgreSQL role and database with: SELECT current_user AS role_name, current_database() AS database_name;
+[ ] For each required table, confirm schema USAGE and effective SELECT permission; check that the analysis role has no unintended write permissions. Replace public.orders with the actual schema-qualified table name.
+[ ] Test a small SELECT using the analysis role. Request narrowly scoped access from the database owner if it fails.
+[ ] Keep exercises that change data in the designated practice sandbox. A BEGIN READ ONLY transaction is an additional session guard, not a replacement for account permissions.
+
+Before sharing
+[ ] Share SQL and connection instructions without passwords, tokens, or password-bearing connection strings.
+[ ] Check notes, workbook connections, screenshots, and files for embedded credentials.
+[ ] If a secret was shared, notify its owner and arrange rotation; removing a visible copy may leave others or file history.
+
+Example shareable SQL file, analysis_readonly.sql:
+SELECT current_user AS role_name, current_database() AS database_name;
+
+SELECT COUNT(*) AS order_rows FROM public.orders;
+
+Example separate note, connection-notes.txt:
+Connection: use the approved practice connection.
+Access: request an analysis-only database role.

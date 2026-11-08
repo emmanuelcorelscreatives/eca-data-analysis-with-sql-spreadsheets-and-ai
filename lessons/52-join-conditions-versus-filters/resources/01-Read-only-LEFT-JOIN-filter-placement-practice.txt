@@ -1,0 +1,33 @@
+Run each statement separately. Expected order IDs are derived from the VALUES shown in the statements; confirm them in your own result grid.
+
+Baseline — expected: 101, 102, 103, 104.
+SELECT o.order_id, o.customer_id, c.customer_id AS matched_customer_id, c.status
+FROM (VALUES (101, 1), (102, 2), (103, 9), (104, 3)) AS o(order_id, customer_id)
+LEFT JOIN (VALUES (1, 'active'), (2, 'inactive'), (3, 'active')) AS c(customer_id, status)
+  ON c.customer_id = o.customer_id
+ORDER BY o.order_id;
+
+Right-side condition in WHERE — expected: 101, 104.
+SELECT o.order_id, o.customer_id, c.customer_id AS matched_customer_id, c.status
+FROM (VALUES (101, 1), (102, 2), (103, 9), (104, 3)) AS o(order_id, customer_id)
+LEFT JOIN (VALUES (1, 'active'), (2, 'inactive'), (3, 'active')) AS c(customer_id, status)
+  ON c.customer_id = o.customer_id
+WHERE c.status = 'active'
+ORDER BY o.order_id;
+
+Right-side condition in ON — expected: 101, 102, 103, 104. Customer columns are null for 102 and 103.
+SELECT o.order_id, o.customer_id, c.customer_id AS matched_customer_id, c.status
+FROM (VALUES (101, 1), (102, 2), (103, 9), (104, 3)) AS o(order_id, customer_id)
+LEFT JOIN (VALUES (1, 'active'), (2, 'inactive'), (3, 'active')) AS c(customer_id, status)
+  ON c.customer_id = o.customer_id AND c.status = 'active'
+ORDER BY o.order_id;
+
+Left-side condition in WHERE — expected: 102, 103, 104.
+SELECT o.order_id, o.customer_id, c.customer_id AS matched_customer_id, c.status
+FROM (VALUES (101, 1), (102, 2), (103, 9), (104, 3)) AS o(order_id, customer_id)
+LEFT JOIN (VALUES (1, 'active'), (2, 'inactive'), (3, 'active')) AS c(customer_id, status)
+  ON c.customer_id = o.customer_id AND c.status = 'active'
+WHERE o.order_id >= 102
+ORDER BY o.order_id;
+
+Reference: PostgreSQL documentation, Table Expressions, https://www.postgresql.org/docs/current/queries-table-expressions.html — see Joined Tables and the distinction between JOIN conditions and WHERE filtering.

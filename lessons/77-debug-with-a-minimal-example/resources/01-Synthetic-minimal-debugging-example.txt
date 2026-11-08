@@ -1,0 +1,18 @@
+All values are invented. This query reads no course or customer tables.
+
+PostgreSQL query:
+WITH sample_orders(order_id) AS (VALUES (101)),
+     sample_returns(order_id) AS (VALUES (101))
+SELECT order_id
+FROM sample_orders
+JOIN sample_returns
+  ON sample_orders.order_id = sample_returns.order_id;
+
+Observed error: ERROR: column reference "order_id" is ambiguous
+Expected: one matched row showing order_id 101.
+Actual: the query stops with the error; no result row is returned.
+
+Safe request:
+Why does this query fail? Suggest the smallest change that would express the intended result. Do not assume additional tables or data.
+
+Before sharing your own example, replace real records with synthetic values while retaining the columns, types, rows, and conditions required to reproduce the failure. Remove credentials, connection details, identifying paths, and sensitive error-message content.

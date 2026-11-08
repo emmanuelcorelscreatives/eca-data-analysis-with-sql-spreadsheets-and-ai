@@ -1,0 +1,51 @@
+Run each statement separately in an already connected PostgreSQL psql session. These statements use inline fictional values, not the course practice tables. Each statement contains its own copy of the same seven rows; if you edit the fixture, make the same edit in all three statements.
+
+1. Inspect all source records:
+WITH lines (line_id, sold_on, quantity, unit_price) AS (
+  VALUES
+    (101, DATE '2025-03-31', 1, 100.00::numeric),
+    (102, DATE '2025-04-01', 2, 12.50::numeric),
+    (103, DATE '2025-04-01', 1, 5.00::numeric),
+    (104, DATE '2025-04-02', 0, 18.00::numeric),
+    (105, DATE '2025-04-30', 3, 4.00::numeric),
+    (106, DATE '2025-05-01', 1, 20.00::numeric),
+    (107, DATE '2025-04-02', 1, NULL::numeric)
+)
+SELECT line_id, sold_on, quantity, unit_price
+FROM lines
+ORDER BY line_id;
+
+2. Calculate the reported figure:
+WITH lines (line_id, sold_on, quantity, unit_price) AS (
+  VALUES
+    (101, DATE '2025-03-31', 1, 100.00::numeric),
+    (102, DATE '2025-04-01', 2, 12.50::numeric),
+    (103, DATE '2025-04-01', 1, 5.00::numeric),
+    (104, DATE '2025-04-02', 0, 18.00::numeric),
+    (105, DATE '2025-04-30', 3, 4.00::numeric),
+    (106, DATE '2025-05-01', 1, 20.00::numeric),
+    (107, DATE '2025-04-02', 1, NULL::numeric)
+)
+SELECT SUM(quantity * unit_price) AS known_price_april_sales
+FROM lines
+WHERE sold_on >= DATE '2025-04-01'
+  AND sold_on < DATE '2025-05-01';
+
+3. Inspect qualifying records without calculating their total:
+WITH lines (line_id, sold_on, quantity, unit_price) AS (
+  VALUES
+    (101, DATE '2025-03-31', 1, 100.00::numeric),
+    (102, DATE '2025-04-01', 2, 12.50::numeric),
+    (103, DATE '2025-04-01', 1, 5.00::numeric),
+    (104, DATE '2025-04-02', 0, 18.00::numeric),
+    (105, DATE '2025-04-30', 3, 4.00::numeric),
+    (106, DATE '2025-05-01', 1, 20.00::numeric),
+    (107, DATE '2025-04-02', 1, NULL::numeric)
+)
+SELECT line_id, sold_on, quantity, unit_price
+FROM lines
+WHERE sold_on >= DATE '2025-04-01'
+  AND sold_on < DATE '2025-05-01'
+ORDER BY line_id;
+
+Independent hand check of the five April records: line 102 = 2 × 12.50 = 25.00; line 103 = 1 × 5.00 = 5.00; line 104 = 0 × 18.00 = 0.00; line 105 = 3 × 4.00 = 12.00; line 107 has an unknown price and no known line value. Known-price total = 25.00 + 5.00 + 0.00 + 12.00 = 42.00. Lines 101 and 106 are outside the April period. Do not present 42.00 as complete revenue while line 107's price remains missing.

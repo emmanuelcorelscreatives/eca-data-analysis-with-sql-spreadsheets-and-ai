@@ -1,0 +1,24 @@
+-- Inspect the types of the example inputs.
+SELECT pg_typeof(5) AS quantity_type,
+       pg_typeof(19.95::numeric(10,2)) AS price_type,
+       pg_typeof(0.10::numeric(4,2)) AS discount_type;
+
+-- Compare integer division with division converted to numeric first.
+SELECT 5 / 2 AS integer_ratio,
+       ROUND(5::numeric / 2, 2) AS numeric_ratio;
+
+-- Calculate example line revenue and a numeric ratio.
+WITH sample_lines(quantity, unit_price, discount_rate) AS (
+    VALUES
+        (5, 19.95::numeric(10,2), 0.10::numeric(4,2)),
+        (4, 12.50::numeric(10,2), 0.20::numeric(4,2))
+)
+SELECT
+    quantity,
+    unit_price,
+    discount_rate,
+    ROUND(quantity * unit_price * (1 - discount_rate), 2) AS line_revenue,
+    ROUND(quantity::numeric / 2, 2) AS accurate_ratio
+FROM sample_lines;
+
+Hand checks: 5 × 19.95 × (1 − 0.10) = 89.775, rounded to 89.78; 4 × 12.50 × (1 − 0.20) = 40.00. For the ratio check, 5 / 2 with integer operands returns 2, while 5::numeric / 2 rounded to two places returns 2.50. The discount inputs here are fractions, and the denominator 2 is only a reference for testing division.

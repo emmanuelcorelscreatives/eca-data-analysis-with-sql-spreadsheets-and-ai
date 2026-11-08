@@ -1,0 +1,46 @@
+PostgreSQL, read-only. Run each query separately in the connected pgAdmin 4 Query Tool.
+
+Deliberate overlap and wrong precedence:
+SELECT order_id, order_total,
+       CASE
+           WHEN order_total >= 50 THEN 'Medium'
+           WHEN order_total >= 100 THEN 'Large'
+           ELSE 'Review'
+       END AS segment
+FROM (VALUES
+    (101, 149.00),
+    (102, 100.00),
+    (103, 99.99),
+    (104, 50.00),
+    (105, 49.99),
+    (106, 0.00),
+    (107, -5.00),
+    (108, NULL::numeric)
+) AS sample_orders(order_id, order_total)
+ORDER BY order_id;
+
+Exclusive ranges and explicit fallback:
+SELECT order_id, order_total,
+       CASE
+           WHEN order_total >= 100 THEN 'Large'
+           WHEN order_total >= 50 AND order_total < 100 THEN 'Medium'
+           WHEN order_total >= 0 AND order_total < 50 THEN 'Small'
+           ELSE 'Review'
+       END AS segment
+FROM (VALUES
+    (101, 149.00),
+    (102, 100.00),
+    (103, 99.99),
+    (104, 50.00),
+    (105, 49.99),
+    (106, 0.00),
+    (107, -5.00),
+    (108, NULL::numeric)
+) AS sample_orders(order_id, order_total)
+ORDER BY order_id;
+
+Check the second query against these expected results calculated from its stated inputs and rules: 101 Large; 102 Large; 103 Medium; 104 Medium; 105 Small; 106 Small; 107 Review; 108 Review. If the actual output differs, inspect the entered query rather than reporting the expected list as an observed result.
+
+Rule note: Large ≥ 100; Medium ≥ 50 and < 100; Small ≥ 0 and < 50; Review = no condition matched. A negative or missing input reaches Review here, but the label does not explain why.
+
+Reference for ordered CASE behavior: PostgreSQL documentation, Conditional Expressions, CASE: https://www.postgresql.org/docs/current/functions-conditional.html#FUNCTIONS-CASE

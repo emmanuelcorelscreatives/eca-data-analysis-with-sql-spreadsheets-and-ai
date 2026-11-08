@@ -1,0 +1,6 @@
+Synthetic demonstration only.
+Reporting period for both versions: 2025-04-01 inclusive to 2025-05-01 exclusive.
+Extract grain: one row per order_id. Revenue unit: cents.
+extract_v1.csv: 3 data rows; 3 distinct order IDs; expected revenue 3500 cents; 0 missing dates; 0 missing revenue values.
+extract_v2.csv: 4 data rows; 4 distinct order IDs; expected revenue 3750 cents; 0 missing dates; 0 missing revenue values.
+Difference between versions: order O104 adds 250 cents. Retain both files; do not treat the two extracts as separate reporting periods.

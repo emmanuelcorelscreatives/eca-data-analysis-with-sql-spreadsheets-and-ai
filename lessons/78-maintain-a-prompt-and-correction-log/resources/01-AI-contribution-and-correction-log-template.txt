@@ -1,0 +1,16 @@
+Create one row per AI contribution incorporated into the work. Columns, in order: ID | Tool | Task | Safe prompt context | Proposed output | Correction | Independent check evidence | Evidence location | Decision.
+
+For real entries, identify the product actually used and preserve the actual proposed output. Record what changed and why; use “No correction” when appropriate. Perform a check separately from the AI suggestion, record what was checked and where it can be repeated, and make a decision only after checking. Add actual reviewer and review date fields if required locally. Do not include credentials or sensitive source rows.
+
+SIMULATED TRAINING ENTRY — not a record of a live ChatGPT response:
+ID: EX-001
+Tool: ChatGPT — simulated training entry
+Task: Total four synthetic amounts in Google Sheets
+Safe prompt context: Synthetic sheet; Check!B2:B5 contains 10, 20, 30, 40. Need a formula for the total of all four cells.
+Proposed output: Illustrative candidate: =SUM(B2:B4)
+Correction: =SUM(B2:B5); changed endpoint from B4 to B5 to include the fourth amount
+Independent check evidence: Hand sum of Check!B2:B5: 10+20+30+40=100; inspected Check!B7 formula =SUM(B2:B5), displayed 100
+Evidence location: Check!B2:B7
+Decision: Accepted after correction — simulated training entry
+
+The log records the check; it is not itself proof. A reviewer should inspect the referenced evidence and decide whether the check covers the intended use.

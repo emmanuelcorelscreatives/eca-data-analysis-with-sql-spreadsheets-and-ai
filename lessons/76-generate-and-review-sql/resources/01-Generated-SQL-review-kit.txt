@@ -1,0 +1,69 @@
+ILLUSTRATIVE EXERCISE ONLY — verify names, relationships, status value, and metric against the supplied course schema before use.
+
+Question: Gross item sales by product category for completed orders dated in 2025. Gross item sales = SUM(quantity * unit_price), before returns.
+
+Schema excerpt:
+orders(order_id bigint, order_date date, status text)
+order_items(order_item_id bigint, order_id bigint references orders.order_id, product_id bigint references products.product_id, quantity integer, unit_price numeric(12,2))
+products(product_id bigint, category text)
+Exercise status value: 'completed'.
+
+Safe request:
+Using only the fictional schema excerpt above, draft PostgreSQL read-only SELECT SQL for the question. Use a start-inclusive, end-exclusive date window. Supply a plain-language explanation and separate SELECT validation queries for unmatched products and a source item count and gross-sales total. State assumptions. Do not invent columns, claim execution, or report results.
+
+Instructor-prepared candidate — NOT executed; product join is wrong:
+SELECT p.category,
+       SUM(i.quantity * i.unit_price) AS gross_sales
+FROM orders AS o
+JOIN order_items AS i ON i.order_id = o.order_id
+JOIN products AS p ON p.product_id = o.order_id
+WHERE o.status = 'completed'
+  AND o.order_date >= DATE '2025-01-01'
+  AND o.order_date < DATE '2026-01-01'
+GROUP BY p.category
+ORDER BY gross_sales DESC;
+
+Repaired proposal — still requires schema confirmation and validation:
+SELECT p.category,
+       SUM(i.quantity * i.unit_price) AS gross_sales
+FROM orders AS o
+JOIN order_items AS i ON i.order_id = o.order_id
+JOIN products AS p ON p.product_id = i.product_id
+WHERE o.status = 'completed'
+  AND o.order_date >= DATE '2025-01-01'
+  AND o.order_date < DATE '2026-01-01'
+GROUP BY p.category
+ORDER BY gross_sales DESC;
+
+Check 1 — eligible items with no matching product:
+SELECT COUNT(*) AS unmatched_item_count
+FROM orders AS o
+JOIN order_items AS i ON i.order_id = o.order_id
+LEFT JOIN products AS p ON p.product_id = i.product_id
+WHERE o.status = 'completed'
+  AND o.order_date >= DATE '2025-01-01'
+  AND o.order_date < DATE '2026-01-01'
+  AND p.product_id IS NULL;
+
+Check 2 — source baseline without the product join:
+SELECT COUNT(*) AS eligible_item_count,
+       SUM(i.quantity * i.unit_price) AS source_gross_sales
+FROM orders AS o
+JOIN order_items AS i ON i.order_id = o.order_id
+WHERE o.status = 'completed'
+  AND o.order_date >= DATE '2025-01-01'
+  AND o.order_date < DATE '2026-01-01';
+
+Review record to complete:
+Schema reference and verified status value: ______
+Question, output grain, and metric confirmed: ______
+Each join key checked against its relationship: ______
+Population and date boundaries checked: ______
+Functions, arithmetic, grouping, and read-only status checked: ______
+Candidate correction and reason: ______
+Unmatched-product count (pending until observed): ______
+Source item count and gross-sales total (pending until observed): ______
+Sum of observed category sales versus observed source total: ______
+Exceptions and follow-up: ______
+
+Run only reviewed statements in an authorized, read-only practice environment. Record observed values; do not fill in results from the SQL text.

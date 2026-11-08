@@ -1,0 +1,138 @@
+-- Query 1: monthly completed-order booked line revenue.
+-- Run this statement on its own in pgAdmin Query Tool.
+WITH orders(order_id, placed_at, status) AS (
+    VALUES
+        (101, '2025-01-05 10:00+00'::timestamptz, 'completed'),
+        (102, '2025-01-21 10:00+00'::timestamptz, 'completed'),
+        (103, '2025-02-08 10:00+00'::timestamptz, 'completed'),
+        (104, '2025-02-24 10:00+00'::timestamptz, 'cancelled'),
+        (105, '2025-03-03 10:00+00'::timestamptz, 'completed'),
+        (106, '2025-03-20 10:00+00'::timestamptz, 'completed'),
+        (107, '2025-04-01 00:00+00'::timestamptz, 'completed'),
+        (108, '2024-12-31 23:59+00'::timestamptz, 'completed')
+),
+order_items(item_id, order_id, quantity, unit_price) AS (
+    VALUES
+        (1001, 101, 2, 10.00::numeric),
+        (1002, 101, 1,  5.00::numeric),
+        (1003, 102, 1, 30.00::numeric),
+        (1004, 103, 3, 10.00::numeric),
+        (1005, 103, 1, 20.00::numeric),
+        (1006, 104, 4, 10.00::numeric),
+        (1007, 105, 1, 15.00::numeric),
+        (1008, 106, 2, 20.00::numeric),
+        (1009, 107, 1, 99.00::numeric),
+        (1010, 108, 1, 77.00::numeric)
+),
+eligible_orders AS (
+    SELECT order_id, placed_at
+    FROM orders
+    WHERE status = 'completed'
+      AND placed_at >= '2025-01-01 00:00+00'::timestamptz
+      AND placed_at < '2025-04-01 00:00+00'::timestamptz
+),
+eligible_lines AS (
+    SELECT
+        o.order_id,
+        i.item_id,
+        date_trunc('month', o.placed_at AT TIME ZONE 'UTC')::date AS month_start,
+        i.quantity * i.unit_price AS line_revenue
+    FROM eligible_orders o
+    JOIN order_items i ON i.order_id = o.order_id
+),
+monthly AS (
+    SELECT
+        month_start,
+        COUNT(DISTINCT order_id) AS order_count,
+        COUNT(*) AS line_count,
+        SUM(line_revenue) AS revenue
+    FROM eligible_lines
+    GROUP BY month_start
+),
+trend AS (
+    SELECT
+        month_start, order_count, line_count, revenue,
+        LAG(month_start) OVER (ORDER BY month_start) AS previous_month,
+        LAG(revenue) OVER (ORDER BY month_start) AS previous_revenue
+    FROM monthly
+)
+SELECT
+    month_start, order_count, line_count, revenue,
+    CASE
+        WHEN previous_month = (month_start - INTERVAL '1 month')::date
+        THEN revenue - previous_revenue
+    END AS change_amount,
+    CASE
+        WHEN previous_month = (month_start - INTERVAL '1 month')::date
+        THEN ROUND(100 * (revenue - previous_revenue)
+                   / NULLIF(previous_revenue, 0), 2)
+    END AS change_pct
+FROM trend
+ORDER BY month_start;
+
+-- Query 2: independent controls, starting again from the input rows.
+-- Run this statement separately; the first query's CTEs do not persist.
+WITH orders(order_id, placed_at, status) AS (
+    VALUES
+        (101, '2025-01-05 10:00+00'::timestamptz, 'completed'),
+        (102, '2025-01-21 10:00+00'::timestamptz, 'completed'),
+        (103, '2025-02-08 10:00+00'::timestamptz, 'completed'),
+        (104, '2025-02-24 10:00+00'::timestamptz, 'cancelled'),
+        (105, '2025-03-03 10:00+00'::timestamptz, 'completed'),
+        (106, '2025-03-20 10:00+00'::timestamptz, 'completed'),
+        (107, '2025-04-01 00:00+00'::timestamptz, 'completed'),
+        (108, '2024-12-31 23:59+00'::timestamptz, 'completed')
+),
+order_items(item_id, order_id, quantity, unit_price) AS (
+    VALUES
+        (1001, 101, 2, 10.00::numeric),
+        (1002, 101, 1,  5.00::numeric),
+        (1003, 102, 1, 30.00::numeric),
+        (1004, 103, 3, 10.00::numeric),
+        (1005, 103, 1, 20.00::numeric),
+        (1006, 104, 4, 10.00::numeric),
+        (1007, 105, 1, 15.00::numeric),
+        (1008, 106, 2, 20.00::numeric),
+        (1009, 107, 1, 99.00::numeric),
+        (1010, 108, 1, 77.00::numeric)
+),
+eligible_items AS (
+    SELECT i.order_id, i.quantity, i.unit_price
+    FROM order_items i
+    WHERE EXISTS (
+        SELECT 1
+        FROM orders o
+        WHERE o.order_id = i.order_id
+          AND o.status = 'completed'
+          AND o.placed_at >= '2025-01-01 00:00+00'::timestamptz
+          AND o.placed_at < '2025-04-01 00:00+00'::timestamptz
+    )
+),
+controls AS (
+    SELECT
+        COUNT(*) AS line_count,
+        COUNT(DISTINCT order_id) AS order_count,
+        SUM(quantity * unit_price) AS revenue
+    FROM eligible_items
+)
+SELECT
+    c.line_count,
+    c.order_count,
+    c.revenue,
+    (SELECT COUNT(*) - COUNT(DISTINCT order_id) FROM orders)
+        AS duplicate_order_ids,
+    (SELECT COUNT(*) - COUNT(DISTINCT item_id) FROM order_items)
+        AS duplicate_item_ids,
+    (SELECT COUNT(*)
+     FROM order_items i
+     WHERE NOT EXISTS (
+         SELECT 1 FROM orders o WHERE o.order_id = i.order_id
+     )) AS orphan_items
+FROM controls c;
+
+-- Hand checks for these fictional input rows:
+-- Monthly revenue: January 55; February 50; March 55.
+-- Monthly order counts: 2, 1, 2. Monthly line counts: 3, 2, 2.
+-- February change: -5 and -9.09 percent; March: 5 and 10.00 percent.
+-- Independent controls: revenue 160; orders 5; lines 7.
+-- Duplicate order IDs, duplicate item IDs, and orphan items: 0.
