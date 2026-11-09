@@ -1,0 +1,17 @@
+{
+  "source": "Exact six rows from saved lesson83 visual7",
+  "rows": 6,
+  "months": {
+    "2025-04": {
+      "rows": 3,
+      "revenue": 400
+    },
+    "2025-05": {
+      "rows": 3,
+      "revenue": 300
+    }
+  },
+  "change": -100,
+  "relativeChange": -0.25,
+  "actualNativeGoogleSheetsResultsVerified": true
+}

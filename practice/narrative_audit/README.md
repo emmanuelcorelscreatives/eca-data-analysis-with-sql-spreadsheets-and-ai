@@ -1,0 +1,13 @@
+# Narrative audit: lesson83
+
+Emmanuel Corels Academy
+
+This is the exact fictional six-order teaching example from the saved lesson, not a result from a retailer or course practice database. No customer, product category, inventory, profit or future-period data is supplied.
+
+Import orders.csv at Orders!A1 for the main lesson's ISO month labels (2025-04 and2025-05). The order IDs and revenue values are exactly the saved source example. The corresponding April and May totals are400 and300 dollars. May minus April is-100; dividing by April gives-0.25 (-25%).
+
+For the Short's human-readable month display, orders_display_labels.csv contains exactly the same six IDs, months and amounts, with April2025 and May2025 written out. The actual captured Google Sheets workbook uses these expanded labels; this changes no month or amount. Its Evidence formulas use =SUMIF(Orders!B2:B7,"April 2025",Orders!C2:C7) and =SUMIF(Orders!B2:B7,"May 2025",Orders!C2:C7). If using the ISO file, use criteria "2025-04" and "2025-05" as in the main lesson. Verify actual results400 and300 before using the findings.
+
+Create Draft, Orders, Evidence and Trace tabs. The draft to challenge is: Company revenue fell25% in May2025, a100-dollar loss. Stockouts caused the decline. May had20% fewer customers. Demand is collapsing, so revenue will keep falling. May revenue was300dollars. All categories performed worse.
+
+Trace each numerical claim to its checked cell. Describe the population as these six example rows. A decrease in revenue is not proof of financial loss. Remove causal, customer, category and future claims because the necessary fields are absent. A defensible statement is: In this six-order example, recorded revenue totals400dollars in April2025 and300dollars in May2025. That is100dollars lower, or25% lower relative to April. These rows do not establish the cause or whether the pattern holds outside this example.
