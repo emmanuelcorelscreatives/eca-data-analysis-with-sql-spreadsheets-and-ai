@@ -6,4 +6,4 @@ Select and label a bar, line, or scatter chart for a stated question.
 
 [Course repository](https://github.com/emmanuelcorelscreatives/eca-data-analysis-with-sql-spreadsheets-and-ai)
 
-Supporting files will appear here when this lesson has developed resources.
+- [Verified monthly chart practice data and explicit exercise units](resources/01-Verified-monthly-chart-practice-data-and-explicit-exercise-units.txt)
