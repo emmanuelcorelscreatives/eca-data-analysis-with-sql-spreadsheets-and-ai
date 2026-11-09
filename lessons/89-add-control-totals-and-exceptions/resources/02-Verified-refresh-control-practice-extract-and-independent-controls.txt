@@ -1,0 +1,27 @@
+Emmanuel Corels Academy
+Public exercise: https://github.com/emmanuelcorelscreatives/eca-data-analysis-with-sql-spreadsheets-and-ai/tree/4ed4704567063fecaf79ffcce504e527c4e86281/practice/refresh_controls
+
+# Lesson 89: Workbook refresh controls
+
+Emmanuel Corels Academy
+
+This constructed practice extract uses seven paid order-item records from the supplied Project 2 fixtures. All revenue in this derived exercise is denominated in USD. The source reporting period is 2025-01-01 00:00:00 UTC inclusive through 2025-04-01 00:00:00 UTC exclusive.
+
+Import source_extract.csv into the Google Sheets Extract tab at A1. Create Control using the lesson's supplied workbook refresh-control specification; preserve its exact cell coordinates and formulas. Independently executed source controls are 7 rows and USD 400.00, as recorded in VERIFICATION.json. Run source_extract.sql and independent_controls.sql against the supplied eca_project2 practice schema to reproduce them. Keep these source controls independent of formulas over the loaded Extract tab.
+
+After the completed load, enter =NOW() in Control!B3, copy it and use Edit > Paste special > Values only. Confirm the spreadsheet time zone in File > Settings. Keep this fixed refresh time separate from Control!B2's source reporting cutoff. Format B12:B14 as USD currency for this practice extract. Investigate any discrepancy; do not alter expectations to force PASS.
+
+Actual independent source controls:
+{
+  "checkedAt": "2026-11-09T02:41:25.517735+00:00",
+  "actualSeparateDatabaseQueriesExecuted": true,
+  "independentOriginalCsvChecksPassed": true,
+  "sourceRows": 7,
+  "sourceRevenue": "400.00",
+  "practiceCurrency": "USD",
+  "sourceExtractSha256": "d4d4edfaeb26c21a906acc339859e81b1b5c139583b554b856fcc2c3297be1f0",
+  "sourceQuerySha256": "b93629d5a5bf3b30561e95da8a534f18898478390b6a436b666e650cbae4eadd",
+  "independentControlQuerySha256": "c4054afebe943c539114af1d3870cc07a5c7c8b22d6d9634376474119c195ae4",
+  "sourceReportingCutoffExclusive": "2025-04-01T00:00:00Z",
+  "noSourceRowsModified": true
+}
