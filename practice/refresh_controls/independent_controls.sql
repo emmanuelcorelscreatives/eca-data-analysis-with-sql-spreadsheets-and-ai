@@ -1,0 +1,1 @@
+SELECT json_build_object('source_rows',COUNT(*),'source_revenue',SUM(oi.quantity*oi.unit_price),'source_cutoff_exclusive','2025-04-01T00:00:00Z') FROM eca_project2.order_items oi JOIN eca_project2.orders o ON o.order_id=oi.order_id WHERE o.status='paid' AND o.order_ts >= TIMESTAMPTZ '2025-01-01 00:00:00+00' AND o.order_ts < TIMESTAMPTZ '2025-04-01 00:00:00+00';

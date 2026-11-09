@@ -1,0 +1,13 @@
+{
+  "checkedAt": "2026-11-09T02:41:25.517735+00:00",
+  "actualSeparateDatabaseQueriesExecuted": true,
+  "independentOriginalCsvChecksPassed": true,
+  "sourceRows": 7,
+  "sourceRevenue": "400.00",
+  "practiceCurrency": "USD",
+  "sourceExtractSha256": "d4d4edfaeb26c21a906acc339859e81b1b5c139583b554b856fcc2c3297be1f0",
+  "sourceQuerySha256": "b93629d5a5bf3b30561e95da8a534f18898478390b6a436b666e650cbae4eadd",
+  "independentControlQuerySha256": "c4054afebe943c539114af1d3870cc07a5c7c8b22d6d9634376474119c195ae4",
+  "sourceReportingCutoffExclusive": "2025-04-01T00:00:00Z",
+  "noSourceRowsModified": true
+}

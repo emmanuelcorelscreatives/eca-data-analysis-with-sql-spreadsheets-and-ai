@@ -1,0 +1,13 @@
+{
+  "exercise": "Lesson 89: workbook refresh controls",
+  "practiceCurrency": "USD",
+  "periodStartInclusive": "2025-01-01T00:00:00Z",
+  "sourceReportingCutoffExclusive": "2025-04-01T00:00:00Z",
+  "grain": "One row per paid order item",
+  "metric": "quantity multiplied by unit_price",
+  "sourceRows": 7,
+  "sourceRevenue": "400.00",
+  "sourceExtractSha256": "d4d4edfaeb26c21a906acc339859e81b1b5c139583b554b856fcc2c3297be1f0",
+  "source": "Academy constructed Project 2 input fixtures",
+  "independentControls": "independent_controls.sql"
+}
