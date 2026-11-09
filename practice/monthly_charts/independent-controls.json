@@ -1,0 +1,31 @@
+{
+  "sourceRows": 8,
+  "months": [
+    "2025-01",
+    "2025-02",
+    "2025-03"
+  ],
+  "categories": [
+    "Apparel",
+    "Home"
+  ],
+  "pairedRevenueByMonth": [
+    [
+      "50",
+      "50"
+    ],
+    [
+      "40",
+      "70"
+    ],
+    [
+      "25",
+      "15"
+    ]
+  ],
+  "grandTotal": "250",
+  "independentPythonDecimalCalculation": true,
+  "sourceIsExactSavedLesson27ConstructedEightRows": true,
+  "exerciseCurrency": "USD",
+  "currencyDefinition": "Explicit denomination for this constructed teaching fixture, not an observed business currency"
+}

@@ -1,0 +1,13 @@
+{
+  "sourceRows": 8,
+  "grandTotal": 250,
+  "categoryTotals": {
+    "Apparel": 115,
+    "Home": 135
+  },
+  "pairedObservations": 3,
+  "sourceExtractSha256": "400ff6d31cafac02b782dfee5abf13532113dcd522a143abea524493c455a996",
+  "actualGoogleSheetsValuesIndependentlyChecked": true,
+  "exerciseCurrency": "USD",
+  "source": "Exact eight-row constructed example in lesson 27"
+}
